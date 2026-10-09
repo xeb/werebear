@@ -1,6 +1,6 @@
 # WEAR THE BEAR — a Werebear Action-RPG Platformer
 
-> **Status:** design spec **v1.0, locked for the first level.** Nothing is built yet.
+> **Status:** design spec **v1.0, locked for the first level.** A playable browser implementation is built and locally verified; production deployment is pending.
 > **Title:** ***Wear the Bear*** (chosen by the user 2026-10-09). Old Norse **berserkr** means "bear-shirt": you start shirtless, and the Rage bar is the shirt you earn. Holding Berserk with a full bar is literally "wearing the bear".
 > **Scope:** **one level**, *The Elderwold*. Wake alone in the forest, scavenge, reach the Den (first checkpoint), then press deeper.
 > **Hosting:** the game at **`werebear.xeb.ai/`**; the current codex moves to **`werebear.xeb.ai/research/`** (§17).
@@ -24,8 +24,10 @@
 | D11 | Orientation | **Landscape**, with a rotate prompt in portrait. | Default, unanswered |
 | D12 | Music | Synthesised, adaptive layers (Web Audio). No licensed tracks. | Default, unanswered |
 | D13 | Gamepad | Supported in v1. | Default, unanswered |
-| D14 | Level climax | The level ends with a boss, **Old Thorngut**, in the Rotted Clearing. | Assumed (see §19) |
+| D14 | Level climax | The level ends with a boss, **Old Thorngut**, in the Rotted Clearing. | User |
 | D15 | **Title** | ***Wear the Bear.*** Coming-soon tagline: "Wake with nothing. Earn the fury." | User |
+| D16 | Cold open | Keep the 30-second playable bear dream before Bjarki wakes. | User |
+| D17 | Sleep | Sleeping at a checkpoint restores Health, respawns enemies and skips to the next dawn. | User |
 
 Removed from the v0.1 draft: Amber currency, Marks/stat levelling, the Shed Pelt recovery, the Heartwood Pulse (replaced by the day/night cycle), and the 12s/kill-extended berserk (replaced by a fixed 90s).
 
@@ -674,14 +676,14 @@ werebear/                    # git repo (~/p/werebear)
 | `https://werebear.xeb.ai/research/` | **The codex** (the current site, moved) |
 | `https://werebear.xeb.ai/research` | 301 → `/research/` (so relative asset paths resolve) |
 
-**Migration: done 2026-10-09.** Until the game ships, `/` serves a "coming soon" page (`site/index.html`) with the Primalist Titan art.
+**Migration: done 2026-10-09.** The local deploy root now contains the playable game at `/`; production deployment of the game is pending.
 1. ✅ Codex moved with `git mv` into `site/research/` (relative asset paths; Pages adds the trailing-slash redirect).
-2. ✅ "The Game ↗" link in the codex header and footer; "Read the Ursa Codex →" on the coming-soon page. The game's title screen gets the same link when it replaces the teaser.
+2. ✅ "The Game ↗" link in the codex header and footer; "The Ursa Codex ↗" on the game's title screen.
 3. ✅ Pages deploy root is now `site/`: `wrangler pages deploy site --project-name=werebear-xeb --branch=main --commit-dirty=true`.
 4. ✅ `~/p/master/docs/cloudflare.md` and the `~/x/werebear/` mirror updated.
 5. Same Pages project, domain and DNS.
 
-When the game is built, it replaces `site/index.html`; the teaser is retired.
+The playable game now occupies `site/index.html`; the teaser is retired locally and will disappear from production on deploy.
 
 ---
 
@@ -698,11 +700,11 @@ When the game is built, it replaces `site/index.html`; the teaser is retired.
 
 ---
 
-## 19. Remaining Open Items (minor; defaults apply if unanswered)
+## 19. Resolved Design Items
 
-1. **Level climax:** is the Old Thorngut boss fight the right ending, or should the level end on reaching the forest's edge with no boss? *Default: boss.*
-2. **Cold-open dream** (play the bear for 30s before waking). Keep it? *Default: yes.*
-3. **Sleep skips to dawn.** Is that a good trade-off? It means night only happens if you push on without sleeping. *Default: yes.*
+1. ~~**Level climax.**~~ *Decided 2026-10-09:* the level ends with the **Old Thorngut boss fight** in the Rotted Clearing (D14).
+2. ~~**Cold-open dream.**~~ *Decided 2026-10-09:* keep the 30-second playable bear dream before Bjarki wakes (D16).
+3. ~~**Sleep skips to dawn.**~~ *Decided 2026-10-09:* sleeping restores Health, respawns enemies and skips to the next dawn; players who want the night's Rage bonus must push on without sleeping (D17).
 4. ~~**Title.**~~ *Decided 2026-10-09:* ***Wear the Bear*** (D15). Considered: *Berserkr*, *Bear-Shirt*, *Bjarki*.
 5. ~~**Codex attribution fix.**~~ *Done 2026-10-09:* folios IV–X are labelled AI-generated with no artist credit; folios I–III (real MTG card art) keep their credits; the Latin "source text" is labelled as invented; the D&D alignment note is corrected to Chaotic Good.
 
@@ -716,11 +718,11 @@ Everything below is the state of the project so a later session can pick it up w
 
 | Area | Status |
 |---|---|
-| **Game** | **Not built.** This spec is locked at v1.0 for the first level. Building starts only when the user says go, following §18. |
+| **Game** | **Built and locally verified.** The complete Elderwold run is playable from the cold-open dream through Old Thorngut, with desktop, gamepad and touch controls. Production deployment is pending. |
 | **Title** | ***Wear the Bear*** (D15). |
-| **`werebear.xeb.ai/`** | Live "coming soon" page (`site/index.html`): Primalist Titan art, drifting embers, a Rage-bar "Coming soon" badge, four selling points, a link to the codex, and a footer saying the art is AI-generated. |
+| **`werebear.xeb.ai/`** | Production still serves the teaser until the pending deploy. Local `site/index.html` is the playable game: procedural Canvas art, fixed-step simulation, Rage/forms/Wounds, persistent trees, day/night, enemies, checkpoints, saves, synthesised audio and the Old Thorngut boss. |
 | **`werebear.xeb.ai/research/`** | Live **Ursa Codex** (`site/research/`): the top-10 werebear gallery with desktop and iPhone wallpaper downloads. `/research` 308-redirects to `/research/`. |
-| **Open design items** | §19 items 1–3 (boss climax, cold-open dream, sleep skips to dawn). Defaults apply if unanswered. |
+| **Design decisions** | All items in §19 are resolved: keep Old Thorngut as the level-ending boss, keep the cold-open bear dream, and make sleep skip to dawn. |
 
 ### 20.2 History of this project
 
@@ -728,26 +730,35 @@ Everything below is the state of the project so a later session can pick it up w
 2. **Deploy.** Created the Cloudflare Pages project `werebear-xeb` with the custom domain `werebear.xeb.ai`, following the `~/p/blue` conventions.
 3. **Folio VII swap.** The user liked Ann Novak's Last Epoch werebear (ArtStation `d0026X`). ArtStation blocks fetching, so an AI image in that style, *The Primalist Titan*, replaced the old Folio VII. It is now the visual reference for the bear form.
 4. **DNS report.** The user saw "DNS not registered". The record resolved correctly on every public resolver, so the most likely cause was a negative cache on the user's side. No change was needed.
-5. **Game design.** Two rounds of questions led to this spec (decisions D1–D14).
+5. **Game design.** Two rounds of questions led to the initial spec (decisions D1–D14).
 6. **Hosting switch.** The codex moved to `/research/`, the coming-soon page went in at `/`, and the deploy root became `site/` (§17).
 7. **Attribution clean-up.** Folios IV–X are labelled "AI-generated" with no artist credit, because they are AI images. Folios I–III keep their credits because they are real published art (see 20.4). The invented Latin "source text" is labelled as invented, and the D&D note now says werebears were Chaotic Good in the 1977 *Monster Manual*.
 8. **Title.** The user chose *Wear the Bear* over *Berserkr*, *Bear-Shirt* and *Bjarki*.
+9. **Design lock.** The user confirmed Old Thorngut as the level-ending boss, kept the cold-open bear dream, and made checkpoint sleep skip to dawn (D14, D16–D17). No design questions remain open.
+10. **Game implementation.** Built the static browser game with a deterministic 60 Hz simulation, procedural painted-woodcut Canvas renderer, synthesised Web Audio, keyboard/gamepad/two-thumb controls, local saves, offline shell, all seven level sections and Old Thorngut. The aspirational painted-atlas pipeline in §12 remains a future art upgrade; the shipped gameplay uses original procedural art plus the AI-generated Primalist Titan title/cut-in.
 
 ### 20.3 Repository layout (`~/p/werebear`, branch `main`)
 
 ```
-GAME.md               this spec and status (not deployed)
+GAME.md               design spec and project status (not deployed)
 README.md             project readme (not deployed)
+package.json          ESM project; `npm test` runs the Node test suite
 build_wallpapers.py   regenerates wallpapers and webp into site/research/assets/
-.gitignore            .wrangler/, __pycache__/
-site/                 Cloudflare Pages deploy root
-  _headers            security headers; immutable cache on /research/assets/*
-  index.html          "Wear the Bear" coming-soon page (self-contained HTML/CSS/JS)
-  assets/titan.{jpg,webp}   Primalist Titan hero art
-  research/           The Ursa Codex: index.html, style.css, app.js (FOLIOS array), assets/
+tests/sim/            deterministic simulation, input, save and shell regressions
+site/                  Cloudflare Pages deploy root
+  _headers             security headers; immutable cache on /research/assets/*
+  index.html           game shell, HUD, menus, settings and touch controls
+  main.js              fixed-step browser loop and composition root
+  sim/                 deterministic world and validated save adapter
+  input/               keyboard, gamepad and multi-pointer touch input
+  render/              procedural Canvas renderer
+  audio/               synthesised Web Audio engine
+  sw.js                offline game-shell service worker; excludes /research/
+  assets/titan.*       AI-generated Primalist Titan title/cut-in art
+  research/            Ursa Codex: index.html, style.css, app.js and assets/
 ```
 
-When the game is built, it replaces `site/index.html` and keeps the link to `/research/`. The game layout in §15.3 lives under `site/`.
+The game occupies `site/index.html` and retains the link to `/research/`.
 
 ### 20.4 Content and attribution rules
 
@@ -770,8 +781,10 @@ When the game is built, it replaces `site/index.html` and keeps the link to `/re
 
 ### 20.6 Verification done
 
-- Checked the coming-soon page with Playwright at 1440×900, 390×844 (phone portrait) and 844×390 (phone landscape), and the codex at 1440×900. There were no console errors. Screenshot script: `brain/<conversation>/scratch/shots.py`.
-- Checked the live URLs: `/` 200, `/research` 308 → `/research/`, `/research/` 200, and all assets 200.
+- `npm test`: **48/48 pass** across deterministic clock/movement/combat, Rage/forms/Wounds, items, checkpoints, trees, enemies, Old Thorngut, saves, input, lifecycle, responsive shell and service-worker rules.
+- `node --check`: all 14 game/test JavaScript files pass. `git diff --check` passes.
+- Playwright local browser QA at 1280×720, 1440×900, 390×844 portrait and 844×390 phone landscape: title/new-game, movement/combat, night art, lifecycle pause/reset, boss HUD and completion, saved completion, portrait rotation, two-thumb move+attack, 56 px touch targets, 16:9 letterboxing and offline reload. No console or page errors.
+- Three independent fail-closed reviews found and drove fixes for lifecycle input, boss defense/reset/HUD, save validation/restore, first-gap topology, bear public controls, bee-tree Slam, enemy tethering, mobile scaling and service-worker scope. The final review verdict was **SHIP** with no blockers.
 
 ### 20.7 Commits
 
@@ -787,6 +800,6 @@ When the game is built, it replaces `site/index.html` and keeps the link to `/re
 
 ### 20.8 Next steps
 
-1. Answer §19 items 1–3, or accept the defaults.
-2. When the user says go, build following §18: a grey-box simulation first (movement, combat, Rage, bear, Wounds with `node --test`), reusing the readysetsanta patterns in §15.
-3. When the game ships: replace `site/index.html`, keep the codex link, and update §17, this section and `~/p/master/docs/cloudflare.md`.
+1. Commit and deploy the verified game to `werebear.xeb.ai`, then record the launch commit and live checks here.
+2. Collect real-player feedback and tune encounter spacing, Rage rhythm and Old Thorngut without weakening the deterministic contracts.
+3. Optional future art pass: replace procedural character/environment drawings with the painted atlases and backgrounds described in §12 while leaving the tested simulation intact.

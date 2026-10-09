@@ -4,10 +4,12 @@
 
 | URL | What | Source |
 | :--- | :--- | :--- |
-| `https://werebear.xeb.ai/` | **Wear the Bear**: a werebear action-RPG platformer. Currently a "coming soon" page. Design spec: [GAME.md](GAME.md). | `site/index.html` |
+| `https://werebear.xeb.ai/` | **Wear the Bear**: a playable, static-module action-RPG platformer through the Elderwold. Design and acceptance criteria: [GAME.md](GAME.md). | `site/index.html` and `site/` modules |
 | `https://werebear.xeb.ai/research/` | **The Ursa Codex**: a top-10 werebear art gallery. | `site/research/` |
 
 `site/` is the Cloudflare Pages deploy root. Everything outside it (this README, `GAME.md`, `build_wallpapers.py`) is not published.
+
+The game runs directly from `site/` with no build step or runtime package dependencies. Its fixed-step simulation is isolated in `site/sim/`; the Canvas renderer, input adapters, audio synthesis, and local save handling are separate modules. Run the simulation and input suite with `npm test`.
 
 Created as the thematic sister project to [Werwulf](https://werwulf.xeb.ai) (`~/p/werwulf` and `~/x/werwulf.html`).
 
@@ -30,7 +32,7 @@ Folios I–III are published Magic: The Gathering card art, © the credited arti
 | **IX** | **The Twilight Sentinel** | Animated Feature Concept | AI-generated | Animated-feature style |
 | **X** | **The Ruined Abbey** | Gothic Horror Comic | AI-generated | Gothic comic style |
 
-Folio VII is the visual reference for the game's bear form, and the hero image on the coming-soon page (`site/assets/titan.*`).
+Folio VII is the visual reference for the game's bear form, the title-screen hero, and the transformation cut-in (`site/assets/titan.*`).
 
 ---
 

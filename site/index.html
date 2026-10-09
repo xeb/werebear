@@ -2,303 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#08090a">
-  <title>Wear the Bear — a werebear action-RPG · Coming soon</title>
-  <meta name="description" content="Wake in the forest with nothing. Fight the rot, build your rage, and wear the bear. A werebear action-RPG platformer for the browser. Coming soon.">
-  <meta property="og:title" content="Wear the Bear — coming soon">
-  <meta property="og:description" content="Wake with nothing. Earn the fury. Become the bear. A werebear action-RPG platformer for your browser.">
-  <meta property="og:image" content="https://werebear.xeb.ai/assets/titan.jpg">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%2308090a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='serif' font-size='44' fill='%23e7a43c'%3Eᛒ%3C/text%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Cardo:ital@0;1&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#101616">
+  <meta name="description" content="Wake with nothing. Earn the fury. Play Wear the Bear, a Norse folklore action platformer.">
+  <title>Wear the Bear — The Elderwold</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23101616'/%3E%3Ctext x='32' y='48' text-anchor='middle' font-size='48' fill='%23e5a947'%3E%E1%9B%92%3C/text%3E%3C/svg%3E">
   <style>
-    :root {
-      --ink: #08090a;
-      --bone: #ece3d0;
-      --ash: #9a978c;
-      --amber: #e7a43c;
-      --ember: #ff7a2a;
-      --moss: #4f7a4a;
-      --rule: rgba(231, 164, 60, 0.3);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      background: var(--ink);
-      color: var(--bone);
-      font-family: "Cardo", Georgia, serif;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* The Titan stands on the right; text sits in the dark on the left. */
-    .stage {
-      position: relative;
-      min-height: 100svh;
-      display: grid;
-      align-items: center;
-      isolation: isolate;
-    }
-    .titan {
-      position: absolute;
-      inset: 0 0 0 auto;
-      height: 100%;
-      width: min(62vw, 82svh);
-      z-index: -2;
-      overflow: hidden;
-    }
-    .titan img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 50% 20%;
-      filter: saturate(0.9) contrast(1.05);
-      animation: breathe 7s ease-in-out infinite;
-      transform-origin: 50% 85%;
-    }
-    .titan::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, var(--ink) 0%, rgba(8,9,10,0.55) 22%, rgba(8,9,10,0) 50%),
-        linear-gradient(0deg, var(--ink) 0%, rgba(8,9,10,0) 30%);
-    }
-    #embers { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-
-    .copy {
-      padding: clamp(2rem, 6vw, 6rem);
-      max-width: 44rem;
-    }
-    .eyebrow {
-      font-family: "Cinzel", serif;
-      font-weight: 600;
-      font-size: 0.78rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--amber);
-    }
-    h1 {
-      font-family: "Cinzel", serif;
-      font-weight: 900;
-      font-size: clamp(4.2rem, 13vw, 9rem);
-      width: fit-content;
-      line-height: 0.95;
-      letter-spacing: 0.04em;
-      margin: 0.6rem 0 0.4rem;
-      background: linear-gradient(180deg, #fff3da 0%, var(--amber) 70%, #a2581d 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 28px rgba(231, 120, 40, 0.22));
-    }
-    h1 .pre {
-      display: block;
-      font-weight: 600;
-      font-size: 0.34em;
-      letter-spacing: 0.42em;
-      line-height: 1.1;
-      margin-bottom: 0.05em;
-      padding-left: 0.12em;
-    }
-    .tagline {
-      font-size: clamp(1.25rem, 3vw, 1.7rem);
-      font-style: italic;
-      color: var(--bone);
-    }
-    .tagline b { color: var(--ember); font-style: normal; font-weight: 400; }
-    .pitch {
-      margin-top: 1.4rem;
-      font-size: 1.08rem;
-      line-height: 1.65;
-      color: var(--ash);
-      max-width: 34rem;
-    }
-    .pillars {
-      list-style: none;
-      margin-top: 1.8rem;
-      display: grid;
-      gap: 0.75rem;
-    }
-    .pillars li {
-      display: grid;
-      grid-template-columns: 1.6rem 1fr;
-      gap: 0.6rem;
-      align-items: baseline;
-      line-height: 1.45;
-    }
-    .pillars .rune { color: var(--amber); font-family: "Noto Sans Runic", "Segoe UI Historic", sans-serif; font-size: 1.15rem; text-align: center; }
-    .pillars b { color: var(--bone); font-weight: 400; }
-    .pillars span.d { color: var(--ash); }
-
-    .soon {
-      margin-top: 2.2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      align-items: center;
-    }
-    .badge {
-      font-family: "Cinzel", serif;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      padding: 0.8rem 1.3rem;
-      border: 1px solid var(--amber);
-      color: var(--amber);
-      background: rgba(231, 164, 60, 0.06);
-      position: relative;
-    }
-    .badge::before {
-      content: "";
-      position: absolute;
-      left: 0; bottom: 0;
-      height: 3px;
-      width: 100%;
-      background: linear-gradient(90deg, var(--ember), var(--amber));
-      transform-origin: left;
-      animation: rage 4.5s ease-in-out infinite;
-    }
-    .link {
-      color: var(--bone);
-      text-decoration: none;
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 2px;
-      font-size: 1rem;
-    }
-    .link:hover { color: var(--amber); border-color: var(--amber); }
-    .meta {
-      margin-top: 1.1rem;
-      font-size: 0.85rem;
-      color: var(--ash);
-      letter-spacing: 0.06em;
-    }
-    footer {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      padding: 1rem clamp(2rem, 6vw, 6rem) max(1rem, env(safe-area-inset-bottom));
-      font-size: 0.78rem;
-      color: #6d6a62;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    footer a { color: inherit; }
-
-    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.015); } }
-    @keyframes rage {
-      0% { transform: scaleX(0); opacity: 0.6; }
-      70% { transform: scaleX(1); opacity: 1; }
-      85% { transform: scaleX(1); opacity: 1; filter: brightness(1.6); }
-      100% { transform: scaleX(0); opacity: 0.4; }
-    }
-
-    /* Phones: the Titan looms behind the words. */
-    @media (max-width: 820px) {
-      .titan { width: 100%; }
-      .titan img { object-position: 60% 15%; opacity: 0.5; }
-      .titan::after {
-        background: linear-gradient(0deg, var(--ink) 8%, rgba(8,9,10,0.75) 45%, rgba(8,9,10,0.35) 100%);
-      }
-      .stage { align-items: end; }
-      .copy { padding-bottom: 5rem; }
-    }
-    /* Short landscape phones */
-    @media (max-height: 500px) and (min-width: 821px) {
-      h1 { font-size: clamp(3rem, 10vw, 5.2rem); }
-      .copy { padding-block: 1.5rem 3.5rem; }
-      .pitch { margin-top: 0.8rem; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .titan img, .badge::before { animation: none; }
-      #embers { display: none; }
-    }
+    :root{color-scheme:dark;--bone:#eee5d2;--amber:#e9aa50;--moss:#82947a;--ink:#0a1112}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a1112;color:var(--bone);font-family:Georgia,'Times New Roman',serif}button{font:inherit;color:inherit}#game{position:fixed;inset:0;background:#0c1518;touch-action:none}canvas{display:block;width:100%;height:100%;image-rendering:auto}#ui{position:fixed;inset:0;pointer-events:none}.screen{position:absolute;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 48%,rgba(11,17,17,.38),rgba(5,9,10,.88));pointer-events:auto}.panel{width:min(720px,94vw);max-height:92svh;overflow:auto;padding:clamp(24px,5vw,54px);border:1px solid rgba(230,174,91,.48);background:linear-gradient(145deg,rgba(14,23,22,.95),rgba(15,19,19,.96));box-shadow:0 20px 90px #000b, inset 0 0 50px #c8872810;text-align:center}.eyebrow{text-transform:uppercase;letter-spacing:.28em;color:var(--amber);font:600 11px/1.5 system-ui,sans-serif}.title{font:900 clamp(54px,10vw,104px)/.83 Georgia,serif;letter-spacing:.035em;text-transform:uppercase;text-shadow:0 3px 0 #3e2616,0 12px 35px #000}.title small{display:block;margin:0 0 14px;font:600 .24em/1.2 Georgia,serif;letter-spacing:.4em;color:#e8dec9}.tag{margin:24px 0 8px;font-size:clamp(18px,3vw,24px);font-style:italic}.muted{color:#aeb3a7;line-height:1.6}.menu{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}.menu button,.btn{border:1px solid #bd8b4c;background:#bd8b4c16;padding:12px 20px;min-height:48px;cursor:pointer;text-transform:uppercase;letter-spacing:.12em;font:600 12px system-ui,sans-serif}.menu button:hover,.menu button:focus-visible,.btn:hover{background:#d1944338;outline:1px solid #e8b664}.menu .primary{background:#bd8b4c;color:#101313}.menu .primary:hover{background:#e1ad64}a{color:#e5b96f}.screen[hidden]{display:none}#hud{position:absolute;inset:0;pointer-events:none;font:600 12px system-ui,sans-serif;text-shadow:0 2px 4px #000}.topline{position:absolute;top:max(12px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:16px;align-items:center;white-space:nowrap}.meter{height:13px;width:clamp(90px,18vw,190px);border:1px solid #dfc99d88;background:#111b;border-radius:10px;overflow:hidden;display:inline-block;vertical-align:middle}.fill{height:100%;width:100%;display:block;background:linear-gradient(90deg,#a64336,#e5784c);transition:width .12s}.rage{width:clamp(130px,24vw,260px);height:18px;border:2px solid #c7ad7b;background:#171c1b;display:flex;gap:2px;padding:2px;box-shadow:0 2px 12px #0008}.rage i{flex:1;background:#292c26}.rage i.on{background:linear-gradient(#ffd77c,#ca692e);box-shadow:0 0 10px #d88848}.hud-left,.hud-right{position:absolute;top:max(18px,env(safe-area-inset-top));display:grid;gap:8px}.hud-left{left:max(16px,env(safe-area-inset-left))}.hud-right{right:max(16px,env(safe-area-inset-right));text-align:right}.hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#eee0c1;background:#101817bd;padding:7px 14px;border:1px solid #c9a35a45;white-space:nowrap}.world-name{color:#e8c47e;letter-spacing:.17em;text-transform:uppercase;font-size:10px}.#touch{display:none;pointer-events:none}.touch-stick{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));width:150px;height:150px;border-radius:50%;border:1px solid #e8deb64d;background:#17201d88;pointer-events:auto;touch-action:none}.stick-knob{position:absolute;left:50%;top:50%;width:62px;height:62px;margin:-31px;border-radius:50%;background:#e8deb633;border:1px solid #eee2a980;transform:translate(0,0)}.touch-cluster{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));width:min(45vw,370px);height:220px;pointer-events:none}.touch-btn{position:absolute;border-radius:50%;border:1px solid #e8deb699;background:#15211dcc;display:grid;place-items:center;width:62px;height:62px;pointer-events:auto;touch-action:none;user-select:none;font:600 11px system-ui,sans-serif;color:#eee1c6}.touch-btn:active,.touch-btn.held{background:#bd7f35cc;box-shadow:0 0 22px #e2a94b88}.touch-btn.attack{width:76px;height:76px;right:6px;bottom:38px}.touch-btn.jump{right:92px;bottom:86px}.touch-btn.dodge{right:94px;bottom:8px}.touch-btn.heavy{right:6px;bottom:128px}.touch-btn.paw{right:100px;bottom:154px;color:#ffd178}.touch-btn.throw{right:174px;bottom:38px;width:52px;height:52px}.touch-btn.honey{right:178px;bottom:102px;width:52px;height:52px}.rotate{display:none;position:absolute;inset:0;background:#0a1010f2;z-index:5;place-items:center;text-align:center;padding:30px}.rotate .glyph{font-size:56px;color:var(--amber)}@media(orientation:portrait) and (max-width:900px){.rotate{display:grid}}@media(max-height:430px){.touch-stick{width:118px;height:118px}.topline{top:6px}.hud-left,.hud-right{top:8px}}
+  </style>
+  <style>
+    #touch{display:none;pointer-events:none}#title{isolation:isolate;background:linear-gradient(90deg,#070b0c 0%,#070b0ce8 42%,#070b0c42 100%)}#title .title-art{position:absolute;z-index:-1;inset:0 0 0 auto;width:min(64vw,92vh);height:100%;object-fit:cover;object-position:52% 18%;filter:saturate(.78) contrast(1.08) brightness(.72);mask-image:linear-gradient(90deg,transparent 0%,#000 35%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 35%)}#title .panel{margin-right:auto;margin-left:clamp(0px,4vw,64px);background:linear-gradient(145deg,rgba(14,23,22,.94),rgba(15,19,19,.78))}.hud-pause{position:absolute;top:max(54px,calc(env(safe-area-inset-top) + 42px));right:max(16px,env(safe-area-inset-right));pointer-events:auto;border:1px solid #d4b98077;background:#101817bb;padding:0;width:56px;height:56px;min-width:56px;min-height:56px;cursor:pointer;color:#eee1c6}.hud-pause:focus-visible{outline:2px solid #e8b664}.touch-btn.throw,.touch-btn.honey{width:56px;height:56px}.touch-btn.paw.ready{box-shadow:0 0 20px #e2a94b99;border-color:#f7cc73}.touch-btn.paw.full{animation:pawPulse 1s ease-in-out infinite}.touch-btn.paw.held{outline:3px solid #f4cb69;outline-offset:3px}@keyframes pawPulse{50%{box-shadow:0 0 28px #ffc45acc;transform:scale(1.06)}}
   </style>
 </head>
 <body>
-  <main class="stage">
-    <div class="titan" aria-hidden="true">
-      <picture>
-        <source srcset="/assets/titan.webp" type="image/webp">
-        <img src="/assets/titan.jpg" alt="">
-      </picture>
+  <main id="game" aria-label="Wear the Bear game">
+    <canvas id="world" aria-label="The Elderwold game canvas"></canvas>
+    <div id="hud" hidden>
+      <div class="hud-left"><div class="world-name" id="section">The Waking Hollow</div><div>HEALTH <span class="meter"><span id="health" class="fill"></span></span></div><div id="staminaText">STAMINA <span class="meter"><span id="stamina" class="fill" style="background:linear-gradient(90deg,#88a073,#ced18a)"></span></span></div><div id="woundsText" hidden>WOUNDS <span class="meter"><span id="wounds" class="fill" style="background:#aaa"></span></span></div></div>
+      <div class="topline"><span>RAGE</span><div class="rage" id="rage"><i></i><i></i><i></i><i></i></div><span id="clock">☼ DAWN</span></div>
+      <div class="hud-right"><div id="items">FISTS · 0 STONES · 0 HONEY</div><div>☰ <kbd>Esc</kbd></div></div>
+      <div id="hint" class="hint">WASD move · Space jump · J strike · I bear skill</div>
+      <button class="hud-pause" data-action="pause" aria-label="Pause game">Ⅱ</button>
     </div>
-    <canvas id="embers" aria-hidden="true"></canvas>
-
-    <section class="copy">
-      <div class="eyebrow">A werebear action-RPG</div>
-      <h1><span class="pre">Wear the</span>BEAR</h1>
-      <p class="tagline">Wake with nothing. <b>Earn the fury.</b></p>
-      <p class="pitch">
-        You wake under the roots of a rotting forest with a scrap of cloth and nothing else.
-        Every fight feeds your Rage. Spend it in single crushing swipes, or save it all and
-        become the Titan for ninety seconds.
-      </p>
-      <ul class="pillars">
-        <li><span class="rune">ᛒ</span><span><b>Fragile man, unstoppable bear.</b> <span class="d">Careful and precise, then a 90-second storm.</span></span></li>
-        <li><span class="rune">ᛏ</span><span><b>Fell the forest.</b> <span class="d">Knock the trees down. They stay down.</span></span></li>
-        <li><span class="rune">ᛗ</span><span><b>Die, and wake with nothing.</b> <span class="d">The dens hold. Your gear doesn't.</span></span></li>
-        <li><span class="rune">ᛉ</span><span><b>Sun and moon.</b> <span class="d">The rot grows bold at night, and so does the bear.</span></span></li>
-      </ul>
-      <div class="soon">
-        <span class="badge">Coming soon</span>
-        <a class="link" href="/research/">Read the Ursa Codex →</a>
-      </div>
-      <p class="meta">Free in your browser · phone or desktop</p>
-    </section>
-
-    <footer>
-      <span>Art shown is AI-generated concept art.</span>
-      <a href="https://xeb.ai">xeb.ai</a>
-    </footer>
+    <div id="ui">
+      <section id="title" class="screen"><img class="title-art" src="/assets/titan.webp" alt="" aria-hidden="true"><div class="panel"><div class="eyebrow">A Norse folklore action tale</div><h1 class="title"><small>Wear the</small>Bear</h1><p class="tag">Wake with nothing. <strong style="color:#e17c38">Earn the fury.</strong></p><p class="muted">The Elderwold is rotting from within. Fight through the forest, gather what was stolen, and decide when to wear the bear.</p><div class="menu"><button class="primary" data-action="new">Wake in the Hollow</button><button data-action="continue" id="continueBtn">Continue</button><button data-action="howto">How to play</button><button data-action="settings">Settings</button></div><p class="muted" style="font-size:13px;margin:20px 0 0">A quiet tale for keyboard, gamepad, or touch · <a href="/research/">The Ursa Codex ↗</a></p></div></section>
+      <section id="howto" class="screen" hidden><div class="panel"><div class="eyebrow">The Elderwold</div><h2>How to play</h2><p class="muted">Move with A/D or ←/→. Jump with Space/W/↑. J strikes, K heavy attacks, L dodges, U throws stones, H eats honey. Tap I to spend 25 Rage on a directional bear skill; hold I for a full 90-second transformation. E interacts with dens. Find the Den, light the Deep Stone, and reach Old Thorngut.</p><p class="muted">Enemies tell you what comes next. Dodge the lunge, then punish the recovery. The man is fragile; the bear's wounds are paid when the shape breaks. Trees felled by the bear remain as bridges.</p><div class="menu"><button data-action="back">Back</button><button class="primary" data-action="new">Begin</button></div></div></section>
+      <section id="settings" class="screen" hidden><div class="panel"><div class="eyebrow">Accessibility & sound</div><h2>Settings</h2><p><label><input id="assist" type="checkbox"> Assist: wounds cannot kill; begin with honey after waking</label></p><p><label><input id="reduced" type="checkbox"> Reduced motion</label></p><p>Music <input id="music" type="range" min="0" max="1" step=".05" value=".6"></p><p>Sound <input id="sfx" type="range" min="0" max="1" step=".05" value=".8"></p><div class="menu"><button data-action="back">Back</button></div></div></section>
+      <section id="pause" class="screen" hidden><div class="panel"><div class="eyebrow">The forest holds its breath</div><h2>Paused</h2><div class="menu"><button class="primary" data-action="resume">Return</button><button data-action="sleep">Sleep at this den</button><button data-action="howto">How to play</button><button data-action="settings">Settings</button><button data-action="title">Title</button></div></div></section>
+      <section id="complete" class="screen" hidden><div class="panel"><div class="eyebrow">The rot recedes</div><h2>Old Thorngut is fallen</h2><p class="muted">Dawn breaks over the Elderwold. Bjarki has earned the bear.</p><p id="summary"></p><div class="menu"><button class="primary" data-action="title">Return to title</button></div></div></section>
+    </div>
+    <div id="touch" aria-label="Touch controls"><div class="touch-stick" role="application" aria-label="Move thumbstick"><div class="stick-knob"></div></div><div class="touch-cluster"><button class="touch-btn paw" data-control="skill" aria-label="Bear skill, hold to transform">PAW</button><button class="touch-btn heavy" data-control="heavy" aria-label="Heavy attack">HEAVY</button><button class="touch-btn attack" data-control="attack" aria-label="Attack">ATTACK</button><button class="touch-btn jump" data-control="jump" aria-label="Jump">JUMP</button><button class="touch-btn dodge" data-control="dodge" aria-label="Dodge">DODGE</button><button class="touch-btn throw" data-control="throw" aria-label="Throw stone">THROW</button><button class="touch-btn honey" data-control="honey" aria-label="Eat honey">HONEY</button></div></div>
+    <div class="rotate"><div><div class="glyph">↻</div><h2>Turn your device sideways</h2><p>The Elderwold opens in landscape.</p></div></div>
   </main>
-
-  <script>
-    // Drifting embers. Small, cheap, paused when the tab is hidden.
-    (() => {
-      const c = document.getElementById("embers");
-      if (!c || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const g = c.getContext("2d");
-      let w, h, dpr, parts = [];
-      const resize = () => {
-        dpr = Math.min(devicePixelRatio || 1, 2);
-        w = c.clientWidth; h = c.clientHeight;
-        c.width = w * dpr; c.height = h * dpr;
-        g.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const n = Math.round(Math.min(70, (w * h) / 18000));
-        parts = Array.from({ length: n }, () => spawn(true));
-      };
-      const spawn = (anywhere) => ({
-        x: Math.random() * w,
-        y: anywhere ? Math.random() * h : h + 10,
-        r: 0.6 + Math.random() * 1.8,
-        vy: 0.25 + Math.random() * 0.7,
-        vx: (Math.random() - 0.5) * 0.3,
-        t: Math.random() * Math.PI * 2,
-        a: 0.3 + Math.random() * 0.6,
-      });
-      const tick = () => {
-        g.clearRect(0, 0, w, h);
-        for (const p of parts) {
-          p.t += 0.02; p.y -= p.vy; p.x += p.vx + Math.sin(p.t) * 0.25;
-          if (p.y < -10) Object.assign(p, spawn(false));
-          const fade = Math.min(1, p.y / (h * 0.5));
-          g.globalAlpha = p.a * fade * (0.7 + 0.3 * Math.sin(p.t * 3));
-          g.fillStyle = p.r > 1.6 ? "#ffb35c" : "#ff7a2a";
-          g.beginPath(); g.arc(p.x, p.y, p.r, 0, Math.PI * 2); g.fill();
-        }
-        if (!document.hidden) requestAnimationFrame(tick);
-      };
-      addEventListener("resize", resize);
-      document.addEventListener("visibilitychange", () => { if (!document.hidden) requestAnimationFrame(tick); });
-      resize(); requestAnimationFrame(tick);
-    })();
-  </script>
+  <script type="module" src="/main.js?v=20261009b"></script>
 </body>
 </html>
