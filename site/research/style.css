@@ -1055,3 +1055,7 @@ body.still-mode .return-cue {
     display: none;
   }
 }
+
+/* Link-styled quiet button and AI disclosure (added with the /research/ move) */
+a.btn-quiet { text-decoration: none; display: inline-block; }
+.foot p.ai-note { margin-top: 1rem; font-size: 0.8rem; font-style: normal; letter-spacing: 0.04em; }

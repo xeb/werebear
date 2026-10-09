@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08090a">
+  <title>BERSERKR — a werebear action-RPG · Coming soon</title>
+  <meta name="description" content="Wake in the forest with nothing. Fight the rot, build your rage, and wear the bear. A werebear action-RPG platformer for the browser. Coming soon.">
+  <meta property="og:title" content="BERSERKR — coming soon">
+  <meta property="og:description" content="Wake with nothing. Earn the fury. Wear the bear. A werebear action-RPG platformer for your browser.">
+  <meta property="og:image" content="https://werebear.xeb.ai/assets/titan.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%2308090a'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='serif' font-size='44' fill='%23e7a43c'%3Eᛒ%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Cardo:ital@0;1&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #08090a;
+      --bone: #ece3d0;
+      --ash: #9a978c;
+      --amber: #e7a43c;
+      --ember: #ff7a2a;
+      --moss: #4f7a4a;
+      --rule: rgba(231, 164, 60, 0.3);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--ink);
+      color: var(--bone);
+      font-family: "Cardo", Georgia, serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* The Titan stands on the right; text sits in the dark on the left. */
+    .stage {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      isolation: isolate;
+    }
+    .titan {
+      position: absolute;
+      inset: 0 0 0 auto;
+      height: 100%;
+      width: min(62vw, 82svh);
+      z-index: -2;
+      overflow: hidden;
+    }
+    .titan img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 20%;
+      filter: saturate(0.9) contrast(1.05);
+      animation: breathe 7s ease-in-out infinite;
+      transform-origin: 50% 85%;
+    }
+    .titan::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, var(--ink) 0%, rgba(8,9,10,0.55) 22%, rgba(8,9,10,0) 50%),
+        linear-gradient(0deg, var(--ink) 0%, rgba(8,9,10,0) 30%);
+    }
+    #embers { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+
+    .copy {
+      padding: clamp(2rem, 6vw, 6rem);
+      max-width: 44rem;
+    }
+    .eyebrow {
+      font-family: "Cinzel", serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    h1 {
+      font-family: "Cinzel", serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 8.5vw, 6.6rem);
+      width: fit-content;
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      margin: 0.6rem 0 0.4rem;
+      background: linear-gradient(180deg, #fff3da 0%, var(--amber) 70%, #a2581d 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 28px rgba(231, 120, 40, 0.22));
+    }
+    .tagline {
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
+      font-style: italic;
+      color: var(--bone);
+    }
+    .tagline b { color: var(--ember); font-style: normal; font-weight: 400; }
+    .pitch {
+      margin-top: 1.4rem;
+      font-size: 1.08rem;
+      line-height: 1.65;
+      color: var(--ash);
+      max-width: 34rem;
+    }
+    .pillars {
+      list-style: none;
+      margin-top: 1.8rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .pillars li {
+      display: grid;
+      grid-template-columns: 1.6rem 1fr;
+      gap: 0.6rem;
+      align-items: baseline;
+      line-height: 1.45;
+    }
+    .pillars .rune { color: var(--amber); font-family: "Noto Sans Runic", "Segoe UI Historic", sans-serif; font-size: 1.15rem; text-align: center; }
+    .pillars b { color: var(--bone); font-weight: 400; }
+    .pillars span.d { color: var(--ash); }
+
+    .soon {
+      margin-top: 2.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+    }
+    .badge {
+      font-family: "Cinzel", serif;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 0.8rem 1.3rem;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      background: rgba(231, 164, 60, 0.06);
+      position: relative;
+    }
+    .badge::before {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0;
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--ember), var(--amber));
+      transform-origin: left;
+      animation: rage 4.5s ease-in-out infinite;
+    }
+    .link {
+      color: var(--bone);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      font-size: 1rem;
+    }
+    .link:hover { color: var(--amber); border-color: var(--amber); }
+    .meta {
+      margin-top: 1.1rem;
+      font-size: 0.85rem;
+      color: var(--ash);
+      letter-spacing: 0.06em;
+    }
+    footer {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 1rem clamp(2rem, 6vw, 6rem) max(1rem, env(safe-area-inset-bottom));
+      font-size: 0.78rem;
+      color: #6d6a62;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    footer a { color: inherit; }
+
+    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.015); } }
+    @keyframes rage {
+      0% { transform: scaleX(0); opacity: 0.6; }
+      70% { transform: scaleX(1); opacity: 1; }
+      85% { transform: scaleX(1); opacity: 1; filter: brightness(1.6); }
+      100% { transform: scaleX(0); opacity: 0.4; }
+    }
+
+    /* Phones: the Titan looms behind the words. */
+    @media (max-width: 820px) {
+      .titan { width: 100%; }
+      .titan img { object-position: 60% 15%; opacity: 0.5; }
+      .titan::after {
+        background: linear-gradient(0deg, var(--ink) 8%, rgba(8,9,10,0.75) 45%, rgba(8,9,10,0.35) 100%);
+      }
+      .stage { align-items: end; }
+      .copy { padding-bottom: 5rem; }
+    }
+    /* Short landscape phones */
+    @media (max-height: 500px) and (min-width: 821px) {
+      h1 { font-size: clamp(2.6rem, 7vw, 4.2rem); }
+      .copy { padding-block: 1.5rem 3.5rem; }
+      .pitch { margin-top: 0.8rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .titan img, .badge::before { animation: none; }
+      #embers { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <div class="titan" aria-hidden="true">
+      <picture>
+        <source srcset="/assets/titan.webp" type="image/webp">
+        <img src="/assets/titan.jpg" alt="">
+      </picture>
+    </div>
+    <canvas id="embers" aria-hidden="true"></canvas>
+
+    <section class="copy">
+      <div class="eyebrow">A werebear action-RPG</div>
+      <h1>BERSERKR</h1>
+      <p class="tagline">Wake with nothing. Earn the fury. <b>Wear the bear.</b></p>
+      <p class="pitch">
+        You wake under the roots of a rotting forest with a scrap of cloth and nothing else.
+        Every fight feeds your Rage. Spend it in single crushing swipes, or save it all and
+        become the Titan for ninety seconds.
+      </p>
+      <ul class="pillars">
+        <li><span class="rune">ᛒ</span><span><b>Fragile man, unstoppable bear.</b> <span class="d">Careful and precise, then a 90-second storm.</span></span></li>
+        <li><span class="rune">ᛏ</span><span><b>Fell the forest.</b> <span class="d">Knock the trees down. They stay down.</span></span></li>
+        <li><span class="rune">ᛗ</span><span><b>Die, and wake with nothing.</b> <span class="d">The dens hold. Your gear doesn't.</span></span></li>
+        <li><span class="rune">ᛉ</span><span><b>Sun and moon.</b> <span class="d">The rot grows bold at night, and so does the bear.</span></span></li>
+      </ul>
+      <div class="soon">
+        <span class="badge">Coming soon</span>
+        <a class="link" href="/research/">Read the Ursa Codex →</a>
+      </div>
+      <p class="meta">Free in your browser · phone or desktop</p>
+    </section>
+
+    <footer>
+      <span>Art shown is AI-generated concept art.</span>
+      <a href="https://xeb.ai">xeb.ai</a>
+    </footer>
+  </main>
+
+  <script>
+    // Drifting embers. Small, cheap, paused when the tab is hidden.
+    (() => {
+      const c = document.getElementById("embers");
+      if (!c || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const g = c.getContext("2d");
+      let w, h, dpr, parts = [];
+      const resize = () => {
+        dpr = Math.min(devicePixelRatio || 1, 2);
+        w = c.clientWidth; h = c.clientHeight;
+        c.width = w * dpr; c.height = h * dpr;
+        g.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const n = Math.round(Math.min(70, (w * h) / 18000));
+        parts = Array.from({ length: n }, () => spawn(true));
+      };
+      const spawn = (anywhere) => ({
+        x: Math.random() * w,
+        y: anywhere ? Math.random() * h : h + 10,
+        r: 0.6 + Math.random() * 1.8,
+        vy: 0.25 + Math.random() * 0.7,
+        vx: (Math.random() - 0.5) * 0.3,
+        t: Math.random() * Math.PI * 2,
+        a: 0.3 + Math.random() * 0.6,
+      });
+      const tick = () => {
+        g.clearRect(0, 0, w, h);
+        for (const p of parts) {
+          p.t += 0.02; p.y -= p.vy; p.x += p.vx + Math.sin(p.t) * 0.25;
+          if (p.y < -10) Object.assign(p, spawn(false));
+          const fade = Math.min(1, p.y / (h * 0.5));
+          g.globalAlpha = p.a * fade * (0.7 + 0.3 * Math.sin(p.t * 3));
+          g.fillStyle = p.r > 1.6 ? "#ffb35c" : "#ff7a2a";
+          g.beginPath(); g.arc(p.x, p.y, p.r, 0, Math.PI * 2); g.fill();
+        }
+        if (!document.hidden) requestAnimationFrame(tick);
+      };
+      addEventListener("resize", resize);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) requestAnimationFrame(tick); });
+      resize(); requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
