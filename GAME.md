@@ -1,6 +1,6 @@
 # WEAR THE BEAR — a Werebear Action-RPG Platformer
 
-> **Status:** design spec **v1.0, locked for the first level.** A playable browser implementation is built and locally verified; production deployment is pending.
+> **Status:** design spec **v1.0, locked for the first level.** The playable browser game is live at **`werebear.xeb.ai`**.
 > **Title:** ***Wear the Bear*** (chosen by the user 2026-10-09). Old Norse **berserkr** means "bear-shirt": you start shirtless, and the Rage bar is the shirt you earn. Holding Berserk with a full bar is literally "wearing the bear".
 > **Scope:** **one level**, *The Elderwold*. Wake alone in the forest, scavenge, reach the Den (first checkpoint), then press deeper.
 > **Hosting:** the game at **`werebear.xeb.ai/`**; the current codex moves to **`werebear.xeb.ai/research/`** (§17).
@@ -676,14 +676,14 @@ werebear/                    # git repo (~/p/werebear)
 | `https://werebear.xeb.ai/research/` | **The codex** (the current site, moved) |
 | `https://werebear.xeb.ai/research` | 301 → `/research/` (so relative asset paths resolve) |
 
-**Migration: done 2026-10-09.** The local deploy root now contains the playable game at `/`; production deployment of the game is pending.
+**Migration and game launch: done 2026-10-09.** The playable game is live at `/`.
 1. ✅ Codex moved with `git mv` into `site/research/` (relative asset paths; Pages adds the trailing-slash redirect).
 2. ✅ "The Game ↗" link in the codex header and footer; "The Ursa Codex ↗" on the game's title screen.
 3. ✅ Pages deploy root is now `site/`: `wrangler pages deploy site --project-name=werebear-xeb --branch=main --commit-dirty=true`.
 4. ✅ `~/p/master/docs/cloudflare.md` and the `~/x/werebear/` mirror updated.
 5. Same Pages project, domain and DNS.
 
-The playable game now occupies `site/index.html`; the teaser is retired locally and will disappear from production on deploy.
+The playable game occupies `site/index.html`; the teaser is retired in production.
 
 ---
 
@@ -718,9 +718,9 @@ Everything below is the state of the project so a later session can pick it up w
 
 | Area | Status |
 |---|---|
-| **Game** | **Built and locally verified.** The complete Elderwold run is playable from the cold-open dream through Old Thorngut, with desktop, gamepad and touch controls. Production deployment is pending. |
+| **Game** | **Built, independently reviewed and live.** The complete Elderwold run is playable from the cold-open dream through Old Thorngut, with desktop, gamepad and touch controls. |
 | **Title** | ***Wear the Bear*** (D15). |
-| **`werebear.xeb.ai/`** | Production still serves the teaser until the pending deploy. Local `site/index.html` is the playable game: procedural Canvas art, fixed-step simulation, Rage/forms/Wounds, persistent trees, day/night, enemies, checkpoints, saves, synthesised audio and the Old Thorngut boss. |
+| **`werebear.xeb.ai/`** | Live playable game: procedural Canvas art, fixed-step simulation, Rage/forms/Wounds, persistent trees, day/night, enemies, checkpoints, validated local saves, synthesised audio, offline shell and the Old Thorngut boss. |
 | **`werebear.xeb.ai/research/`** | Live **Ursa Codex** (`site/research/`): the top-10 werebear gallery with desktop and iPhone wallpaper downloads. `/research` 308-redirects to `/research/`. |
 | **Design decisions** | All items in §19 are resolved: keep Old Thorngut as the level-ending boss, keep the cold-open bear dream, and make sleep skip to dawn. |
 
@@ -785,6 +785,7 @@ The game occupies `site/index.html` and retains the link to `/research/`.
 - `node --check`: all 14 game/test JavaScript files pass. `git diff --check` passes.
 - Playwright local browser QA at 1280×720, 1440×900, 390×844 portrait and 844×390 phone landscape: title/new-game, movement/combat, night art, lifecycle pause/reset, boss HUD and completion, saved completion, portrait rotation, two-thumb move+attack, 56 px touch targets, 16:9 letterboxing and offline reload. No console or page errors.
 - Three independent fail-closed reviews found and drove fixes for lifecycle input, boss defense/reset/HUD, save validation/restore, first-gap topology, bear public controls, bee-tree Slam, enemy tethering, mobile scaling and service-worker scope. The final review verdict was **SHIP** with no blockers.
+- Live deployment verified on both `werebear.xeb.ai` and `ea2a6bcb.werebear-xeb.pages.dev`: game HTML and versioned module loaded, teaser copy was absent, `/research` returned 308 to `/research/`, and the codex, all game modules, service worker and Titan art returned 200. A real browser loaded the live night/Den game with no runtime failure.
 
 ### 20.7 Commits
 
@@ -794,12 +795,13 @@ The game occupies `site/index.html` and retains the link to `/research/`.
 | werebear | `9f2e180` | Folio VII Primalist Titan swap |
 | werebear | `7dfe8f1` | Codex moved to `/research/`, coming-soon page, AI labels, GAME.md v1.0 |
 | werebear | `a17bd6c` | Title *Wear the Bear*; this status section |
+| werebear | `2874c5f` | Verified playable game, tests and launch-ready project status |
 | master | `ccbb819` | `werebear-xeb` row added to `docs/cloudflare.md` |
 | master | `0377277` | Deploy root changed to `site/` |
 | master | `975474c` | Title updated in `docs/cloudflare.md` |
+| master | `25d65ba` | Playable game launch recorded in `docs/cloudflare.md` |
 
 ### 20.8 Next steps
 
-1. Commit and deploy the verified game to `werebear.xeb.ai`, then record the launch commit and live checks here.
-2. Collect real-player feedback and tune encounter spacing, Rage rhythm and Old Thorngut without weakening the deterministic contracts.
-3. Optional future art pass: replace procedural character/environment drawings with the painted atlases and backgrounds described in §12 while leaving the tested simulation intact.
+1. Collect real-player feedback and tune encounter spacing, Rage rhythm and Old Thorngut without weakening the deterministic contracts.
+2. Optional future art pass: replace procedural character/environment drawings with the painted atlases and backgrounds described in §12 while leaving the tested simulation intact.
