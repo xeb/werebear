@@ -4,7 +4,7 @@
 
 | URL | What | Source |
 | :--- | :--- | :--- |
-| `https://werebear.xeb.ai/` | **BERSERKR** (working title): a werebear action-RPG platformer. Currently a "coming soon" page. Design spec: [GAME.md](GAME.md). | `site/index.html` |
+| `https://werebear.xeb.ai/` | **Wear the Bear**: a werebear action-RPG platformer. Currently a "coming soon" page. Design spec: [GAME.md](GAME.md). | `site/index.html` |
 | `https://werebear.xeb.ai/research/` | **The Ursa Codex**: a top-10 werebear art gallery. | `site/research/` |
 
 `site/` is the Cloudflare Pages deploy root. Everything outside it (this README, `GAME.md`, `build_wallpapers.py`) is not published.

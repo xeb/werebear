@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#08090a">
-  <title>BERSERKR — a werebear action-RPG · Coming soon</title>
+  <title>Wear the Bear — a werebear action-RPG · Coming soon</title>
   <meta name="description" content="Wake in the forest with nothing. Fight the rot, build your rage, and wear the bear. A werebear action-RPG platformer for the browser. Coming soon.">
-  <meta property="og:title" content="BERSERKR — coming soon">
-  <meta property="og:description" content="Wake with nothing. Earn the fury. Wear the bear. A werebear action-RPG platformer for your browser.">
+  <meta property="og:title" content="Wear the Bear — coming soon">
+  <meta property="og:description" content="Wake with nothing. Earn the fury. Become the bear. A werebear action-RPG platformer for your browser.">
   <meta property="og:image" content="https://werebear.xeb.ai/assets/titan.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -85,7 +85,7 @@
     h1 {
       font-family: "Cinzel", serif;
       font-weight: 900;
-      font-size: clamp(3rem, 8.5vw, 6.6rem);
+      font-size: clamp(4.2rem, 13vw, 9rem);
       width: fit-content;
       line-height: 0.95;
       letter-spacing: 0.04em;
@@ -95,6 +95,15 @@
       background-clip: text;
       color: transparent;
       filter: drop-shadow(0 0 28px rgba(231, 120, 40, 0.22));
+    }
+    h1 .pre {
+      display: block;
+      font-weight: 600;
+      font-size: 0.34em;
+      letter-spacing: 0.42em;
+      line-height: 1.1;
+      margin-bottom: 0.05em;
+      padding-left: 0.12em;
     }
     .tagline {
       font-size: clamp(1.25rem, 3vw, 1.7rem);
@@ -202,7 +211,7 @@
     }
     /* Short landscape phones */
     @media (max-height: 500px) and (min-width: 821px) {
-      h1 { font-size: clamp(2.6rem, 7vw, 4.2rem); }
+      h1 { font-size: clamp(3rem, 10vw, 5.2rem); }
       .copy { padding-block: 1.5rem 3.5rem; }
       .pitch { margin-top: 0.8rem; }
     }
@@ -224,8 +233,8 @@
 
     <section class="copy">
       <div class="eyebrow">A werebear action-RPG</div>
-      <h1>BERSERKR</h1>
-      <p class="tagline">Wake with nothing. Earn the fury. <b>Wear the bear.</b></p>
+      <h1><span class="pre">Wear the</span>BEAR</h1>
+      <p class="tagline">Wake with nothing. <b>Earn the fury.</b></p>
       <p class="pitch">
         You wake under the roots of a rotting forest with a scrap of cloth and nothing else.
         Every fight feeds your Rage. Spend it in single crushing swipes, or save it all and
