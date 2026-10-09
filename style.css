@@ -1,0 +1,1057 @@
+/* ==========================================================================
+   WEREBEAR — The Ursa Codex
+   A visual study of the ten great werebears in art, cartoons & photorealism
+   ========================================================================== */
+
+:root {
+  --ink: #070908;
+  --pitch: #0b0f0d;
+  --panel: #111714;
+  --panel-border: rgba(184, 150, 80, 0.22);
+  --vellum: #d6ccb8;
+  --bone: #ede5d4;
+  --ash: #8c8f85;
+  --gold: #c8973b;
+  --gold-bright: #e7b54d;
+  --emerald: #2fa368;
+  --emerald-glow: rgba(46, 163, 104, 0.25);
+  --blood: #7d261e;
+  --cold: #405858;
+  --rule: rgba(200, 151, 59, 0.28);
+  --rule-subtle: rgba(255, 255, 255, 0.08);
+  --measure: 44rem;
+  --radius: 3px;
+  --transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--ink);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--ink);
+  color: var(--vellum);
+  font-family: "Cardo", Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle parchment grain & ambient vignette overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(200, 151, 59, 0.06), transparent 55%),
+    radial-gradient(100% 100% at 50% 100%, rgba(7, 9, 8, 0.8), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+a {
+  color: var(--gold-bright);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--bone);
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography Helpers */
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 2px;
+  border: 1px solid var(--panel-border);
+  background: rgba(17, 23, 20, 0.85);
+  color: var(--vellum);
+  font-weight: 600;
+}
+
+.badge.art {
+  border-color: rgba(200, 151, 59, 0.4);
+  color: var(--gold-bright);
+}
+
+.badge.cartoon {
+  border-color: rgba(90, 160, 220, 0.4);
+  color: #79c0ff;
+}
+
+.badge.photo {
+  border-color: rgba(46, 163, 104, 0.4);
+  color: #56d396;
+}
+
+.badge.game {
+  border-color: rgba(210, 110, 240, 0.4);
+  color: #d2a8ff;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(1.6rem, 5vw, 4.5rem);
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center 30%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 0.8s ease, filter 0.8s ease, opacity 0.8s ease;
+  filter: contrast(1.05) brightness(0.72);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 9, 8, 0.6) 0%,
+    rgba(7, 9, 8, 0.2) 35%,
+    rgba(7, 9, 8, 0.85) 85%,
+    rgba(7, 9, 8, 1) 100%
+  );
+}
+
+.hero-top {
+  position: absolute;
+  top: clamp(1.2rem, 3vw, 2.5rem);
+  left: clamp(1.4rem, 5vw, 4.5rem);
+  right: clamp(1.4rem, 5vw, 4.5rem);
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nav-brand {
+  font-family: "UnifrakturMaguntia", serif;
+  font-size: 1.8rem;
+  color: var(--bone);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-brand span {
+  font-family: "Cardo", serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ash);
+  display: block;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.btn-quiet {
+  font-family: "Cardo", serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: rgba(11, 15, 13, 0.75);
+  border: 1px solid var(--panel-border);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  backdrop-filter: blur(8px);
+}
+
+.btn-quiet:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: rgba(11, 15, 13, 0.95);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 66rem;
+}
+
+.hero .eyebrow {
+  margin-bottom: 0.9rem;
+  display: inline-block;
+}
+
+.hero-title {
+  font-family: "UnifrakturMaguntia", serif;
+  font-weight: 400;
+  line-height: 0.88;
+  font-size: clamp(3.8rem, 15vw, 12rem);
+  color: var(--bone);
+  text-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 3px 0 #000;
+  letter-spacing: 0.01em;
+}
+
+.hero-title .drop {
+  color: var(--gold-bright);
+}
+
+.hero-sub {
+  margin-top: 1.2rem;
+  max-width: 38rem;
+  color: var(--bone);
+  font-size: clamp(1.08rem, 2.2vw, 1.35rem);
+  font-style: italic;
+  line-height: 1.55;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
+}
+
+.hero-meta {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 2.4rem;
+  align-items: baseline;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.hero-meta b {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* Hero Carousel Quick Bar */
+.hero-selector {
+  margin-top: 2.2rem;
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+}
+
+.hero-selector-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.hero-thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.6rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+.hero-thumb {
+  flex: 0 0 68px;
+  height: 48px;
+  border: 1px solid var(--panel-border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.hero-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-thumb:hover {
+  opacity: 0.95;
+  border-color: var(--gold);
+}
+
+.hero-thumb.active {
+  opacity: 1;
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 12px rgba(231, 181, 77, 0.4);
+}
+
+.hero-thumb::after {
+  content: attr(data-num);
+  position: absolute;
+  bottom: 2px;
+  right: 3px;
+  font-size: 0.6rem;
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.75);
+  color: var(--bone);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   PROLOGUE & BESTIARY SOURCE TEXT
+   ========================================================================== */
+
+.colophon-prologue {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+}
+
+.colophon-prologue .rule-mark {
+  font-family: "UnifrakturMaguntia", serif;
+  color: var(--gold);
+  font-size: 2.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.colophon-prologue p {
+  color: var(--bone);
+  font-size: 1.2rem;
+  line-height: 1.75;
+}
+
+.colophon-prologue p + p {
+  margin-top: 1.2rem;
+  color: var(--vellum);
+}
+
+/* Scholarly Latin Card */
+.source-study {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 1rem clamp(1.2rem, 4vw, 2.5rem) clamp(3rem, 6vw, 4.5rem);
+}
+
+.source-card {
+  border: 1px solid var(--rule);
+  box-shadow:
+    inset 0 0 0 5px var(--ink),
+    inset 0 0 0 6px var(--rule),
+    0 12px 40px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(180deg, #101613 0%, #0a0e0c 100%);
+  padding: clamp(2rem, 5vw, 3.6rem) clamp(1.6rem, 5vw, 3.2rem);
+  text-align: center;
+  position: relative;
+}
+
+.source-card .latin-head {
+  font-family: "UnifrakturMaguntia", serif;
+  color: var(--gold-bright);
+  font-size: clamp(1.8rem, 4.8vw, 3rem);
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+.source-card .gloss-head {
+  font-style: italic;
+  color: var(--ash);
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+}
+
+.source-card .quote {
+  margin: 1.8rem auto 1.4rem;
+  max-width: 38rem;
+  font-style: italic;
+  color: var(--bone);
+  font-size: 1.1rem;
+  line-height: 1.68;
+  padding: 0.8rem 1.4rem;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.source-card .trans {
+  max-width: 40rem;
+  margin: 0 auto;
+  color: var(--vellum);
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+.source-card .attrib {
+  margin-top: 1.8rem;
+  color: var(--ash);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  border-top: 1px solid var(--rule-subtle);
+  padding-top: 1.4rem;
+}
+
+.source-card .attrib b {
+  color: var(--gold);
+}
+
+/* ==========================================================================
+   FILTER CONTROLS
+   ========================================================================== */
+
+.filter-bar {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 clamp(1.2rem, 4vw, 2.5rem) 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.filter-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: "Cardo", serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ash);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.filter-btn:hover {
+  color: var(--bone);
+  border-color: var(--gold);
+}
+
+.filter-btn.active {
+  color: var(--ink);
+  background: var(--gold-bright);
+  border-color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.filter-count {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+/* ==========================================================================
+   THE CODEX EXHIBITION (THE 10 FOLIOS)
+   ========================================================================== */
+
+.codex-gallery {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.2rem, 4vw, 2.5rem) 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 7vw, 5.5rem);
+}
+
+.folio-item {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--rule);
+  align-items: start;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.folio-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.folio-item.hidden {
+  display: none;
+}
+
+/* Illuminated Initial Marker */
+.folio-marker {
+  position: sticky;
+  top: 2rem;
+  text-align: center;
+}
+
+.folio-marker .num {
+  font-family: "UnifrakturMaguntia", serif;
+  font-size: 3.6rem;
+  line-height: 1;
+  color: var(--gold-bright);
+  display: block;
+  border: 1px solid var(--rule);
+  box-shadow:
+    inset 0 0 0 4px var(--ink),
+    inset 0 0 0 5px var(--rule);
+  padding: 0.6rem 0.2rem 0.4rem;
+  background: linear-gradient(180deg, #161c18 0%, #0d1210 100%);
+}
+
+.folio-marker .label {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.folio-marker .label b {
+  color: var(--gold);
+}
+
+/* Folio Content */
+.folio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.folio-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.folio-tags {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.folio-title {
+  font-family: "Cardo", serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.8vw, 2.3rem);
+  line-height: 1.15;
+  color: var(--bone);
+  letter-spacing: 0.01em;
+}
+
+.folio-subtitle {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* Picture Plate */
+figure.plate {
+  position: relative;
+  border: 1px solid var(--rule);
+  padding: 6px;
+  background: linear-gradient(180deg, #131a16 0%, #0a0e0c 100%);
+  cursor: zoom-in;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+figure.plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 720px;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  filter: contrast(1.02) saturate(0.96);
+}
+
+figure.plate:hover {
+  border-color: var(--gold-bright);
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 151, 59, 0.2);
+}
+
+figure.plate:hover img {
+  transform: scale(1.015);
+  filter: contrast(1.06) saturate(1.03) brightness(1.02);
+}
+
+figure.plate::after {
+  content: "⊕ inspect folio";
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-family: "Cardo", serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--bone);
+  background: rgba(7, 9, 8, 0.82);
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+figure.plate:hover::after {
+  opacity: 1;
+}
+
+/* Folio Analysis & Gloss */
+.folio-gloss {
+  color: var(--vellum);
+  font-size: 1.06rem;
+  line-height: 1.72;
+  max-width: var(--measure);
+}
+
+.folio-gloss p + p {
+  margin-top: 0.8rem;
+}
+
+/* Folio Meta Details Table */
+.folio-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: rgba(17, 23, 20, 0.6);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  margin-top: 0.4rem;
+}
+
+.detail-col .label {
+  font-size: 0.66rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ash);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.detail-col .val {
+  font-size: 0.95rem;
+  color: var(--bone);
+  font-weight: 600;
+}
+
+/* Wallpaper Download Bar */
+.folio-downloads {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.4rem;
+  margin-top: 0.4rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule-subtle);
+}
+
+.download-link {
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition);
+}
+
+.download-link:hover {
+  color: var(--gold-bright);
+  border-bottom-color: var(--gold-bright);
+}
+
+/* ==========================================================================
+   MARGINALIA (THE SCHOLARLY NOTES)
+   ========================================================================== */
+
+.marginalia {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 6rem) clamp(1.2rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.marginalia > .eyebrow {
+  display: block;
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+.marginalia > .lede {
+  text-align: center;
+  max-width: 44rem;
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  font-style: italic;
+  color: var(--ash);
+  font-size: 1.12rem;
+}
+
+.marginalia-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.8rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem);
+}
+
+.marginalia-item {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.marginalia-item .glyph {
+  font-family: "UnifrakturMaguntia", serif;
+  color: var(--gold-bright);
+  font-size: 2.2rem;
+  line-height: 1;
+  text-align: center;
+  border: 1px solid var(--rule);
+  padding: 0.4rem 0 0.2rem;
+  background: linear-gradient(180deg, #161c18 0%, #0d1210 100%);
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+.marginalia-item h3 {
+  font-family: "Cardo", serif;
+  font-weight: 700;
+  color: var(--bone);
+  font-size: 1.22rem;
+  line-height: 1.25;
+  margin-bottom: 0.45rem;
+}
+
+.marginalia-item p {
+  color: var(--vellum);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   COLOPHON & FOOTER
+   ========================================================================== */
+
+.foot {
+  border-top: 1px solid var(--rule);
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem 5rem;
+  text-align: center;
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.foot .mark {
+  font-family: "UnifrakturMaguntia", serif;
+  font-size: 2.8rem;
+  color: var(--gold-bright);
+  line-height: 1;
+}
+
+.foot p {
+  margin-top: 1.2rem;
+  color: var(--ash);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.foot .credits {
+  margin-top: 1.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #6a6f67;
+}
+
+.foot .credits a {
+  color: var(--gold);
+  border-bottom: 1px solid var(--rule);
+}
+
+.foot .credits a:hover {
+  color: var(--gold-bright);
+}
+
+/* ==========================================================================
+   LIGHTBOX MODAL
+   ========================================================================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  background: rgba(5, 7, 6, 0.97);
+  align-items: center;
+  justify-content: center;
+  padding: 2vw;
+  cursor: zoom-out;
+  backdrop-filter: blur(12px);
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+}
+
+.lightbox-img-wrap {
+  position: relative;
+  display: inline-block;
+  box-shadow: 0 0 90px rgba(0, 0, 0, 0.95);
+  border: 1px solid var(--rule);
+  background: #000;
+}
+
+.lightbox img {
+  display: block;
+  max-width: 94vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.lightbox .caption-box {
+  margin-top: 1.2rem;
+  text-align: center;
+  max-width: 48rem;
+  padding: 0 1rem;
+}
+
+.lightbox .cap-title {
+  font-family: "Cardo", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--bone);
+  margin-bottom: 0.3rem;
+}
+
+.lightbox .cap-title b {
+  font-family: "UnifrakturMaguntia", serif;
+  color: var(--gold-bright);
+  font-size: 1.4rem;
+  margin-right: 0.6rem;
+  font-weight: 400;
+}
+
+.lightbox .cap-desc {
+  font-size: 0.94rem;
+  font-style: italic;
+  color: var(--vellum);
+  line-height: 1.5;
+}
+
+.lightbox .cap-links {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.lightbox .btn-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(11, 15, 13, 0.85);
+  border: 1px solid var(--panel-border);
+  color: var(--bone);
+  font-size: 1.8rem;
+  width: 3.4rem;
+  height: 3.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all var(--transition);
+  z-index: 105;
+}
+
+.lightbox .btn-nav:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: rgba(11, 15, 13, 1);
+}
+
+.lightbox .btn-prev {
+  left: 2vw;
+}
+
+.lightbox .btn-next {
+  right: 2vw;
+}
+
+.lightbox .btn-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-size: 1.6rem;
+  color: var(--ash);
+  cursor: pointer;
+  transition: color var(--transition);
+  z-index: 105;
+}
+
+.lightbox .btn-close:hover {
+  color: var(--bone);
+}
+
+/* ==========================================================================
+   STILL-ONLY FULLSCREEN MODE
+   ========================================================================== */
+
+body.still-mode .hero-inner,
+body.still-mode .hero-selector,
+body.still-mode .colophon-prologue,
+body.still-mode .source-study,
+body.still-mode .filter-bar,
+body.still-mode .codex-gallery,
+body.still-mode .marginalia,
+body.still-mode .foot {
+  display: none !important;
+}
+
+body.still-mode .hero {
+  border-bottom: none;
+  min-height: 100vh;
+}
+
+body.still-mode .hero-bg {
+  filter: contrast(1.08) brightness(0.95);
+}
+
+body.still-mode .hero-bg::after {
+  background: radial-gradient(circle at center, transparent 40%, rgba(7, 9, 8, 0.4) 100%);
+}
+
+.return-cue {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+}
+
+body.still-mode .return-cue {
+  display: block;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .marginalia-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .folio-item {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .folio-marker {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    margin-bottom: 0.6rem;
+  }
+
+  .folio-marker .num {
+    font-size: 2.6rem;
+    padding: 0.35rem 0.65rem 0.2rem;
+  }
+
+  .folio-marker .label {
+    margin-top: 0;
+  }
+
+  figure.plate::after {
+    opacity: 1;
+  }
+
+  .lightbox .btn-nav {
+    display: none;
+  }
+}

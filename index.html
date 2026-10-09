@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070908">
+  <title>Werebear — The Ursa Codex</title>
+  <meta name="description" content="A curated study of the ten greatest werebears across classic fantasy art, animation, and photorealism.">
+  <meta property="og:title" content="Werebear — The Ursa Codex">
+  <meta property="og:description" content="Ten visions of the human soul bound inside the beast — from Norse sagas to MtG cult classics.">
+  <meta property="og:image" content="/assets/05_photoreal_blizzard_apex.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23070908'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='serif' font-size='42' fill='%23c8973b'%3EU%3C/text%3E%3C/svg%3E">
+
+  <!-- Typography: UnifrakturMaguntia, Cinzel Decorative, Cardo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- ====================================================================
+         HERO SECTION
+         ==================================================================== -->
+    <header class="hero">
+      <div class="hero-bg" id="hero-bg" style="background-image: url('assets/wallpapers/05_photoreal_blizzard_apex-desktop-1920x1080.jpg');"></div>
+
+      <!-- Navigation Top Bar -->
+      <nav class="hero-top" aria-label="Main navigation">
+        <a class="nav-brand" href="#top">
+          U<span>The Ursa Codex</span>
+        </a>
+        <div class="nav-actions">
+          <button class="btn-quiet" id="btn-view-still" aria-pressed="false">View Still <span aria-hidden="true">↗</span></button>
+        </div>
+      </nav>
+
+      <!-- Hero Main Content -->
+      <div class="hero-inner">
+        <span class="eyebrow">A Bestiary of the Great Shifters · X Folios</span>
+        <h1 class="hero-title" id="hero-title">Were<span class="drop">bear</span></h1>
+        <p class="hero-sub" id="hero-sub">
+          Ten definitive visions of the human spirit bound within the beast. From the primordial bloodlines of Norse berserkir to 1990s Saturday-morning animation, legendary trading card cult classics, and cinematic photorealism.
+        </p>
+
+        <div class="hero-meta">
+          <span>Curated Selection: <b>Top 10 Masterpieces</b></span>
+          <span>Traditions: <b>Art · Cartoons · Photoreal</b></span>
+          <span>Resolution: <b>1080p &amp; 4K Downloads</b></span>
+          <span>Codex Leaves: <b>X Folios</b></span>
+        </div>
+
+        <!-- Quick Scene Switcher -->
+        <div class="hero-selector">
+          <span class="hero-selector-label">Inspect Specimen in Hero Focus:</span>
+          <div class="hero-thumbnails" id="hero-thumbnails" role="tablist" aria-label="Quick hero specimen selection"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====================================================================
+         PROLOGUE & THE SOURCE TEXT (LATIN CODEX)
+         ==================================================================== -->
+    <section class="colophon-prologue">
+      <div class="rule-mark">ᛒ</div>
+      <p>
+        Where the wolf has forever stood in folklore as the hungry devourer—the shadow on the edge of the winter sheepfold—the bear has always been something far more complicated: a brother in the dark, a king in exile, an earth-god clothed in hide and fat.
+      </p>
+      <p>
+        Across ancient Scandinavia, Anglo-Saxon Britain, and Native American medicine traditions, the man who becomes a bear does not lose his soul. He amplifies it. He trades the fragile bones of men for the unstoppable sinew of the forest warden. Laid out below are the ten greatest depictions ever committed to canvas, paper, cel, and film.
+      </p>
+    </section>
+
+    <!-- Scholarly Bestiary Card -->
+    <section class="source-study">
+      <article class="source-card">
+        <span class="eyebrow">The Source Text · De Reconditis Hominum Formis · c. A.D. 1240</span>
+        <h2 class="latin-head">De Hominibus Qui<br>Fuerunt Ursi</h2>
+        <p class="gloss-head">Of Men Who Walked as Great Bears</p>
+
+        <p class="quote">
+          “Non vt lupi rapaces per noctem grassantur, sed vt siluarum custodes, solo motu brachiorum quercus flectentes, dormientes in antris donec terra clamet.”
+        </p>
+
+        <p class="trans">
+          “They do not prowl through the night as ravenous wolves, but stand as wardens of the deep woods; bending oak trees by the mere movement of their arms, sleeping in caves until the earth itself cries out for their fury.”
+        </p>
+
+        <div class="attrib">
+          From the recovered fragments of the <b>Gesta Septentrionalia</b>, recorded by Brother Aelfric of Northumbria. Unlike the wretched sufferers of <i>lycanthropia</i>, those blessed with the <i>ursa-hamr</i> were hailed as protectors of sacred boundaries, holy hermits, and kings who carried the bloodline of the mountain.
+        </div>
+      </article>
+    </section>
+
+    <!-- ====================================================================
+         FILTER BAR
+         ==================================================================== -->
+    <div class="filter-bar">
+      <div class="filter-group" role="tablist" aria-label="Filter werebears by medium">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All Works (10)</button>
+        <button class="filter-btn" data-filter="art" role="tab" aria-selected="false">Fine Art &amp; Lore (4)</button>
+        <button class="filter-btn" data-filter="photo" role="tab" aria-selected="false">Photorealistic (2)</button>
+        <button class="filter-btn" data-filter="cartoon" role="tab" aria-selected="false">Cartoons &amp; Comics (3)</button>
+        <button class="filter-btn" data-filter="game" role="tab" aria-selected="false">Game Art (1)</button>
+      </div>
+      <span class="filter-count" id="filter-count">10 of 10 folios</span>
+    </div>
+
+    <!-- ====================================================================
+         THE TEN FOLIOS (EXHIBITION GALLERY)
+         ==================================================================== -->
+    <main class="codex-gallery" id="codex-gallery" aria-label="The Ten Werebear Folios"></main>
+
+    <!-- ====================================================================
+         MARGINALIA (SCHOLARLY & POP-CULTURE NOTES)
+         ==================================================================== -->
+    <section class="marginalia">
+      <span class="eyebrow">Marginalia · Six Essential Truths of the Werebear</span>
+      <p class="lede">Glosses on how the werebear survived the Middle Ages, reshaped modern fantasy literature, and became a beloved titan of pop culture.</p>
+
+      <div class="marginalia-grid">
+        <div class="marginalia-item">
+          <div class="glyph">I</div>
+          <div>
+            <h3>The Root of 'Berserker'</h3>
+            <p>The English word <i>berserk</i> derives directly from the Old Norse <i>ber-sarkr</i>: literally "bear-shirt." Elite Viking shock troops fought without chainmail, channeling the sacred frenzy of Odin by wrapping themselves in the spirit and pelts of bears.</p>
+          </div>
+        </div>
+
+        <div class="marginalia-item">
+          <div class="glyph">II</div>
+          <div>
+            <h3>Bǫðvarr Bjarki at Lejre</h3>
+            <p>In Scandinavian lore, King Hrólfr Kraki's champion was Bǫðvarr Bjarki. As enemies breached the fortress, Bjarki slept in his tent while his enormous spirit bear killed more foes than five hundred warriors combined.</p>
+          </div>
+        </div>
+
+        <div class="marginalia-item">
+          <div class="glyph">III</div>
+          <div>
+            <h3>Tolkien's Beorn</h3>
+            <p>In <i>The Hobbit</i>, J.R.R. Tolkien consciously restored the ancient Germanic archetype of the solitary, honey-eating vegetarian skin-changer who turns into an unstoppable Great Bear to crush the goblin host at the Battle of Five Armies.</p>
+          </div>
+        </div>
+
+        <div class="marginalia-item">
+          <div class="glyph">IV</div>
+          <div>
+            <h3>The D&amp;D Moral Divergence</h3>
+            <p>In Gary Gygax’s original <i>Monster Manual</i> (1977), while werewolves were Chaotic Evil and wereboars were Neutral, werebears were deliberately designated <b>Lawful Good</b>: benevolent hermits who heal wounded wanderers and slay evil predators.</p>
+          </div>
+        </div>
+
+        <div class="marginalia-item">
+          <div class="glyph">V</div>
+          <div>
+            <h3>The 2001 Card Pun</h3>
+            <p>Carl Critchlow's <i>Werebear</i> in MTG's Odyssey set gave birth to the legendary flavor text: <i>“He exercises his right to bear arms.”</i> It remains one of the top five most famous card lines ever printed by Wizards of the Coast.</p>
+          </div>
+        </div>
+
+        <div class="marginalia-item">
+          <div class="glyph">VI</div>
+          <div>
+            <h3>The Mage Tower 'Hulk Bear'</h3>
+            <p>In <i>World of Warcraft: Legion</i>, Blizzard unlocked the bipedal "Might of the Grizzlemaw" appearance for Guardian Druids. It replaced the four-legged bear with an ape-like, two-legged powerhouse with runic claws, instantly becoming the most coveted transmog in the game's 20-year history.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         FOOTER & COLOPHON
+         ==================================================================== -->
+    <footer class="foot">
+      <div class="mark">ᛒ</div>
+      <p>Here ends the Codex of the Werebear. The mountain remembers the beast.</p>
+      <div class="credits">
+        <span>An archival study in ursine lycanthropy</span> · 
+        <a href="https://xeb.ai" target="_blank" rel="noopener">xeb.ai</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ====================================================================
+       INTERACTIVE LIGHTBOX MODAL
+       ==================================================================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Full-resolution werebear folio plate">
+    <button class="btn-close" id="lb-close" aria-label="Close modal">✕</button>
+    <button class="btn-nav btn-prev" id="lb-prev" aria-label="Previous folio">‹</button>
+    <button class="btn-nav btn-next" id="lb-next" aria-label="Next folio">›</button>
+
+    <div class="lightbox-content">
+      <div class="lightbox-img-wrap">
+        <img id="lb-img" src="" alt="">
+      </div>
+      <div class="caption-box">
+        <div class="cap-title" id="lb-cap-title"></div>
+        <div class="cap-desc" id="lb-cap-desc"></div>
+        <div class="cap-links">
+          <a class="download-link" id="lb-dl-desktop" href="#" download>Download Desktop (1920×1080) ↓</a>
+          <a class="download-link" id="lb-dl-iphone" href="#" download>Download iPhone (1320×2868) ↓</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Still mode exit cue -->
+  <div class="return-cue">
+    <button class="btn-quiet" id="btn-return">← Return to Ursa Codex</button>
+  </div>
+
+</body>
+</html>
