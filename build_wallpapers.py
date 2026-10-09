@@ -15,7 +15,7 @@ ITEMS = [
     ("04_norse_bodvar_bjarki_spirit", "The Spirit of Bodvar Bjarki"),
     ("05_photoreal_blizzard_apex", "The Boreal Apex"),
     ("06_photoreal_river_rapids", "The River Sovereign"),
-    ("07_game_art_guardian_werebear", "The Earth Warder"),
+    ("07_primalist_werebear_ann_novak", "The Primalist Titan (Ann Novak / Last Epoch)"),
     ("08_90s_action_cartoon_werebear", "Saturday Morning Savage"),
     ("09_animated_feature_werebear", "The Twilight Sentinel"),
     ("10_gothic_comic_graphic_novel", "The Ruined Abbey"),

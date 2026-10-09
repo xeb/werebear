@@ -169,28 +169,28 @@ const FOLIOS = [
   {
     id: "folio-7",
     num: "VII",
-    title: "The Earth Warder",
-    subtitle: "Runic Druidic Titan of the Sacred Grove",
+    title: "The Primalist Titan",
+    subtitle: "3D Character Sculpt & Marmoset Toolbag Study",
     category: "game",
-    badgeLabel: "Epic Fantasy Game Art",
-    artist: "High-Fantasy Key Art Studio",
+    badgeLabel: "3D Character Art",
+    artist: "Ann Novak (Last Epoch)",
     year: "Contemporary",
-    source: "Inspired by WoW Mage Tower & Diablo Druid",
-    medium: "Digital Key Art Masterpiece",
-    img: "assets/07_game_art_guardian_werebear.jpg",
-    webp: "assets/07_game_art_guardian_werebear.webp",
-    desktop: "assets/wallpapers/07_game_art_guardian_werebear-desktop-1920x1080.jpg",
-    iphone: "assets/wallpapers/07_game_art_guardian_werebear-iphone-1320x2868.jpg",
-    quote: "“When the paws strike stone, the very mountains awaken.”",
+    source: "ArtStation (d0026X) · Last Epoch",
+    medium: "ZBrush & Marmoset 3D Digital Sculpture",
+    img: "assets/07_primalist_werebear_ann_novak.jpg",
+    webp: "assets/07_primalist_werebear_ann_novak.webp",
+    desktop: "assets/wallpapers/07_primalist_werebear_ann_novak-desktop-1920x1080.jpg",
+    iphone: "assets/wallpapers/07_primalist_werebear_ann_novak-iphone-1320x2868.jpg",
+    quote: "“Carved from primeval granite, bound in weathered leather and bone.”",
     gloss: [
-      "The definitive game-art aesthetic that took the gaming world by storm through World of Warcraft’s legendary Guardian Druid Mage Tower appearance (the 'Might of the Grizzlemaw') and Diablo IV’s pulverizing earth-magic shapeshifter.",
-      "Carved with glowing emerald nature runes etched directly into its muscle and fur, and bound by ancient dwarven-forged iron bracers, this bipedal titan slams both fists into the flagstones of a ruined temple, sending concussive shockwaves of verdant druidic energy through the forest floor."
+      "Directly celebrating 3D character artist Ann Novak's celebrated 'Primalist Werebear form' for Eleventh Hour Games' Last Epoch (showcased on ArtStation). This study represents the pinnacle of modern next-generation character sculpting and real-time game art.",
+      "Sculpted in ZBrush, textured with organic grime and weathered hide in Substance 3D Painter, and presented with three-point studio rim lighting in Marmoset Toolbag. It grounds the bipedal werebear archetype in plausible weight: colossal hunched shoulders, heavy leather chest rigging with carved runic tusks, and curved obsidian claws poised atop a weathered stone plinth."
     ],
     details: {
-      origin: "Cenarian Sacred Groves",
-      alignment: "Guardian of the Earth Cycle",
-      transformation: "Arcane Druidic Ursine Form",
-      legacy: "The Legendary 'Hulk Bear' Archetype"
+      origin: "Eterra / Last Epoch Primalist Mastery",
+      alignment: "Ancient Shamanic Guardian",
+      transformation: "Druid Primalist Shapeshift Form",
+      legacy: "Ann Novak's Benchmark ArtStation 3D Masterpiece"
     }
   },
   {

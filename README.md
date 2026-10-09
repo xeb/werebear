@@ -16,7 +16,7 @@ Created as the thematic sister project to [Werwulf](https://werwulf.xeb.ai) (`~/
 | **IV** | **The Spirit of Bǫðvarr Bjarki** | Mythic Norse Saga | Classical Saga Oil Study (*Hrólfs saga kraka* & *Bjarkamál*) | Epic Oil Painting |
 | **V** | **The Boreal Apex** | Photorealistic | Boreal Wildlife Specimen Archive | 8K Photorealistic Render |
 | **VI** | **The River Sovereign** | Photorealistic | Pacific Northwest Wilderness Study | High-Speed Action Photography |
-| **VII** | **The Earth Warder** | Epic Game Art | High-Fantasy Key Art Studio (Inspired by WoW Mage Tower & Diablo) | Digital Key Art |
+| **VII** | **The Primalist Titan** | 3D Character Art | Ann Novak (*Last Epoch* / ArtStation `d0026X`) | ZBrush & Marmoset Toolbag 3D Sculpt |
 | **VIII** | **Saturday Morning Savage** | 1990s Action Cartoon | Vintage Cel-Shade Animation Studio | Cel-Shaded Keyframe |
 | **IX** | **The Twilight Sentinel** | Animated Feature Concept | Feature Animation Visual Development Team | Lyrical Concept Art |
 | **X** | **The Ruined Abbey** | Gothic Horror Comic | Graphic Novel Ink Master (Mignola / Chiaroscuro Style) | Heavy Ink & Chiaroscuro |
