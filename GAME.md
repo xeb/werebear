@@ -780,10 +780,10 @@ When the game is built, it replaces `site/index.html` and keeps the link to `/re
 | werebear | `a58d7c6` | Initial codex |
 | werebear | `9f2e180` | Folio VII Primalist Titan swap |
 | werebear | `7dfe8f1` | Codex moved to `/research/`, coming-soon page, AI labels, GAME.md v1.0 |
-| werebear | *(this commit)* | Title *Wear the Bear*; this status section |
+| werebear | `a17bd6c` | Title *Wear the Bear*; this status section |
 | master | `ccbb819` | `werebear-xeb` row added to `docs/cloudflare.md` |
 | master | `0377277` | Deploy root changed to `site/` |
-| master | *(this commit)* | Title updated in `docs/cloudflare.md` |
+| master | `975474c` | Title updated in `docs/cloudflare.md` |
 
 ### 20.8 Next steps
 
