@@ -20,9 +20,9 @@ test('game viewport is 16:9 letterboxed and pause touch target is at least 56px'
 });
 
 test('service worker caches only shell paths, excludes research and uses network-first navigation',()=>{
-  assert.match(sw,/wear-the-bear-20261010a/);assert.match(sw,/url\.pathname\.startsWith\('\/research\/'\)/);
-  assert.match(sw,/if \(!SHELL_PATHS\.has\(url\.pathname\)\) return/);assert.match(sw,/url\.search !== '\?v=20261010a'/);assert.match(sw,/fetch\(request\)[\s\S]*catch\(\(\) => caches\.match\(request\)/);
-  assert.match(html,/main\.js\?v=20261010a/);
+  assert.match(sw,/wear-the-bear-20261011a/);assert.match(sw,/url\.pathname\.startsWith\('\/research\/'\)/);
+  assert.match(sw,/if \(!SHELL_PATHS\.has\(url\.pathname\)\) return/);assert.match(sw,/url\.search !== '\?v=20261011a'/);assert.match(sw,/fetch\(request\)[\s\S]*catch\(\(\) => caches\.match\(request\)/);
+  assert.match(html,/main\.js\?v=20261011a/);
 });
 
 test('lifecycle loss clears input and only pauses; explicit gamepad Start can resume',()=>{
