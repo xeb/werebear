@@ -1,0 +1,18 @@
+{
+  "$comment": "Art prompt registry per GAME.md §12.2. AI-generated assets only; folios I-III in the codex are real licensed art and are not listed here.",
+  "generated_with": "nano banana / google/gemini-3-pro-image via OpenRouter (tools/regen_stage4.py)",
+  "prompts": [
+    {
+      "asset": "site/art/assets/transform_stage4.*",
+      "date": "2026-10-10",
+      "edit_of": "previous Stage 4 titan render",
+      "prompt": "Edit this character sprite. Keep the character design, pose style, fur, leather harness, bone talismans and the amber lightning energy veins in the fur EXACTLY as they are. Changes: 1. REMOVE the fire vortex / flames coming from the mouth completely. The mouth is open in a roar but emits nothing. 2. Zoom out / reframe so the ENTIRE figure fits comfortably: nothing cut off at any canvas edge. 3. Full body visible, feet on an implied ground line near the bottom edge (with margin). 4. Solid pure white background, no gradient, no shadow, no vignette.",
+      "postprocess": "tools/keyout_white.py (border flood-fill key + feather) and a 1px MinFilter edge tighten; verified against dark and green composites"
+    },
+    {
+      "asset": "site/art/assets/{human,werebear,transform_stage1-3,bjarki}_*.png/webp",
+      "date": "2026-10-10",
+      "note": "Character pose set (lean/armored human, werebear idle/maul/roar/slam, transform stages) generated in earlier art passes; all carry true alpha cutouts, verified with tools/make_transparent.py heuristics."
+    }
+  ]
+}

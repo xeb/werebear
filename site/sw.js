@@ -1,7 +1,7 @@
-const CACHE = 'wear-the-bear-20261009b';
+const CACHE = 'wear-the-bear-20261010a';
 const SHELL = [
-  '/', '/index.html', '/main.js?v=20261009b', '/sim/world.js', '/sim/save.js',
-  '/input/browser.js', '/input/controls.js', '/render/renderer.js',
+  '/', '/index.html', '/main.js?v=20261010a', '/sim/world.js', '/sim/save.js',
+  '/input/browser.js', '/input/controls.js', '/render/renderer.js', '/render/sprites.js',
   '/audio/audio.js', '/assets/titan.webp'
 ];
 const SHELL_PATHS = new Set(SHELL.map(path => new URL(path, self.location.origin).pathname));
@@ -15,7 +15,7 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || url.pathname === '/research' || url.pathname.startsWith('/research/') || url.pathname === '/art' || url.pathname.startsWith('/art/')) return;
-  if (url.pathname === '/main.js' && url.search !== '?v=20261009b') return;
+  if (url.pathname === '/main.js' && url.search !== '?v=20261010a') return;
   const navigation = request.mode === 'navigate' || request.destination === 'document' || /\.html?$/i.test(url.pathname);
   if (navigation) {
     if (!['/', '/index.html'].includes(url.pathname)) return;
