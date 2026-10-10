@@ -2,15 +2,25 @@
 /research/assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# game modules + shell must revalidate so releases land immediately
-/*.js
+# game modules must revalidate so releases land immediately
+/main.js
   Cache-Control: public, max-age=300, must-revalidate
-/*.html
+/sw.js
   Cache-Control: no-cache
-/*.webp
-  Cache-Control: public, max-age=3600, must-revalidate
-/*.png
-  Cache-Control: public, max-age=3600, must-revalidate
+/render/renderer.js
+  Cache-Control: public, max-age=300, must-revalidate
+/render/sprites.js
+  Cache-Control: public, max-age=300, must-revalidate
+/sim/world.js
+  Cache-Control: public, max-age=300, must-revalidate
+/sim/save.js
+  Cache-Control: public, max-age=300, must-revalidate
+/input/browser.js
+  Cache-Control: public, max-age=300, must-revalidate
+/input/controls.js
+  Cache-Control: public, max-age=300, must-revalidate
+/audio/audio.js
+  Cache-Control: public, max-age=300, must-revalidate
 
 /*
   X-Content-Type-Options: nosniff
