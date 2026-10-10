@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0a1112">
-  <meta name="description" content="Wear the Bear — Character & Sprite Art Gallery. AAA 3D character sprites, transformation animations, and live game engine move simulator.">
-  <title>Wear the Bear — Art Review &amp; Game Engine Moves</title>
+  <meta name="description" content="Wear the Bear — Character & Sprite Art Gallery. AAA transparent 3D character sprites, smooth transformation morph animation, and live game engine move simulator.">
+  <title>Wear the Bear — Art Review &amp; Engine Moves</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23101616'/%3E%3Ctext x='32' y='48' text-anchor='middle' font-size='48' fill='%23e5a947'%3E%E1%9B%92%3C/text%3E%3C/svg%3E">
   <style>
     :root {
@@ -143,7 +143,7 @@
     .engine-header p {
       color: var(--muted);
       font-size: 14px;
-      max-width: 650px;
+      max-width: 680px;
     }
     .stage-wrapper {
       position: relative;
@@ -180,7 +180,7 @@
       display: flex;
       gap: 14px;
       align-items: center;
-      background: rgba(10, 16, 17, 0.8);
+      background: rgba(10, 16, 17, 0.85);
       padding: 6px 14px;
       border-radius: 6px;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -201,7 +201,7 @@
       transition: width 0.2s;
     }
     .stage-hud-right {
-      background: rgba(10, 16, 17, 0.8);
+      background: rgba(10, 16, 17, 0.85);
       padding: 6px 14px;
       border-radius: 6px;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -287,7 +287,7 @@
     }
     .spotlight-grid {
       display: grid;
-      grid-template-columns: minmax(320px, 1fr) 1.2fr;
+      grid-template-columns: minmax(320px, 1fr) 1.3fr;
       gap: 32px;
       align-items: center;
     }
@@ -300,7 +300,7 @@
       border-radius: 10px;
       overflow: hidden;
       aspect-ratio: 3 / 4;
-      max-height: 480px;
+      max-height: 520px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -317,18 +317,19 @@
       position: absolute;
       top: 12px;
       left: 12px;
-      background: rgba(201, 77, 56, 0.9);
+      background: rgba(201, 77, 56, 0.95);
       color: #fff;
       font-size: 11px;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 4px;
       text-transform: uppercase;
+      z-index: 5;
     }
     .scrubber-panel {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
     .scrubber-slider-wrap {
       background: #0b1213;
@@ -353,7 +354,7 @@
       background: #0e1617;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 8px;
-      padding: 14px 18px;
+      padding: 12px 16px;
       transition: all 0.25s;
     }
     .stage-card-pill.active {
@@ -362,13 +363,14 @@
       box-shadow: 0 0 16px rgba(233, 170, 80, 0.2);
     }
     .stage-card-pill h4 {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--amber);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .stage-card-pill p {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--muted);
+      line-height: 1.45;
     }
 
     /* SPRITE GRIDS & CARDS */
@@ -394,7 +396,7 @@
     }
     .sprite-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 24px;
       margin-bottom: 48px;
     }
@@ -417,7 +419,13 @@
       width: 100%;
       aspect-ratio: 3 / 4;
       overflow: hidden;
-      background: #181d1e;
+      background-image: linear-gradient(45deg, #1b2324 25%, transparent 25%),
+                        linear-gradient(-45deg, #1b2324 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #1b2324 75%),
+                        linear-gradient(-45deg, transparent 75%, #1b2324 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      background-color: #121819;
       cursor: pointer;
     }
     .card-thumb-wrap img {
@@ -432,7 +440,7 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(10, 17, 18, 0.75);
+      background: rgba(10, 17, 18, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: var(--bone);
       padding: 4px 8px;
@@ -453,11 +461,13 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      z-index: 2;
     }
     .badge.lean { background: rgba(175, 130, 80, 0.95); color: #0c1213; }
     .badge.armored { background: rgba(233, 170, 80, 0.9); color: #0c1213; }
     .badge.bear { background: rgba(201, 77, 56, 0.9); color: #fff; }
     .badge.shift { background: linear-gradient(135deg, var(--amber), var(--rage-red)); color: #0c1213; }
+    .badge.alpha { background: rgba(70, 140, 130, 0.9); color: #fff; right: 12px; left: auto; top: 12px; }
     .card-body {
       padding: 18px 20px;
       display: flex;
@@ -494,7 +504,7 @@
       letter-spacing: 0.05em;
     }
     .card-desc {
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--muted);
       line-height: 1.5;
       margin-bottom: 14px;
@@ -516,7 +526,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(5, 9, 10, 0.93);
+      background: rgba(5, 9, 10, 0.94);
       backdrop-filter: blur(8px);
       z-index: 9999;
       place-items: center;
@@ -556,7 +566,13 @@
     .modal-img-wrap {
       width: 100%;
       max-height: 65vh;
-      background: #141a1b;
+      background-image: linear-gradient(45deg, #1b2324 25%, transparent 25%),
+                        linear-gradient(-45deg, #1b2324 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #1b2324 75%),
+                        linear-gradient(-45deg, transparent 75%, #1b2324 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      background-color: #121819;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -623,15 +639,21 @@
                         linear-gradient(-45deg, #1b2324 25%, transparent 25%),
                         linear-gradient(45deg, transparent 75%, #1b2324 75%),
                         linear-gradient(-45deg, transparent 75%, #1b2324 75%);
-      background-size: 20px 20px;
-      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
       background-color: #121819;
     }
     .bg-forest .card-thumb-wrap, .bg-forest .modal-img-wrap, .bg-forest .anim-display-box {
+      background-image: none;
       background: radial-gradient(circle at 50% 40%, #162422 0%, #080f10 100%);
     }
     .bg-black .card-thumb-wrap, .bg-black .modal-img-wrap, .bg-black .anim-display-box {
+      background-image: none;
       background: #000000;
+    }
+    .bg-white .card-thumb-wrap, .bg-white .modal-img-wrap, .bg-white .anim-display-box {
+      background-image: none;
+      background: #ffffff;
     }
   </style>
 </head>
@@ -645,7 +667,7 @@
       <a href="/art/" class="active">Art &amp; Engine Moves Review</a>
     </div>
     <div style="color:var(--muted); font-size:12px;">
-      Generated via Nano Banana 2 · 60 Hz Interactive Engine Simulation
+      Transparent RGBA Alpha Sprites · Smooth 34-Frame Morph · 60 Hz Engine Stage
     </div>
   </nav>
 
@@ -653,15 +675,17 @@
     <div class="eyebrow">Wear the Bear Art &amp; Animation Department</div>
     <h1>The Primalist Titan, <span>Lean Bjarki</span> &amp; Engine Moves</h1>
     <p class="lead">
-      Updated to reflect the canonical starting state: <strong>Bjarki wakes gaunt and emaciated in a tattered loincloth</strong>.
-      Includes full 4-stage transformation sequence animations and an interactive 60 FPS Game Engine Stage to test and preview all moves.
+      All character sprites now feature <strong>clean transparent alpha backgrounds</strong>. Includes the <strong>WAY skinnier, loincloth-only starting Bjarki</strong>, an intensely epic new <strong>Stage 4 Primalist Titan with amber vortex fire &amp; lightning</strong>, and a smooth <strong>34-frame interpolated transformation morph</strong>.
     </p>
     <div class="badge-bar">
       <div class="plan-badge">
-        <span>📖 <strong>GAME.md §5.1, §5.3:</strong> Waking state — "Start with nothing... loincloth only."</span>
+        <span>✨ <strong>Alpha Cutouts:</strong> 100% Transparent PNGs &amp; WebPs with zero dark halos</span>
       </div>
       <div class="plan-badge">
-        <span>⚡ <strong>GAME.md §7.5, §12.4:</strong> 4-Stage In-Between Transformation &amp; Waking Roar</span>
+        <span>⚡ <strong>Smooth Morph:</strong> 34-frame blended animation (Stage 1 → 2 → 2.5 → 3 → Epic Stage 4)</span>
+      </div>
+      <div class="plan-badge">
+        <span>📖 <strong>GAME.md §5.1:</strong> Lean, gaunt, loincloth-only starting wildling</span>
       </div>
     </div>
   </div>
@@ -675,11 +699,11 @@
   <section class="engine-section" id="engineStage">
     <div class="engine-header">
       <div>
-        <div class="eyebrow">Interactive Engine Preview</div>
+        <div class="eyebrow">Interactive Engine Preview (Transparent Sprites)</div>
         <h2>Elderwold Engine Move Simulator</h2>
       </div>
       <p>
-        Click any action button below to trigger real-time game engine animations, procedural squash/stretch, screen shake, slash VFX, and the full 4-stage transformation sequence!
+        Test all moves rendered with transparent sprites directly inside the Elderwold environment! Includes live procedural motion, ground impacts, amber slash arcs, and the multi-stage transformation morph.
       </p>
     </div>
 
@@ -722,7 +746,7 @@
       <!-- Transformation & Titan Moves -->
       <div class="move-group-label">3. Transformation &amp; The Primalist Titan (Hold I / 100 Rage)</div>
       <div class="move-groups">
-        <button class="move-btn transform-btn" onclick="playEngineMove('transform')">⚡ WEAR THE BEAR (Morph Sequence!)</button>
+        <button class="move-btn transform-btn" onclick="playEngineMove('transform')">⚡ WEAR THE BEAR (Smooth 5-Stage Morph!)</button>
         <button class="move-btn" onclick="playEngineMove('titan_idle')">Titan Idle</button>
         <button class="move-btn" onclick="playEngineMove('titan_maul')">Titan Maul Swipe (J)</button>
         <button class="move-btn" onclick="playEngineMove('titan_slam')">Ground Slam Rend (K / Heavy)</button>
@@ -738,7 +762,7 @@
           <button class="tab-btn" onclick="setEngineSpeed(1.5)">1.5× Fast</button>
         </div>
         <div>
-          <span>Engine Stats: <strong>60 Hz Fixed Tick</strong> · <strong>72px vs 150px Scale Registered</strong></span>
+          <span>Sprites: <strong>Transparent RGBA</strong> · <strong>60 Hz Fixed Tick</strong></span>
         </div>
       </div>
     </div>
@@ -749,16 +773,15 @@
   <!-- ========================================== -->
   <section class="transform-spotlight">
     <div class="eyebrow">GAME.md §7.5 &amp; §12.4 Transformation Sequence</div>
-    <h2 style="font-family:Georgia,serif; font-size:26px; margin-bottom:8px;">The 4-Stage In-Between Shapeshift</h2>
-    <p style="color:var(--muted); font-size:14.5px; margin-bottom:24px; max-width:820px;">
-      <em>"The man crouches, cloth rips and fur erupts, then the illustrated Titan slams across the screen... The Waking Roar knocks back and stuns everything."</em>
-      Review the rendered continuous animation and drag the scrubber below to examine each in-between keyframe.
+    <h2 style="font-family:Georgia,serif; font-size:26px; margin-bottom:8px;">Smooth 34-Frame Shapeshift &amp; Scrubber</h2>
+    <p style="color:var(--muted); font-size:14.5px; margin-bottom:24px; max-width:860px;">
+      Interpolated with multi-frame blending across 5 keyframes to eliminate choppiness. Includes the newly generated <strong>Epic Stage 4 Titan (roaring an inferno vortex of amber fire and crackling lightning)</strong> and the intermediate <strong>Stage 2.5 snout &amp; vein elongation frame</strong>.
     </p>
 
     <div class="spotlight-grid">
       <!-- Animated Display Box -->
       <div class="anim-display-box">
-        <span class="anim-tag">Live Loop</span>
+        <span class="anim-tag">Transparent WebP Loop</span>
         <img id="transformDisplayImg" src="/art/assets/transformation_animated.webp" alt="Animated Transformation Sequence">
       </div>
 
@@ -767,26 +790,32 @@
         <div class="scrubber-slider-wrap">
           <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
             <strong style="color:var(--bone); font-size:13px;">Keyframe Scrubber:</strong>
-            <span id="scrubberLabel" style="color:var(--amber); font-weight:700; font-size:13px;">Autoplay (Looped Animation)</span>
+            <span id="scrubberLabel" style="color:var(--amber); font-weight:700; font-size:13px;">Autoplay (34-Frame Looped Morph)</span>
           </div>
-          <input type="range" min="0" max="4" value="0" step="1" class="scrubber-slider" id="transformScrubber" aria-label="Transformation frame scrubber">
+          <input type="range" min="0" max="5" value="0" step="1" class="scrubber-slider" id="transformScrubber" aria-label="Transformation frame scrubber">
           <div class="scrubber-steps">
             <span>Loop</span>
             <span>Stage 1</span>
             <span>Stage 2</span>
+            <span>Stage 2.5</span>
             <span>Stage 3</span>
-            <span>Stage 4</span>
+            <span>Stage 4 (Epic)</span>
           </div>
         </div>
 
         <div class="stage-card-pill" id="pill1">
-          <h4>Stage 1: The Agonizing Surge (Man Crouches)</h4>
-          <p>Bjarki crouches to the earth in his tattered loincloth. Fiery glowing amber veins surge through his neck and arm; dark charcoal fur begins bristling along his spine.</p>
+          <h4>Stage 1: The Agonizing Surge (Lean Human Crouches)</h4>
+          <p>Bjarki crouches to the earth in his tattered loincloth. Fiery amber veins surge through his neck and arm; dark charcoal fur begins bristling along his spine.</p>
         </div>
 
         <div class="stage-card-pill" id="pill2">
           <h4>Stage 2: Muscular Expansion &amp; Claws Erupt</h4>
-          <p>Torso and shoulders swell with immense beast muscle (+50%). Hands twist into clawed paws as curved obsidian talons burst forth, and snarling bear fangs form.</p>
+          <p>Torso and shoulders swell with beast muscle (+50%). Hands twist into clawed paws as curved obsidian talons burst forth, and snarling bear fangs form.</p>
+        </div>
+
+        <div class="stage-card-pill" id="pill25">
+          <h4>Stage 2.5: Beast Snout &amp; Lightning Veins (Intermediate)</h4>
+          <p>The human face elongates into a predatory bear muzzle with bared fangs. Amber lightning crackles across the swollen muscular chest as fur blankets the back.</p>
         </div>
 
         <div class="stage-card-pill" id="pill3">
@@ -795,8 +824,8 @@
         </div>
 
         <div class="stage-card-pill" id="pill4">
-          <h4>Stage 4: Primalist Titan Unleashed (2.5m Apex Roar)</h4>
-          <p>Full 2× scale Titan rearing on hind legs. Amber fire erupts from his maw in a deafening Waking Roar that stuns the screen and initiates the 90-second rampage.</p>
+          <h4>Stage 4: Epic Primalist Titan Unleashed (Apex Vortex Roar!)</h4>
+          <p>The new, massively epic Stage 4! Colossal hunched predator posture, bone tusk harness, lightning-infused fur, and an inferno vortex of spiritual fire billowing from his maw.</p>
         </div>
       </div>
     </div>
@@ -805,9 +834,9 @@
   <!-- Controls Bar for Filtering & Background Testing -->
   <div class="controls-bar">
     <div class="filter-tabs">
-      <button class="tab-btn active" data-filter="all">All Art (16)</button>
+      <button class="tab-btn active" data-filter="all">All Transparent Art (17)</button>
       <button class="tab-btn" data-filter="lean">Starting Human (Lean) (4)</button>
-      <button class="tab-btn" data-filter="transform">Transformation Stages (4)</button>
+      <button class="tab-btn" data-filter="transform">Transformation Stages (5)</button>
       <button class="tab-btn" data-filter="armored">Equipped Barbarian (6)</button>
       <button class="tab-btn" data-filter="bear">Primalist Titan (4)</button>
     </div>
@@ -815,10 +844,10 @@
     <div class="view-toggles">
       <span>Background Test:</span>
       <select class="bg-select" id="bgSelect" aria-label="Change preview background">
-        <option value="default">Studio Neutral Dark</option>
         <option value="checker">Transparency Checkerboard</option>
         <option value="forest">Elderwold Forest Vignette</option>
         <option value="black">Pure Pitch Black</option>
+        <option value="white">Pure Crisp White</option>
       </select>
     </div>
   </div>
@@ -829,14 +858,15 @@
   <section class="section-group" data-group="lean">
     <h2 class="section-title">Starting Human: Waking Bjarki (Lean &amp; Gaunt)</h2>
     <p class="section-desc">
-      Directly implementing your request: Bjarki awakens from the Long Sleep with <strong>no armour, bare-chested, bare-footed, wearing only a tattered loincloth tied with rough cord, and possessing a WAY skinnier, sinewy, gaunt build with visible ribs and hollow cheeks</strong> (GAME.md §5.1, §5.3, §10).
+      Bjarki awakens from the Long Sleep with <strong>no armour, bare-chested, bare-footed, wearing only a tattered loincloth tied with rough cord, and possessing a WAY skinnier, sinewy, gaunt build with visible ribs and hollow cheeks</strong> (GAME.md §5.1, §5.3, §10). Rendered with 100% transparent alpha.
     </p>
 
     <div class="sprite-grid">
       <!-- Lean 1: Idle -->
       <article class="sprite-card" data-category="lean">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_idle.webp', 'Waking Bjarki — Lean Idle Stance', 'Emaciated, gaunt, sinewy build with visible ribs, sunken cheeks, wild unkempt hair, glowing amber eyes, and a single tattered loincloth tied with rough cord.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_idle.webp', 'Waking Bjarki — Lean Idle Stance', 'Transparent RGBA sprite. Emaciated, gaunt, sinewy build with visible ribs, sunken cheeks, wild unkempt hair, glowing amber eyes, and a single tattered loincloth tied with rough cord.')">
           <span class="badge lean">Starting Sprite</span>
+          <span class="badge alpha">Alpha PNG</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_lean_idle.webp" alt="Bjarki Lean Idle" loading="lazy">
         </div>
@@ -847,21 +877,22 @@
           </div>
           <div class="card-role">Starting Character State</div>
           <p class="card-desc">
-            Waking with nothing in the root cradle. Wiry sinewy frame, visible ribs, completely bare chest and feet. Only a ragged scrap of cloth tied at the waist.
+            Waking with nothing in the root cradle. Wiry sinewy frame, visible ribs, completely bare chest and feet. Transparent alpha cutout.
           </p>
           <div class="card-meta">
             <div>Build: <strong>Lean &amp; Gaunt</strong></div>
             <div>Attire: <strong>Scrap of Cloth</strong></div>
-            <div>Health: <strong>80 HP</strong></div>
-            <div>Asset: <strong>human_lean_idle.webp</strong></div>
+            <div>Format: <strong>Transparent PNG</strong></div>
+            <div>Asset: <strong>human_lean_idle.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Lean 2: Run -->
       <article class="sprite-card" data-category="lean">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_run.webp', 'Waking Bjarki — Lean Sprint', 'Low center-of-gravity wildling sprint. Wiry legs pumping barefoot across the damp earth with tattered loincloth fluttering.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_run.webp', 'Waking Bjarki — Lean Sprint', 'Transparent RGBA sprite. Low center-of-gravity wildling sprint. Wiry legs pumping barefoot across the damp earth with tattered loincloth fluttering.')">
           <span class="badge lean">Starting Sprite</span>
+          <span class="badge alpha">Alpha PNG</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_lean_run.webp" alt="Bjarki Lean Run" loading="lazy">
         </div>
@@ -877,16 +908,17 @@
           <div class="card-meta">
             <div>Speed: <strong>210 px/s</strong></div>
             <div>Weight: <strong>Light / Agile</strong></div>
-            <div>Footwear: <strong>Barefoot</strong></div>
-            <div>Asset: <strong>human_lean_run.webp</strong></div>
+            <div>Format: <strong>Transparent PNG</strong></div>
+            <div>Asset: <strong>human_lean_run.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Lean 3: Punch -->
       <article class="sprite-card" data-category="lean">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_punch.webp', 'Waking Bjarki — Unarmed Strike', 'Desperate bare-fist punch lunging forward. Knuckles clenched, fierce snarl, amber eyes ablaze.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_punch.webp', 'Waking Bjarki — Unarmed Strike', 'Transparent RGBA sprite. Desperate bare-fist punch lunging forward. Knuckles clenched, fierce snarl, amber eyes ablaze.')">
           <span class="badge lean">Starting Sprite</span>
+          <span class="badge alpha">Alpha PNG</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_lean_punch.webp" alt="Bjarki Unarmed Punch" loading="lazy">
         </div>
@@ -902,16 +934,17 @@
           <div class="card-meta">
             <div>Damage: <strong>Base Fists</strong></div>
             <div>Range: <strong>Short Melee</strong></div>
-            <div>Stamina: <strong>12 / Swing</strong></div>
-            <div>Asset: <strong>human_lean_punch.webp</strong></div>
+            <div>Format: <strong>Transparent PNG</strong></div>
+            <div>Asset: <strong>human_lean_punch.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Lean 4: Crouch -->
       <article class="sprite-card" data-category="lean">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_crouch.webp', 'Waking Bjarki — Wary Crouch / Wake', 'Low crouch close to the rock, one hand touching the earth, head raised with watchful amber eyes.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_lean_crouch.webp', 'Waking Bjarki — Wary Crouch / Wake', 'Transparent RGBA sprite. Low crouch close to the rock, one hand touching the earth, head raised with watchful amber eyes.')">
           <span class="badge lean">Starting Sprite</span>
+          <span class="badge alpha">Alpha PNG</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_lean_crouch.webp" alt="Bjarki Lean Crouch" loading="lazy">
         </div>
@@ -927,8 +960,8 @@
           <div class="card-meta">
             <div>Feature: <strong>Root Crawl</strong></div>
             <div>Profile: <strong>Low Ceiling</strong></div>
-            <div>Hitbox: <strong>36 px Height</strong></div>
-            <div>Asset: <strong>human_lean_crouch.webp</strong></div>
+            <div>Format: <strong>Transparent PNG</strong></div>
+            <div>Asset: <strong>human_lean_crouch.png</strong></div>
           </div>
         </div>
       </article>
@@ -939,16 +972,17 @@
   <!-- 4. TRANSFORMATION IN-BETWEEN FRAMES        -->
   <!-- ========================================== -->
   <section class="section-group" data-group="transform">
-    <h2 class="section-title">Transformation Sequence — 4 In-Between Keyframes</h2>
+    <h2 class="section-title">Transformation Sequence — 5 Keyframes (Transparent Alpha)</h2>
     <p class="section-desc">
-      The incremental stages that bridge the lean human into the 2.5m Primalist Titan. Designed with continuous anatomical growth, fur emergence, claw sprouting, and amber eye flares.
+      The incremental stages that bridge the lean human into the 2.5m Primalist Titan. Featuring the intermediate Stage 2.5 and the newly rendered Epic Stage 4 with amber inferno roar.
     </p>
 
     <div class="sprite-grid">
       <!-- Stage 1 -->
       <article class="sprite-card" data-category="transform">
         <div class="card-thumb-wrap" onclick="openModal('/art/assets/transform_stage1.webp', 'Stage 1 — Rage Surge', 'Bjarki hunched low in tattered loincloth; amber veins bursting with power, dark fur bristling along his spine.')">
-          <span class="badge shift">Stage 1 / 4</span>
+          <span class="badge shift">Stage 1 / 5</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/transform_stage1.webp" alt="Transform Stage 1" loading="lazy">
         </div>
@@ -964,8 +998,7 @@
           <div class="card-meta">
             <div>Scale: <strong>1.0× Human</strong></div>
             <div>Fur Coverage: <strong>Spine / Shoulders</strong></div>
-            <div>iFrames: <strong>Invulnerable</strong></div>
-            <div>Asset: <strong>transform_stage1.webp</strong></div>
+            <div>Asset: <strong>transform_stage1.png</strong></div>
           </div>
         </div>
       </article>
@@ -973,7 +1006,8 @@
       <!-- Stage 2 -->
       <article class="sprite-card" data-category="transform">
         <div class="card-thumb-wrap" onclick="openModal('/art/assets/transform_stage2.webp', 'Stage 2 — Fur &amp; Talon Eruption', 'Muscular bulk expanding +50%, dark charcoal fur erupting over chest and back, hands widening into clawed paws with curved obsidian talons.')">
-          <span class="badge shift">Stage 2 / 4</span>
+          <span class="badge shift">Stage 2 / 5</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/transform_stage2.webp" alt="Transform Stage 2" loading="lazy">
         </div>
@@ -989,8 +1023,32 @@
           <div class="card-meta">
             <div>Scale: <strong>1.3× Human</strong></div>
             <div>Talons: <strong>Obsidian Sprouting</strong></div>
-            <div>iFrames: <strong>Invulnerable</strong></div>
-            <div>Asset: <strong>transform_stage2.webp</strong></div>
+            <div>Asset: <strong>transform_stage2.png</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 2.5 -->
+      <article class="sprite-card" data-category="transform">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/transform_stage2_5.webp', 'Stage 2.5 — Beast Snout &amp; Lightning Veins', 'Intermediate transitional frame. Snout elongating, fangs bared, amber lightning veins surging across swollen limbs.')">
+          <span class="badge shift">Stage 2.5 / 5</span>
+          <span class="badge alpha">Alpha</span>
+          <span class="zoom-hint">🔍 Expand</span>
+          <img src="/art/assets/transform_stage2_5.webp" alt="Transform Stage 2.5" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">2.5. Snout &amp; Lightning Veins</h3>
+            <span class="card-key">t = 0.50s</span>
+          </div>
+          <div class="card-role">Bridging In-Between</div>
+          <p class="card-desc">
+            Bridges the human crouch and the standing beast. The human skull morphs into a snarling bear muzzle with golden electrical veins blazing through swollen arms.
+          </p>
+          <div class="card-meta">
+            <div>Scale: <strong>1.5× Human</strong></div>
+            <div>Veins: <strong>Amber Lightning</strong></div>
+            <div>Asset: <strong>transform_stage2_5.png</strong></div>
           </div>
         </div>
       </article>
@@ -998,14 +1056,15 @@
       <!-- Stage 3 -->
       <article class="sprite-card" data-category="transform">
         <div class="card-thumb-wrap" onclick="openModal('/art/assets/transform_stage3.webp', 'Stage 3 — Bipedal Beast Rising', 'Colossal 1.7× scale bipedal beast rising up in a predatory stance with massive forearms, snarling snout, and crackling amber spiritual embers.')">
-          <span class="badge shift">Stage 3 / 4</span>
+          <span class="badge shift">Stage 3 / 5</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/transform_stage3.webp" alt="Transform Stage 3" loading="lazy">
         </div>
         <div class="card-body">
           <div class="card-title-row">
             <h3 class="card-title">3. Bipedal Beast Rising</h3>
-            <span class="card-key">t = 0.65s</span>
+            <span class="card-key">t = 0.70s</span>
           </div>
           <div class="card-role">Apex Beast Form</div>
           <p class="card-desc">
@@ -1014,33 +1073,32 @@
           <div class="card-meta">
             <div>Scale: <strong>1.7× Human</strong></div>
             <div>Stance: <strong>Predatory Crouch</strong></div>
-            <div>iFrames: <strong>Invulnerable</strong></div>
-            <div>Asset: <strong>transform_stage3.webp</strong></div>
+            <div>Asset: <strong>transform_stage3.png</strong></div>
           </div>
         </div>
       </article>
 
-      <!-- Stage 4 -->
+      <!-- Stage 4 Epic -->
       <article class="sprite-card" data-category="transform">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/transform_stage4.webp', 'Stage 4 — Waking Roar (Titan Unleashed)', 'Standing 2× human height, rearing on hind legs in a cataclysmic roar with amber fire erupting from maw, obsidian claws gleaming.')">
-          <span class="badge shift">Stage 4 / 4</span>
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/transform_stage4.webp', 'Stage 4 (Epic) — Primalist Titan Unleashed', 'Colossal hunched predator posture, bone tusk harness, lightning-infused fur, and an inferno vortex of spiritual fire billowing from his maw.')">
+          <span class="badge shift">Stage 4 / 5 (Apex)</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
-          <img src="/art/assets/transform_stage4.webp" alt="Transform Stage 4" loading="lazy">
+          <img src="/art/assets/transform_stage4.webp" alt="Transform Stage 4 Epic" loading="lazy">
         </div>
         <div class="card-body">
           <div class="card-title-row">
-            <h3 class="card-title">4. Waking Roar (Apex)</h3>
+            <h3 class="card-title">4. Titan Unleashed (Epic!)</h3>
             <span class="card-key">t = 1.0s</span>
           </div>
-          <div class="card-role">Transformation Climax</div>
+          <div class="card-role">Cataclysmic Apex Climax</div>
           <p class="card-desc">
-            The full 2.5m Titan emerges! Rearing upright with amber fire billowing from his maw. Triggers full-screen stun and initiates the 90-second berserk timer.
+            The re-rendered apex Stage 4! Colossal hunched predator hump, carved bone tusk harness, amber lightning coursing across arms, and a roaring vortex of fire!
           </p>
           <div class="card-meta">
             <div>Scale: <strong>2.1× Height (150px)</strong></div>
-            <div>Effect: <strong>1.5s Stun Pulse</strong></div>
-            <div>Duration: <strong>90s Rampage</strong></div>
-            <div>Asset: <strong>transform_stage4.webp</strong></div>
+            <div>Roar: <strong>Amber Inferno Vortex</strong></div>
+            <div>Asset: <strong>transform_stage4.png</strong></div>
           </div>
         </div>
       </article>
@@ -1051,7 +1109,7 @@
   <!-- 5. EQUIPPED BARBARIAN PROGRESSION SPRITES  -->
   <!-- ========================================== -->
   <section class="section-group" data-group="armored">
-    <h2 class="section-title">Equipped Human: Bearkin Warrior (Progression Art)</h2>
+    <h2 class="section-title">Equipped Human: Bearkin Warrior (Transparent Alpha)</h2>
     <p class="section-desc">
       As Bjarki conquers the Den and defeats the Husk Stag and Hollow Trapper, he equips the <strong>Leather Harness with Carved Bone Tusks, Bark Bracers, and Bone Knife</strong> (GAME.md §10 &amp; §12.3 paper-doll progression).
     </p>
@@ -1059,8 +1117,9 @@
     <div class="sprite-grid">
       <!-- Armored Idle -->
       <article class="sprite-card" data-category="armored">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_idle.webp', 'Equipped Bjarki — Idle Stance', 'Full combat gear: bone tusk harness, rune talisman disc, fur loincloth, bracers, and amber eyes.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_idle.webp', 'Equipped Bjarki — Idle Stance', 'Transparent RGBA sprite. Full combat gear: bone tusk harness, rune talisman disc, fur loincloth, bracers, and amber eyes.')">
           <span class="badge armored">Equipped State</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_idle.webp" alt="Equipped Idle" loading="lazy">
         </div>
@@ -1076,15 +1135,16 @@
           <div class="card-meta">
             <div>Armor: <strong>Bone &amp; Leather</strong></div>
             <div>Charm: <strong>Rune Talisman</strong></div>
-            <div>Asset: <strong>human_idle.webp</strong></div>
+            <div>Asset: <strong>human_idle.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Armored Run -->
       <article class="sprite-card" data-category="armored">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_run.webp', 'Equipped Bjarki — Armed Sprint', 'Aggressive forward sprint with bone tusk chest harness, pouches, and fur boots.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_run.webp', 'Equipped Bjarki — Armed Sprint', 'Transparent RGBA sprite. Aggressive forward sprint with bone tusk chest harness, pouches, and fur boots.')">
           <span class="badge armored">Equipped State</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_run.webp" alt="Equipped Run" loading="lazy">
         </div>
@@ -1100,15 +1160,16 @@
           <div class="card-meta">
             <div>Speed: <strong>210 px/s</strong></div>
             <div>Booted: <strong>Fur-Lined Boots</strong></div>
-            <div>Asset: <strong>human_run.webp</strong></div>
+            <div>Asset: <strong>human_run.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Armored Attack -->
       <article class="sprite-card" data-category="armored">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_attack.webp', 'Equipped Bjarki — Bone Knife Slash', 'Lethal forward strike with the carved Bone Knife dropped by the Husk Stag.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_attack.webp', 'Equipped Bjarki — Bone Knife Slash', 'Transparent RGBA sprite. Lethal forward strike with the carved Bone Knife dropped by the Husk Stag.')">
           <span class="badge armored">Equipped State</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_attack.webp" alt="Bone Knife Attack" loading="lazy">
         </div>
@@ -1124,15 +1185,16 @@
           <div class="card-meta">
             <div>Weapon: <strong>Bone Knife</strong></div>
             <div>Effect: <strong>Bleed Damage</strong></div>
-            <div>Asset: <strong>human_attack.webp</strong></div>
+            <div>Asset: <strong>human_attack.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Armored Jump -->
       <article class="sprite-card" data-category="armored">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_jump.webp', 'Equipped Bjarki — Airborne Leap', 'Mid-air leap with tucked legs and axe raised ready to strike or land.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_jump.webp', 'Equipped Bjarki — Airborne Leap', 'Transparent RGBA sprite. Mid-air leap with tucked legs and axe raised ready to strike or land.')">
           <span class="badge armored">Equipped State</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_jump.webp" alt="Equipped Jump" loading="lazy">
         </div>
@@ -1148,15 +1210,16 @@
           <div class="card-meta">
             <div>Height: <strong>2.2× Body</strong></div>
             <div>Coyote Time: <strong>100ms</strong></div>
-            <div>Asset: <strong>human_jump.webp</strong></div>
+            <div>Asset: <strong>human_jump.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Armored Dodge -->
       <article class="sprite-card" data-category="armored">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_dodge.webp', 'Equipped Bjarki — Combat Evasion', 'Low combat dodge crouch with 0.25s invulnerability.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_dodge.webp', 'Equipped Bjarki — Combat Evasion', 'Transparent RGBA sprite. Low combat dodge crouch with 0.25s invulnerability.')">
           <span class="badge armored">Equipped State</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_dodge.webp" alt="Equipped Dodge" loading="lazy">
         </div>
@@ -1172,15 +1235,16 @@
           <div class="card-meta">
             <div>iFrames: <strong>0.25s</strong></div>
             <div>Stamina: <strong>25</strong></div>
-            <div>Asset: <strong>human_dodge.webp</strong></div>
+            <div>Asset: <strong>human_dodge.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Half-Shift -->
       <article class="sprite-card" data-category="armored shift">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_halfshift.webp', 'Equipped Bjarki — Half-Shift Bear Swipe', 'Signature 25-Rage tap skill: right arm violently swells into the massive Werebear clawed limb.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/human_halfshift.webp', 'Equipped Bjarki — Half-Shift Bear Swipe', 'Transparent RGBA sprite. Signature 25-Rage tap skill: right arm violently swells into the massive Werebear clawed limb.')">
           <span class="badge shift">Tap Skill · 25 Rage</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/human_halfshift.webp" alt="Half-Shift Swipe" loading="lazy">
         </div>
@@ -1196,7 +1260,7 @@
           <div class="card-meta">
             <div>Rage Cost: <strong>25 Rage (Tap)</strong></div>
             <div>Damage: <strong>5× Heavy Hit</strong></div>
-            <div>Asset: <strong>human_halfshift.webp</strong></div>
+            <div>Asset: <strong>human_halfshift.png</strong></div>
           </div>
         </div>
       </article>
@@ -1207,7 +1271,7 @@
   <!-- 6. THE WEREBEAR (PRIMALIST TITAN)          -->
   <!-- ========================================== -->
   <section class="section-group" data-group="bear">
-    <h2 class="section-title">The Werebear: The Primalist Titan</h2>
+    <h2 class="section-title">The Werebear: The Primalist Titan (Transparent Alpha)</h2>
     <p class="section-desc">
       The full 90-second transformation. Charcoal fur, bone tusk harness, talisman belt, amber eye embers, and curved obsidian claws.
     </p>
@@ -1215,8 +1279,9 @@
     <div class="sprite-grid">
       <!-- Bear Idle -->
       <article class="sprite-card" data-category="bear">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_idle.webp', 'The Primalist Titan — Combat Idle Stance', 'Hunched bipedal grizzly with colossal shoulders, carved bone tusk harness, talisman pouch belt, and curved obsidian claws.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_idle.webp', 'The Primalist Titan — Combat Idle Stance', 'Transparent RGBA sprite. Hunched bipedal grizzly with colossal shoulders, carved bone tusk harness, talisman pouch belt, and curved obsidian claws.')">
           <span class="badge bear">Werebear Form</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/werebear_idle.webp" alt="Titan Idle" loading="lazy">
         </div>
@@ -1230,17 +1295,18 @@
             Hunched menacing stance facing right. Heavy charcoal fur with grizzled silver tips, bone tusk harness, glowing amber eyes, and colossal obsidian claws.
           </p>
           <div class="card-meta">
-            <div>Scale: <strong>≈150 px (2×)</strong></div>
+            <div>Engine Scale: <strong>≈150 px (2×)</strong></div>
             <div>Duration: <strong>90s Fixed</strong></div>
-            <div>Asset: <strong>werebear_idle.webp</strong></div>
+            <div>Asset: <strong>werebear_idle.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Bear Maul -->
       <article class="sprite-card" data-category="bear">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_maul.webp', 'The Primalist Titan — Maul Claw Swipe', 'Horizontal claw maul swipe with curved obsidian claws, dynamic wind arc trail, and massive muscular momentum.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_maul.webp', 'The Primalist Titan — Maul Claw Swipe', 'Transparent RGBA sprite. Horizontal claw maul swipe with curved obsidian claws, dynamic wind arc trail, and massive muscular momentum.')">
           <span class="badge bear">Werebear Form</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/werebear_maul.webp" alt="Titan Maul" loading="lazy">
         </div>
@@ -1256,15 +1322,16 @@
           <div class="card-meta">
             <div>Damage: <strong>7× Human DPS</strong></div>
             <div>Cleave: <strong>Multi-Target</strong></div>
-            <div>Asset: <strong>werebear_maul.webp</strong></div>
+            <div>Asset: <strong>werebear_maul.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Bear Roar -->
       <article class="sprite-card" data-category="bear shift">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_roar.webp', 'The Primalist Titan — Waking Roar', 'Rearing upright on hind legs, roaring to the sky with amber fire bursting from maw and eyes.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_roar.webp', 'The Primalist Titan — Waking Roar', 'Transparent RGBA sprite. Rearing upright on hind legs, roaring to the sky with amber fire bursting from maw and eyes.')">
           <span class="badge shift">Transformation Roar</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/werebear_roar.webp" alt="Titan Roar" loading="lazy">
         </div>
@@ -1280,15 +1347,16 @@
           <div class="card-meta">
             <div>Stun: <strong>Full Screen</strong></div>
             <div>Camera: <strong>Zoom 10% Out</strong></div>
-            <div>Asset: <strong>werebear_roar.webp</strong></div>
+            <div>Asset: <strong>werebear_roar.png</strong></div>
           </div>
         </div>
       </article>
 
       <!-- Bear Slam -->
       <article class="sprite-card" data-category="bear">
-        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_slam.webp', 'The Primalist Titan — Rend Ground Slam', 'Overhead paw slam cratering the earth with rock fragments and radial shockwaves. Fells Elderwood trees.')">
+        <div class="card-thumb-wrap" onclick="openModal('/art/assets/werebear_slam.webp', 'The Primalist Titan — Rend Ground Slam', 'Transparent RGBA sprite. Overhead paw slam cratering the earth with rock fragments and radial shockwaves. Fells Elderwood trees.')">
           <span class="badge bear">Werebear Form</span>
+          <span class="badge alpha">Alpha</span>
           <span class="zoom-hint">🔍 Expand</span>
           <img src="/art/assets/werebear_slam.webp" alt="Titan Ground Slam" loading="lazy">
         </div>
@@ -1304,7 +1372,7 @@
           <div class="card-meta">
             <div>Shockwave: <strong>6 Tiles</strong></div>
             <div>Destruction: <strong>Fells Trees</strong></div>
-            <div>Asset: <strong>werebear_slam.webp</strong></div>
+            <div>Asset: <strong>werebear_slam.png</strong></div>
           </div>
         </div>
       </article>
@@ -1386,7 +1454,7 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
-  // 4. TRANSFORMATION SCRUBBER
+  // 4. TRANSFORMATION SCRUBBER (5 Stages + Loop)
   const scrubber = document.getElementById('transformScrubber');
   const scrubberLabel = document.getElementById('scrubberLabel');
   const displayImg = document.getElementById('transformDisplayImg');
@@ -1394,6 +1462,7 @@
     null,
     document.getElementById('pill1'),
     document.getElementById('pill2'),
+    document.getElementById('pill25'),
     document.getElementById('pill3'),
     document.getElementById('pill4')
   ];
@@ -1401,6 +1470,7 @@
     '/art/assets/transformation_animated.webp',
     '/art/assets/transform_stage1.webp',
     '/art/assets/transform_stage2.webp',
+    '/art/assets/transform_stage2_5.webp',
     '/art/assets/transform_stage3.webp',
     '/art/assets/transform_stage4.webp'
   ];
@@ -1420,9 +1490,17 @@
     });
 
     if (val === 0) {
-      scrubberLabel.textContent = 'Autoplay (Looped Animation)';
-    } else {
-      scrubberLabel.textContent = `Manual Keyframe: Stage ${val} / 4`;
+      scrubberLabel.textContent = 'Autoplay (34-Frame Looped Morph)';
+    } else if (val === 1) {
+      scrubberLabel.textContent = 'Stage 1: Rage Surge (Lean Human Crouches)';
+    } else if (val === 2) {
+      scrubberLabel.textContent = 'Stage 2: Muscular Expansion & Claws Erupt';
+    } else if (val === 3) {
+      scrubberLabel.textContent = 'Stage 2.5: Snout Elongation & Lightning Veins';
+    } else if (val === 4) {
+      scrubberLabel.textContent = 'Stage 3: The Bipedal Beast Rising (1.7× Scale)';
+    } else if (val === 5) {
+      scrubberLabel.textContent = 'Stage 4: Epic Primalist Titan Unleashed (Apex Roar!)';
     }
   });
 
@@ -1439,7 +1517,7 @@
     event.target.classList.add('active');
   }
 
-  // Preload Images for Engine Stage
+  // Preload Transparent Images for Engine Stage
   const engineImages = {};
   const spriteList = {
     lean_idle: '/art/assets/human_lean_idle.webp',
@@ -1454,6 +1532,7 @@
     armored_halfshift: '/art/assets/human_halfshift.webp',
     stage1: '/art/assets/transform_stage1.webp',
     stage2: '/art/assets/transform_stage2.webp',
+    stage2_5: '/art/assets/transform_stage2_5.webp',
     stage3: '/art/assets/transform_stage3.webp',
     stage4: '/art/assets/transform_stage4.webp',
     titan_idle: '/art/assets/werebear_idle.webp',
@@ -1472,9 +1551,9 @@
   const engineState = {
     currentAction: 'lean_idle',
     currentSprite: 'lean_idle',
-    form: 'lean', // 'lean', 'armored', 'titan'
+    form: 'lean',
     x: 480,
-    y: 380, // ground baseline
+    y: 390, // ground baseline
     scale: 0.38,
     shake: 0,
     particles: [],
@@ -1525,7 +1604,7 @@
       engineState.form = 'titan';
       formNameEl.textContent = 'FORM: TRANSFORMING INTO PRIMALIST TITAN...';
       hudRageEl.style.width = '100%';
-      actionStatusEl.textContent = 'EXECUTING 4-STAGE IN-BETWEEN TRANSFORMATION MORPH!';
+      actionStatusEl.textContent = 'EXECUTING 5-STAGE MORPH SEQUENCE WITH AMBER LIGHTNING!';
       triggerTransformSequence();
       return;
     }
@@ -1550,7 +1629,7 @@
       addDustShockwave(engineState.x + 20, engineState.y);
       actionStatusEl.textContent = 'MOVE: GROUND SLAM REND (EARTH SHOCKWAVE / FELLS TREES)';
     } else if (action === 'titan_roar') {
-      engineState.shake = 15;
+      engineState.shake = 18;
       engineState.stunPulse = 1.0;
       addRoarSparks(engineState.x, engineState.y - 140);
       actionStatusEl.textContent = 'MOVE: WAKING ROAR (FULL-SCREEN 1.5s STUN PULSE)';
@@ -1558,6 +1637,8 @@
       actionStatusEl.textContent = 'MOVE: SPRINTING FORWARD (210 PX/S)';
     } else if (action.includes('jump')) {
       actionStatusEl.textContent = 'MOVE: AIRBORNE JUMP (2.2× HEIGHT)';
+    } else if (action.includes('crouch')) {
+      actionStatusEl.textContent = 'MOVE: WARY CROUCH (ROOT CRAWL PASSAGE)';
     } else if (action.includes('dodge')) {
       actionStatusEl.textContent = 'MOVE: DODGE ROLL (0.25s IFRAMES)';
     } else {
@@ -1565,7 +1646,7 @@
     }
   }
 
-  // 4-Stage Morph Sequence
+  // 5-Stage Morph Sequence
   function triggerTransformSequence() {
     engineState.timer = 0;
     engineState.animating = true;
@@ -1577,22 +1658,26 @@
       stage++;
       if (stage === 2) {
         engineState.currentSprite = 'stage2';
-        engineState.shake = 10;
+        engineState.shake = 9;
         addRoarSparks(engineState.x, engineState.y - 80);
       } else if (stage === 3) {
-        engineState.currentSprite = 'stage3';
-        engineState.shake = 16;
-        addRoarSparks(engineState.x, engineState.y - 110);
+        engineState.currentSprite = 'stage2_5';
+        engineState.shake = 14;
+        addRoarSparks(engineState.x, engineState.y - 100);
       } else if (stage === 4) {
+        engineState.currentSprite = 'stage3';
+        engineState.shake = 18;
+        addRoarSparks(engineState.x, engineState.y - 120);
+      } else if (stage === 5) {
         engineState.currentSprite = 'stage4';
-        engineState.shake = 26;
+        engineState.shake = 28;
         engineState.stunPulse = 1.0;
         addRoarSparks(engineState.x, engineState.y - 150);
         addDustShockwave(engineState.x, engineState.y);
-        actionStatusEl.textContent = 'TITAN FULLY UNLEASHED: 90s BERSERK ACTIVATED!';
+        actionStatusEl.textContent = 'EPIC PRIMALIST TITAN UNLEASHED: 90s BERSERK ACTIVATED!';
         clearInterval(interval);
       }
-    }, 450 / engineSpeed);
+    }, 380 / engineSpeed);
   }
 
   // FX Helpers
@@ -1631,7 +1716,7 @@
   function addRoarSparks(x, y) {
     for (let i = 0; i < 35; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const spd = Math.random() * 8 + 3;
+      const spd = Math.random() * 9 + 3;
       engineState.particles.push({
         x: x,
         y: y,
@@ -1703,12 +1788,17 @@
       ctx.fillRect(x, groundY - 4, 12, 4);
     }
 
-    // 2. Draw Active Sprite
+    // 2. Draw Active Transparent Sprite
     const activeImg = engineImages[engineState.currentSprite];
     if (activeImg && activeImg.complete && activeImg.naturalWidth > 0) {
       const isTitan = engineState.form === 'titan' || engineState.currentSprite.includes('titan') || engineState.currentSprite.includes('stage3') || engineState.currentSprite.includes('stage4');
       // Scale: Lean Human is 72px logical, Titan is 150px (about 2×)
       let targetH = isTitan ? 320 : 190;
+      if (engineState.currentSprite === 'stage2') targetH = 220;
+      if (engineState.currentSprite === 'stage2_5') targetH = 250;
+      if (engineState.currentSprite === 'stage3') targetH = 280;
+      if (engineState.currentSprite === 'stage4') targetH = 340;
+
       let targetW = (activeImg.naturalWidth / activeImg.naturalHeight) * targetH;
 
       // Bob / Procedural movement
@@ -1717,27 +1807,27 @@
       let posY = groundY - targetH + bob;
 
       if (engineState.currentAction.includes('jump')) {
-        posY -= 50; // Jump offset
+        posY -= 50;
       } else if (engineState.currentAction.includes('crouch') || engineState.currentAction.includes('dodge')) {
-        posY += 20; // Crouch offset
+        posY += 15;
       }
 
-      // Draw Shadow
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      // Draw Soft Shadow under feet
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
       ctx.beginPath();
-      ctx.ellipse(engineState.x, groundY - 2, targetW * 0.35, 12, 0, 0, Math.PI * 2);
+      ctx.ellipse(engineState.x, groundY - 2, targetW * 0.32, 10, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Draw Character
+      // Draw Transparent Character Sprite
       ctx.drawImage(activeImg, posX, posY, targetW, targetH);
     }
 
     // 3. Stun Pulse / Roar Wave
     if (engineState.stunPulse > 0) {
-      ctx.strokeStyle = `rgba(233, 170, 80, ${engineState.stunPulse * 0.6})`;
+      ctx.strokeStyle = `rgba(233, 170, 80, ${engineState.stunPulse * 0.7})`;
       ctx.lineWidth = 6;
       ctx.beginPath();
-      ctx.arc(engineState.x, engineState.y - 120, (1 - engineState.stunPulse) * 450, 0, Math.PI * 2);
+      ctx.arc(engineState.x, engineState.y - 120, (1 - engineState.stunPulse) * 480, 0, Math.PI * 2);
       ctx.stroke();
       engineState.stunPulse = Math.max(0, engineState.stunPulse - 0.03 * engineSpeed);
     }
