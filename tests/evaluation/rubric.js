@@ -1,17 +1,25 @@
-// Adventure rubric v2 — DARK HORROR / CHALLENGING FUN.
-// The Elderwold must be a place that punishes and is mastered, not a toy box.
-// Adapted from readysetsanta's rubric architecture: weighted 0-4 ratings over
-// automated bot evidence, contract failures become blockers, human review caps.
-// Tone rows (dread, mastery) are first-class; comfort mechanics are gone
-// (honey was removed from the game entirely per the horror pivot).
-export const RUBRIC_VERSION = 'adventure-rubric-v2-horror';
+// Adventure rubric v3 — DARK HORROR / CHALLENGING FUN / DARK-EPIC ART.
+// The Elderwold must be a place that punishes and is mastered, not a toy box,
+// and it must LOOK the part. Adapted from readysetsanta's rubric architecture:
+// weighted 0-4 ratings over automated evidence (seeded bot play + an automated
+// art-direction judge), contract failures become blockers, human review caps.
+// The art block (20%) comes from tools/art_judge.py — a vision-model review of
+// the sprite contact sheet and live in-game captures against the dark-epic bar.
+export const RUBRIC_VERSION = 'adventure-rubric-v3-dark-epic';
+
+export const ART_ROWS = [
+  { id: 'art_tone', name: 'Art: dark, grim, epic tone', weight: 6 },
+  { id: 'art_silhouette', name: 'Art: silhouettes read at game scale', weight: 5 },
+  { id: 'art_cohesion', name: 'Art: one consistent dark style', weight: 4 },
+  { id: 'art_craft', name: 'Art: craft (cutouts, framing, anatomy)', weight: 5 }
+]; // art block = 20 of 100
 
 const ratingFromBands = (v, bands) => {
   for (const [threshold, rating] of bands) if (v >= threshold) return rating;
   return 0;
 };
 
-export function scoreAdventure(runs, contracts, levelInfo) {
+export function scoreAdventure(runs, contracts, levelInfo, artJudgment = null) {
   const by = Object.fromEntries(runs.map(r => [r.policy, r]));
   const best = runs.reduce((a, b) => (b.progress > a.progress ? b : a));
   const spread = Math.max(...runs.map(r => r.progress)) - Math.min(...runs.map(r => r.progress));
@@ -32,17 +40,17 @@ export function scoreAdventure(runs, contracts, levelInfo) {
 
   const rows = [
     {
-      id: 'progression', name: 'The dark can be traversed — barely', weight: 20,
+      id: 'progression', name: 'The dark can be traversed — barely', weight: 15,
       rating: ratingFromBands(best.progress, [[0.95, 4], [0.6, 3], [0.3, 2], [0.05, 1]]),
       evidence: `best policy ${best.policy} reached ${(best.progress * 100).toFixed(0)}% of the Elderwold${best.completed ? ' (level complete)' : ''}; checkpoints ${best.checkpointsLit}/3`
     },
     {
-      id: 'dread', name: 'The forest punishes the careless', weight: 20,
+      id: 'dread', name: 'The forest punishes the careless', weight: 15,
       rating: ratingFromBands(carelessDmg, [[9, 4], [6, 3], [3, 2], [1, 1]]),
       evidence: `the worst-exposed policy takes ${carelessDmg.toFixed(1)} dmg/min in man form (berserker ${dmg(by.berserker).toFixed(1)}, speedrun ${dmg(speedrun).toFixed(1)}, pacifist ${dmg(pacifist).toFixed(1)}); deaths when reckless: speedrun ${speedrun.deaths}, berserker ${by.berserker.deaths}`
     },
     {
-      id: 'mastery', name: 'Skill and respect for tells are rewarded', weight: 20,
+      id: 'mastery', name: 'Skill and respect for tells are rewarded', weight: 15,
       rating: ratingFromBands(skillGap, [[6, 4], [3, 3], [1.5, 2], [0, 1]]) * (cautiousDodges && threatVisible ? 1 : 0.5),
       evidence: `disciplined play (cautious: ${dmg(cautious).toFixed(1)} dmg/min, ${cautious.dodges} dodge frames, respects tells) beats careless by ${skillGap.toFixed(1)} dmg/min${cautiousDodges ? '' : '; but cautious never dodges — mastery path unexercised'}${threatVisible ? '' : '; threat ordering violated'}`
     },
@@ -62,7 +70,7 @@ export function scoreAdventure(runs, contracts, levelInfo) {
       evidence: fails.length === 0 ? `all ${contracts.length} contracts pass, incl. byte-identical seed replay and zero NaN frames` : fails.map(f => f.id).join(', ')
     },
     {
-      id: 'agency', name: 'Intent changes the run', weight: 10,
+      id: 'agency', name: 'Intent changes the run', weight: 5,
       rating: ratingFromBands(spread, [[0.5, 4], [0.25, 3], [0.1, 2], [0.02, 1]]),
       evidence: `progress spread ${(spread * 100).toFixed(0)} points across policies (${by.berserker.progress * 100 | 0}% berserker vs ${by.pacifist.progress * 100 | 0}% pacifist)`
     },
@@ -71,6 +79,15 @@ export function scoreAdventure(runs, contracts, levelInfo) {
       rating: 4,
       evidence: 'honey/heal-on-demand mechanic removed from the simulation, HUD, touch controls and saves; healing exists only at dens and the bear\'s kill-driven wound recovery'
     },
+    // --- art block (from the automated art director) ---
+    ...ART_ROWS.map(ar => {
+      const j = artJudgment?.rows?.find(r => r.id === ar.id.replace('art_', ''));
+      return {
+        id: ar.id, name: ar.name, weight: ar.weight,
+        rating: j ? j.rating : 0,
+        evidence: j ? `${j.evidence} [judge: ${artJudgment.model}]` : 'no art judgment on file — run tools/art_judge.py'
+      };
+    }),
   ].map(r => ({ ...r, points: +(r.weight * r.rating / 4).toFixed(1) }));
 
   const points = rows.reduce((n, r) => n + r.points, 0);

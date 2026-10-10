@@ -1,12 +1,12 @@
 {
-  "version": "adventure-rubric-v2-horror",
+  "version": "adventure-rubric-v3-dark-epic",
   "level": {
     "width": 57600,
     "trees": 27,
     "checkpoints": 3,
     "enemies": 25
   },
-  "points": 95,
+  "points": 83.8,
   "maxPoints": 100,
   "verdict": "meets the dark-horror challenge target",
   "blockers": [],
@@ -14,26 +14,26 @@
     {
       "id": "progression",
       "name": "The dark can be traversed — barely",
-      "weight": 20,
+      "weight": 15,
       "rating": 4,
       "evidence": "best policy berserker reached 100% of the Elderwold; checkpoints 3/3",
-      "points": 20
+      "points": 15
     },
     {
       "id": "dread",
       "name": "The forest punishes the careless",
-      "weight": 20,
+      "weight": 15,
       "rating": 4,
       "evidence": "the worst-exposed policy takes 10.9 dmg/min in man form (berserker 10.9, speedrun 0.4, pacifist 0.0); deaths when reckless: speedrun 0, berserker 0",
-      "points": 20
+      "points": 15
     },
     {
       "id": "mastery",
       "name": "Skill and respect for tells are rewarded",
-      "weight": 20,
+      "weight": 15,
       "rating": 3,
       "evidence": "disciplined play (cautious: 5.2 dmg/min, 336 dodge frames, respects tells) beats careless by 5.7 dmg/min",
-      "points": 15
+      "points": 11.3
     },
     {
       "id": "rage",
@@ -62,10 +62,10 @@
     {
       "id": "agency",
       "name": "Intent changes the run",
-      "weight": 10,
+      "weight": 5,
       "rating": 4,
       "evidence": "progress spread 97 points across policies (100% berserker vs 2% pacifist)",
-      "points": 10
+      "points": 5
     },
     {
       "id": "nocomfort",
@@ -74,6 +74,38 @@
       "rating": 4,
       "evidence": "honey/heal-on-demand mechanic removed from the simulation, HUD, touch controls and saves; healing exists only at dens and the bear's kill-driven wound recovery",
       "points": 5
+    },
+    {
+      "id": "art_tone",
+      "name": "Art: dark, grim, epic tone",
+      "weight": 6,
+      "rating": 1,
+      "evidence": "The overall mood is far from 'dark-and-epic.' The 'amber sun and silver moon' are entirely absent, replaced by a cheap-looking, bright white crescent moon against a flat, lifeless black sky in the gameplay captures. The vibrant green moss and yellow glowing elements on the sporecap and checkpoint shrine, while trying to be grim, come across as sickly rather than foreboding. The 'rot grub' and 'gloom moth' are too cartoonish in their execution, failing to evoke true horror. The 'elderwood/sapling/bee trees' are particularly egregious, appearing as decorative whimsy rather than ancient, menacing flora. The 'husk stag' is just... a deer. Not epic, not horrifying. The human forms are just generic barbarians, lacking any distinct grim or horror elements beyond a rough texture. [judge: google/gemini-2.5-flash]",
+      "points": 1.5
+    },
+    {
+      "id": "art_silhouette",
+      "name": "Art: silhouettes read at game scale",
+      "weight": 5,
+      "rating": 2,
+      "evidence": "Many characters have decent silhouettes at their native scale, particularly the 'werebear' forms, 'rotwood brute,' and 'Old Thorngut boss' which present strong, recognizable shapes. However, at game scale, the 'rot grub' becomes an amorphous blob, indistinguishable from environmental debris. The 'gloom moth' is just a moth, not 'gloom.' The 'sporecap' is too busy and loses its form. The 'human' character in particular is very generic and bland as a silhouette; nothing about it screams 'protagonist' or 'horror hero'. [judge: google/gemini-2.5-flash]",
+      "points": 2.5
+    },
+    {
+      "id": "art_cohesion",
+      "name": "Art: one consistent dark style",
+      "weight": 4,
+      "rating": 1,
+      "evidence": "The contact sheet shows a range of rendering styles. The 'werebear' and larger enemies (Old Thorngut, Rotwood brute, Stage-4 titan) have a gritty, high-detail painted style. However, the 'sporecap' looks like it was plucked from a completely different, less serious game, with its bright, almost fluorescent elements. The 'gloom moth' feels like it belongs in a children's book about enchanted forests. The 'elderwood/sapling/bee trees' are particularly jarring; their simplistic, almost illustrative style clashes heavily with the grittiness of the creatures. The background elements in the live captures are also extremely flat and simplistic, especially the distant tree line and the ground, which do not match the detail level of the character sprites at all. It feels like assets from three different games were cobbled together. [judge: google/gemini-2.5-flash]",
+      "points": 1
+    },
+    {
+      "id": "art_craft",
+      "name": "Art: craft (cutouts, framing, anatomy)",
+      "weight": 5,
+      "rating": 2,
+      "evidence": "While most sprites exhibit clean alpha cutouts, the 'gloom moth' has some rough edges that could be cleaned up. The 'sporecap' also shows some pixelation around its glowing elements. The 'mire hound' and 'husk stag' appear slightly blurry, suggesting potential scaling issues or a lack of sharp rendering. The 'hollow trapper' and 'human' sprites have a noticeable halo effect, particularly around their outlines, which cheapens the overall presentation. The 'Old Thorngut boss' seems to be slightly cut off at the bottom. The 'werebear maul' animation has an awkward limb extension that looks malformed. [judge: google/gemini-2.5-flash]",
+      "points": 2.5
     }
   ],
   "runs": [

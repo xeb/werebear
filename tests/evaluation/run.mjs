@@ -3,7 +3,7 @@
 import { runPolicy, contracts, POLICY_NAMES } from './harness.mjs';
 import { scoreAdventure } from './rubric.js';
 import { World } from '../../site/sim/world.js';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -25,7 +25,13 @@ process.stderr.write('  contracts ... ');
 const contractsOut = contracts();
 console.error(`${contractsOut.filter(c => c.pass).length}/${contractsOut.length} pass`);
 
-const score = scoreAdventure(runs, contractsOut, levelInfo);
+// Merge the art judge's verdict if one is on file (run tools/art_judge.py first).
+const judgePath = join(root, 'artifacts/art-judgment.json');
+const artJudgment = existsSync(judgePath) ? JSON.parse(readFileSync(judgePath, 'utf8')) : null;
+if (artJudgment) console.error(`art judge: ${artJudgment.rows.map(r => `${r.id} ${r.rating}/4`).join(' · ')}`);
+else console.error('art judge: no artifacts/art-judgment.json — art rows score 0');
+
+const score = scoreAdventure(runs, contractsOut, levelInfo, artJudgment);
 mkdirSync(join(root, 'artifacts'), { recursive: true });
 const jsonPath = join(root, 'artifacts/evaluation.json');
 writeFileSync(jsonPath, JSON.stringify(score, null, 2));
