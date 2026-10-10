@@ -75,10 +75,9 @@ test('a held input frame that spans several fixed steps triggers a directional s
   const w=new World();w.player.rage=100;w.enemies=[];w.advance(.1,{skill:true,direction:'up'});assert.equal(w.player.rage,75);assert.equal(w.player.lastSkill,'roar');
 });
 
-test('heavy attack charges on hold and resolves once on release; held item actions consume once', () => {
+test('heavy attack charges on hold and resolves once on release; thrown stones consume once', () => {
   const w=new World();w.enemies=[];const target=w.spawnEnemy('grub',w.player.x+25);const hp=target.hp;
   w.step({heavy:true});w.advance(.5,{heavy:true});assert.equal(target.hp,hp);
   w.step({heavy:false});assert.ok(target.hp<hp);
   w.player.items.stones=5;for(let i=0;i<10;i++)w.step({throw:true});assert.equal(w.player.items.stones,4);
-  w.player.hp=30;w.player.items.honey=2;for(let i=0;i<10;i++)w.step({honey:true});assert.equal(w.player.items.honey,2);w.advance(1.1);assert.equal(w.player.items.honey,1);assert.equal(w.player.hp,65);
 });

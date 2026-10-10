@@ -1,78 +1,78 @@
 {
-  "version": "adventure-rubric-v1",
+  "version": "adventure-rubric-v2-horror",
   "level": {
     "width": 57600,
     "trees": 27,
     "checkpoints": 3,
     "enemies": 25
   },
-  "points": 100,
+  "points": 95,
   "maxPoints": 100,
-  "verdict": "meets the adventure rubric target",
+  "verdict": "meets the dark-horror challenge target",
   "blockers": [],
   "rows": [
     {
       "id": "progression",
-      "name": "The level can be traversed",
-      "weight": 25,
+      "name": "The dark can be traversed — barely",
+      "weight": 20,
       "rating": 4,
-      "evidence": "best policy berserker reached 100% of the Elderwold; checkpoints lit: 3/3",
-      "points": 25
+      "evidence": "best policy berserker reached 100% of the Elderwold; checkpoints 3/3",
+      "points": 20
     },
     {
-      "id": "combat",
-      "name": "Combat tools earn their keep",
-      "weight": 15,
+      "id": "dread",
+      "name": "The forest punishes the careless",
+      "weight": 20,
       "rating": 4,
-      "evidence": "35 kills in 900s as berserker; attack frames 13924, dodge frames 111",
+      "evidence": "the worst-exposed policy takes 10.9 dmg/min in man form (berserker 10.9, speedrun 0.4, pacifist 0.0); deaths when reckless: speedrun 0, berserker 0",
+      "points": 20
+    },
+    {
+      "id": "mastery",
+      "name": "Skill and respect for tells are rewarded",
+      "weight": 20,
+      "rating": 3,
+      "evidence": "disciplined play (cautious: 5.2 dmg/min, 336 dodge frames, respects tells) beats careless by 5.7 dmg/min",
       "points": 15
     },
     {
       "id": "rage",
-      "name": "Rage economy: spend or save is a real choice",
-      "weight": 15,
+      "name": "Spend or save under fear",
+      "weight": 10,
       "rating": 4,
-      "evidence": "tap skills fired: 2, full transformations: 2, first at 3s; contract rage/tap-costs-25 PASS",
-      "points": 15
+      "evidence": "taps fired 4, berserks 5, first at 3s; bear uptime of best run 19.5% (§4 target ~25%)",
+      "points": 10
     },
     {
       "id": "world",
       "name": "The world remembers the bear",
       "weight": 10,
       "rating": 4,
-      "evidence": "14 trees felled in one run; felled-tree persistence contract PASS",
-      "points": 10
-    },
-    {
-      "id": "deathloop",
-      "name": "Death is a teacher, not a grind",
-      "weight": 10,
-      "rating": 4,
-      "evidence": "death/strips-inventory PASS; total bot deaths 0 (bots that die keep their world changes)",
-      "points": 10
-    },
-    {
-      "id": "agency",
-      "name": "Different intents, different runs",
-      "weight": 10,
-      "rating": 4,
-      "evidence": "progress spread across policies 97 points (berserker 100% vs pacifist 3%): the spend/save decision changes the run",
+      "evidence": "14 trees felled in one run; persistence contract PASS",
       "points": 10
     },
     {
       "id": "determinism",
-      "name": "Seeded, stable, replayable",
-      "weight": 10,
+      "name": "Seeded, stable, replayable dread",
+      "weight": 5,
       "rating": 4,
       "evidence": "all 7 contracts pass, incl. byte-identical seed replay and zero NaN frames",
+      "points": 5
+    },
+    {
+      "id": "agency",
+      "name": "Intent changes the run",
+      "weight": 10,
+      "rating": 4,
+      "evidence": "progress spread 97 points across policies (100% berserker vs 2% pacifist)",
       "points": 10
     },
     {
-      "id": "pacing",
-      "name": "Bear rhythm near §4 targets",
+      "id": "nocomfort",
+      "name": "No comfort mechanics remain",
       "weight": 5,
       "rating": 4,
-      "evidence": "bear uptime 19.5% of a full best run (target ~25% ± 25%); first transformation 3.1 min (bot is superhuman; human target 9–13 min)",
+      "evidence": "honey/heal-on-demand mechanic removed from the simulation, HUD, touch controls and saves; healing exists only at dens and the bear's kill-driven wound recovery",
       "points": 5
     }
   ],
@@ -81,37 +81,40 @@
       "policy": "speedrun",
       "seed": 7,
       "seconds": 900,
-      "firstTapSkill": 360.25,
+      "firstTapSkill": 360.3,
       "firstTransform": null,
       "transforms": 0,
       "bearFrames": 0,
       "tapSkills": 1,
-      "attacks": 203,
-      "dodges": 31,
+      "attacks": 247,
+      "dodges": 0,
       "throws": 0,
       "honeyEaten": 0,
       "deaths": 0,
       "deathsBefore": 0,
       "nanFrames": 0,
+      "damageTaken": 5.950000000000003,
+      "lowHpFrames": 0,
+      "nightFrames": 14401,
       "maxX": 3838,
       "bossReached": false,
       "bossDamageDealt": 0,
       "checkpointsLit": 1,
-      "kills": 1,
+      "kills": 2,
       "endDeaths": 0,
       "progress": 0.067,
       "bearUptime": 0,
       "treesFelled": 0,
       "completed": false,
-      "endDigest": "3838.00|472.07|80.00|0.00|0.00|899.75|0.00|0.00|0.00|0.00|1.00",
+      "endDigest": "3838.00|389.14|74.05|0.00|0.00|899.70|0.00|0.00|0.00|0.00|1.00",
       "stats": {
         "deaths": 0,
         "berserks": 0,
         "secrets": 0,
-        "playTime": 899.7499999995104,
+        "playTime": 899.6999999995104,
         "moonrises": 1,
         "trees": 0,
-        "kills": 1
+        "kills": 2
       }
     },
     {
@@ -130,6 +133,9 @@
       "deaths": 0,
       "deathsBefore": 0,
       "nanFrames": 0,
+      "damageTaken": 162.8,
+      "lowHpFrames": 0,
+      "nightFrames": 0,
       "maxX": 57572,
       "bossReached": true,
       "bossDamageDealt": 0,
@@ -155,37 +161,40 @@
       "policy": "cautious",
       "seed": 7,
       "seconds": 900,
-      "firstTapSkill": null,
-      "firstTransform": null,
-      "transforms": 0,
-      "bearFrames": 0,
-      "tapSkills": 0,
-      "attacks": 239,
-      "dodges": 89,
+      "firstTapSkill": 22.25,
+      "firstTransform": 193.7,
+      "transforms": 3,
+      "bearFrames": 12129,
+      "tapSkills": 2,
+      "attacks": 16839,
+      "dodges": 336,
       "throws": 0,
       "honeyEaten": 0,
       "deaths": 0,
       "deathsBefore": 0,
       "nanFrames": 0,
-      "maxX": 3838,
+      "damageTaken": 77.35000000000001,
+      "lowHpFrames": 0,
+      "nightFrames": 0,
+      "maxX": 37495.584627052085,
       "bossReached": false,
       "bossDamageDealt": 0,
-      "checkpointsLit": 1,
-      "kills": 3,
+      "checkpointsLit": 2,
+      "kills": 49,
       "endDeaths": 0,
-      "progress": 0.067,
-      "bearUptime": 0,
-      "treesFelled": 0,
+      "progress": 0.651,
+      "bearUptime": 0.225,
+      "treesFelled": 9,
       "completed": false,
-      "endDigest": "3838.00|502.57|63.85|50.00|0.00|899.65|0.00|0.00|0.00|0.00|1.00",
+      "endDigest": "22940.00|373.63|105.00|58.81|35.28|42.08|0.00|9.00|9.00|1.00|2.00",
       "stats": {
         "deaths": 0,
-        "berserks": 0,
+        "berserks": 3,
         "secrets": 0,
-        "playTime": 899.6499999995104,
-        "moonrises": 1,
-        "trees": 0,
-        "kills": 3
+        "playTime": 866.2833333328741,
+        "moonrises": 0,
+        "trees": 9,
+        "kills": 49
       }
     },
     {
@@ -204,6 +213,9 @@
       "deaths": 0,
       "deathsBefore": 0,
       "nanFrames": 0,
+      "damageTaken": 0,
+      "lowHpFrames": 0,
+      "nightFrames": 14404,
       "maxX": 1480.5,
       "bossReached": false,
       "bossDamageDealt": 0,
@@ -230,12 +242,12 @@
     {
       "id": "determinism/replay",
       "pass": true,
-      "detail": "3838.00|513.86|80.00|0.00|0.00|89.75|0.00|0.00|0.00|0.00|1.00 vs 3838.00|513.86|80.00|0.00|0.00|89.75|0.00|0.00|0.00|0.00|1.00"
+      "detail": "3838.00|387.15|74.05|0.00|0.00|89.70|0.00|0.00|0.00|0.00|1.00 vs 3838.00|387.15|74.05|0.00|0.00|89.70|0.00|0.00|0.00|0.00|1.00"
     },
     {
       "id": "death/strips-inventory",
       "pass": true,
-      "detail": "{\"hand\":null,\"body\":null,\"charms\":[],\"stones\":0,\"honey\":0,\"honeyPouch\":false,\"bracers\":false}"
+      "detail": "{\"hand\":null,\"body\":null,\"charms\":[],\"stones\":0,\"bracers\":false}"
     },
     {
       "id": "death/world-persists",
@@ -263,5 +275,5 @@
       "detail": "rage 25"
     }
   ],
-  "scope": "Automated mechanical evidence from seeded headless bots over the real simulation; human enjoyment and device feel remain unreviewed (same split as readysetsanta)."
+  "scope": "Automated mechanical evidence from seeded headless bots over the real simulation; horror atmosphere and feel remain unreviewed (same split as readysetsanta)."
 }

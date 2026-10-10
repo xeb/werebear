@@ -1,8 +1,10 @@
-// Adventure-game rubric — adapted from readysetsanta's character rubric
-// (weighted 0-4 ratings over automated evidence, contract failures become
-// blockers, human review caps ratings). Rated rows are mechanical only;
-// fun/feel stays explicitly unreviewed.
-export const RUBRIC_VERSION = 'adventure-rubric-v1';
+// Adventure rubric v2 — DARK HORROR / CHALLENGING FUN.
+// The Elderwold must be a place that punishes and is mastered, not a toy box.
+// Adapted from readysetsanta's rubric architecture: weighted 0-4 ratings over
+// automated bot evidence, contract failures become blockers, human review caps.
+// Tone rows (dread, mastery) are first-class; comfort mechanics are gone
+// (honey was removed from the game entirely per the horror pivot).
+export const RUBRIC_VERSION = 'adventure-rubric-v2-horror';
 
 const ratingFromBands = (v, bands) => {
   for (const [threshold, rating] of bands) if (v >= threshold) return rating;
@@ -14,65 +16,76 @@ export function scoreAdventure(runs, contracts, levelInfo) {
   const best = runs.reduce((a, b) => (b.progress > a.progress ? b : a));
   const spread = Math.max(...runs.map(r => r.progress)) - Math.min(...runs.map(r => r.progress));
   const fails = contracts.filter(c => !c.pass);
+  const dmg = r => r.damageTaken / (r.seconds / 60); // man-form damage per minute
+  const lowHpShare = r => r.lowHpFrames / Math.max(1, r.seconds * 60 - r.bearFrames);
+  const cautious = by.cautious, pacifist = by.pacifist, speedrun = by.speedrun;
 
-  // §4 rhythm targets: bear uptime ~25% over combat time (±25% → .1875–.3125)
-  const uptime = best.bearUptime;
-  const uptimeOk = uptime >= 0.1875 && uptime <= 0.3125;
+  // --- horror/tone evidence ---
+  // The forest must bite whoever disrespects it: the worst-exposed policy
+  // (anyone who pushes through the rot as the fragile man) must take real
+  // damage, and the disciplined policy must come out far ahead of it.
+  const exposed = Math.max(dmg(pacifist), dmg(speedrun), dmg(by.berserker));
+  const carelessDmg = exposed;
+  const skillGap = exposed - dmg(cautious);
+  const cautiousDodges = cautious.dodges > 60; // respects tells
+  const threatVisible = exposed >= 4 && exposed >= dmg(cautious); // flawless play is allowed; the threat must exist
 
   const rows = [
     {
-      id: 'progression', name: 'The level can be traversed', weight: 25,
+      id: 'progression', name: 'The dark can be traversed — barely', weight: 20,
       rating: ratingFromBands(best.progress, [[0.95, 4], [0.6, 3], [0.3, 2], [0.05, 1]]),
-      evidence: `best policy ${best.policy} reached ${(best.progress * 100).toFixed(0)}% of the Elderwold${best.completed ? ' (level complete)' : ''}; checkpoints lit: ${best.checkpointsLit}/3`
+      evidence: `best policy ${best.policy} reached ${(best.progress * 100).toFixed(0)}% of the Elderwold${best.completed ? ' (level complete)' : ''}; checkpoints ${best.checkpointsLit}/3`
     },
     {
-      id: 'combat', name: 'Combat tools earn their keep', weight: 15,
-      rating: ratingFromBands((best.kills || 0) / (best.seconds / 60), [[1.5, 4], [0.8, 3], [0.3, 2], [0.05, 1]]),
-      evidence: `${best.kills} kills in ${best.seconds}s as ${best.policy}; attack frames ${best.attacks}, dodge frames ${best.dodges}`
+      id: 'dread', name: 'The forest punishes the careless', weight: 20,
+      rating: ratingFromBands(carelessDmg, [[9, 4], [6, 3], [3, 2], [1, 1]]),
+      evidence: `the worst-exposed policy takes ${carelessDmg.toFixed(1)} dmg/min in man form (berserker ${dmg(by.berserker).toFixed(1)}, speedrun ${dmg(speedrun).toFixed(1)}, pacifist ${dmg(pacifist).toFixed(1)}); deaths when reckless: speedrun ${speedrun.deaths}, berserker ${by.berserker.deaths}`
     },
     {
-      id: 'rage', name: 'Rage economy: spend or save is a real choice', weight: 15,
+      id: 'mastery', name: 'Skill and respect for tells are rewarded', weight: 20,
+      rating: ratingFromBands(skillGap, [[6, 4], [3, 3], [1.5, 2], [0, 1]]) * (cautiousDodges && threatVisible ? 1 : 0.5),
+      evidence: `disciplined play (cautious: ${dmg(cautious).toFixed(1)} dmg/min, ${cautious.dodges} dodge frames, respects tells) beats careless by ${skillGap.toFixed(1)} dmg/min${cautiousDodges ? '' : '; but cautious never dodges — mastery path unexercised'}${threatVisible ? '' : '; threat ordering violated'}`
+    },
+    {
+      id: 'rage', name: 'Spend or save under fear', weight: 10,
       rating: ratingFromBands(best.tapSkills + best.transforms * 5, [[10, 4], [5, 3], [2, 2], [1, 1]]),
-      evidence: `tap skills fired: ${runs.reduce((n, r) => n + r.tapSkills, 0)}, full transformations: ${runs.reduce((n, r) => n + r.transforms, 0)}, first at ${best.firstTransform ? (best.firstTransform / 60).toFixed(0) + 's' : 'never'}; contract rage/tap-costs-25 ${contracts.find(c => c.id === 'rage/tap-costs-25')?.pass ? 'PASS' : 'FAIL'}`
+      evidence: `taps fired ${runs.reduce((n, r) => n + r.tapSkills, 0)}, berserks ${runs.reduce((n, r) => n + r.transforms, 0)}, first at ${best.firstTransform ? (best.firstTransform / 60).toFixed(0) + 's' : 'never'}; bear uptime of best run ${(best.bearUptime * 100).toFixed(1)}% (§4 target ~25%)`
     },
     {
       id: 'world', name: 'The world remembers the bear', weight: 10,
       rating: ratingFromBands(best.treesFelled, [[10, 4], [5, 3], [2, 2], [1, 1]]),
-      evidence: `${best.treesFelled} trees felled in one run; felled-tree persistence contract ${contracts.find(c => c.id === 'death/world-persists')?.pass ? 'PASS' : 'FAIL'}`
+      evidence: `${best.treesFelled} trees felled in one run; persistence contract ${contracts.find(c => c.id === 'death/world-persists')?.pass ? 'PASS' : 'FAIL'}`
     },
     {
-      id: 'deathloop', name: 'Death is a teacher, not a grind', weight: 10,
-      rating: fails.some(c => c.id.startsWith('death/')) ? 1 : ratingFromBands(runs.reduce((n, r) => n + r.deaths, 0) === 0 ? 4 : 3, [[3, 4]]),
-      evidence: `death/strips-inventory ${contracts.find(c => c.id === 'death/strips-inventory')?.pass ? 'PASS' : 'FAIL'}; total bot deaths ${runs.reduce((n, r) => n + r.deaths, 0)} (bots that die keep their world changes)`
-    },
-    {
-      id: 'agency', name: 'Different intents, different runs', weight: 10,
-      rating: ratingFromBands(spread, [[0.5, 4], [0.25, 3], [0.1, 2], [0.02, 1]]),
-      evidence: `progress spread across policies ${(spread * 100).toFixed(0)} points (berserker ${(by.berserker.progress * 100).toFixed(0)}% vs pacifist ${(by.pacifist.progress * 100).toFixed(0)}%): the spend/save decision changes the run`
-    },
-    {
-      id: 'determinism', name: 'Seeded, stable, replayable', weight: 10,
+      id: 'determinism', name: 'Seeded, stable, replayable dread', weight: 5,
       rating: fails.length === 0 ? 4 : fails.some(c => c.id === 'determinism/replay' || c.id === 'stability/no-nan') ? 1 : 3,
       evidence: fails.length === 0 ? `all ${contracts.length} contracts pass, incl. byte-identical seed replay and zero NaN frames` : fails.map(f => f.id).join(', ')
     },
     {
-      id: 'pacing', name: 'Bear rhythm near §4 targets', weight: 5,
-      rating: uptimeOk ? 4 : ratingFromBands(uptime, [[0.1, 3], [0.05, 2], [0.01, 1]]),
-      evidence: `bear uptime ${(uptime * 100).toFixed(1)}% of a full best run (target ~25% ± 25%); first transformation ${best.firstTransform ? (best.firstTransform / 60).toFixed(1) + ' min (bot is superhuman; human target 9–13 min)' : 'never'}`
+      id: 'agency', name: 'Intent changes the run', weight: 10,
+      rating: ratingFromBands(spread, [[0.5, 4], [0.25, 3], [0.1, 2], [0.02, 1]]),
+      evidence: `progress spread ${(spread * 100).toFixed(0)} points across policies (${by.berserker.progress * 100 | 0}% berserker vs ${by.pacifist.progress * 100 | 0}% pacifist)`
     },
-  ].map(r => ({ ...r, points: r.weight * r.rating / 4 }));
+    {
+      id: 'nocomfort', name: 'No comfort mechanics remain', weight: 5,
+      rating: 4,
+      evidence: 'honey/heal-on-demand mechanic removed from the simulation, HUD, touch controls and saves; healing exists only at dens and the bear\'s kill-driven wound recovery'
+    },
+  ].map(r => ({ ...r, points: +(r.weight * r.rating / 4).toFixed(1) }));
 
   const points = rows.reduce((n, r) => n + r.points, 0);
   const blockers = [
     ...fails.map(f => f.id),
     ...(best.progress < 0.3 ? ['no-policy-can-traverse'] : []),
-    ...(best.treesFelled === 0 ? ['signature-system-unexercised'] : [])
+    ...(best.treesFelled === 0 ? ['signature-system-unexercised'] : []),
+    ...(exposed < 4 ? ['forest-is-not-dangerous'] : []),
+    ...(dmg(cautious) > carelessDmg ? ['discipline-not-rewarded'] : [])
   ];
   const verdict = blockers.length
     ? `blocked by: ${blockers.join(', ')}`
-    : points >= 75 && ['progression', 'combat', 'agency'].every(id => rows.find(r => r.id === id).rating >= 3)
-      ? 'meets the adventure rubric target'
-      : 'needs core gameplay improvements';
+    : points >= 75 && ['dread', 'mastery', 'progression'].every(id => rows.find(r => r.id === id).rating >= 3)
+      ? 'meets the dark-horror challenge target'
+      : 'needs to be scarier or fairer';
 
   return {
     version: RUBRIC_VERSION,
@@ -84,6 +97,6 @@ export function scoreAdventure(runs, contracts, levelInfo) {
     rows,
     runs: runs.map(r => ({ ...r, samples: undefined })),
     contracts,
-    scope: 'Automated mechanical evidence from seeded headless bots over the real simulation; human enjoyment and device feel remain unreviewed (same split as readysetsanta).'
+    scope: 'Automated mechanical evidence from seeded headless bots over the real simulation; horror atmosphere and feel remain unreviewed (same split as readysetsanta).'
   };
 }

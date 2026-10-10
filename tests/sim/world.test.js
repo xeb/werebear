@@ -51,9 +51,9 @@ test('checkpoint touch lights without time; sleep restores health at dawn; death
   const w = new World(); w.enemies = [];
   const cp = w.checkpoints[1]; w.player.x = cp.x; w.clock = 400; w.step();
   assert.equal(w.checkpoint, cp.id); assert.equal(w.clock > 400, true);
-  w.player.hp = 12; w.player.rage = 60; w.player.items.honey = 2; w.sleep();
+  w.player.hp = 12; w.player.rage = 60; w.player.items.stones = 3; w.sleep();
   assert.equal(w.clock, 0); assert.equal(w.player.hp, w.player.maxHp); assert.equal(w.player.rage, 60);
-  w.die(); assert.equal(w.player.items.honey, 0); assert.equal(w.player.rage, 0); assert.equal(w.player.x, cp.x);
+  w.die(); assert.equal(w.player.items.stones, 0); assert.equal(w.player.rage, 0); assert.equal(w.player.x, cp.x);
 });
 
 test('boss phases, tree pin damage, and no-bear victory route are represented', () => {
@@ -86,8 +86,8 @@ test('parry cancels a tell, a net prevents transformation until Roar, and human 
 });
 
 test('seeded integration sequence replays to identical state and death preserves felling but strips resources', () => {
-  const run=()=>{const w=new World({seed:123});w.enemies=[];for(let i=0;i<90;i++)w.step({right:i<60,jump:i===3});w.player.rage=25;w.tapSkill('forward');w.addTree('path_oak',600,'elderwood');for(let i=0;i<3;i++)w.hitTree(w.trees.at(-1));w.advance(1.2);w.player.items.honey=2;w.player.items.stones=4;w.die();return w.serialize()};
-  assert.deepEqual(run(),run()); const result=run();assert.ok(result.world.felled.includes('path_oak'));assert.equal(result.player.items.honey,0);assert.equal(result.player.items.stones,0);
+  const run=()=>{const w=new World({seed:123});w.enemies=[];for(let i=0;i<90;i++)w.step({right:i<60,jump:i===3});w.player.rage=25;w.tapSkill('forward');w.addTree('path_oak',600,'elderwood');for(let i=0;i<3;i++)w.hitTree(w.trees.at(-1));w.advance(1.2);w.player.items.stones=4;w.die();return w.serialize()};
+  assert.deepEqual(run(),run()); const result=run();assert.ok(result.world.felled.includes('path_oak'));assert.equal(result.player.items.stones,0);
 });
 
 test('felled tree uses a creak and fall window before opening a shaft and becoming a log collider',()=>{
@@ -101,10 +101,6 @@ test('compressed level exposes every named beat and bear form is rejected by cra
   w.player.form='man';w.player.x=crawl.x-10;w.step({right:true,down:true});assert.ok(w.player.x>crawl.x-crawl.width);
 });
 
-test('honey takes 1.2 seconds, heals 35 on completion, and an incoming hit interrupts it',()=>{
-  const w=new World();w.enemies=[];w.player.hp=30;w.player.items.honey=2;assert.equal(w.eatHoney(),true);assert.equal(w.player.items.honey,2);w.advance(1.19);assert.equal(w.player.hp,30);w.advance(.02);assert.equal(w.player.hp,65);assert.equal(w.player.items.honey,1);
-  w.player.hp=20;w.eatHoney();w.advance(.4);w.hurt(1);w.advance(1);assert.equal(w.player.hp,19);assert.equal(w.player.items.honey,1);
-});
 
 test('transform animation survives release; holding again as the bear ends the form',()=>{
   const w=new World();w.enemies=[];w.player.rage=100;w.beginTransform();w.endTransform();w.advance(1);assert.equal(w.player.form,'bear');assert.equal(w.player.h,150);w.endTransform();assert.equal(w.player.form,'exhausted');assert.equal(w.player.h,72);
@@ -116,10 +112,10 @@ test('bear can uproot a felled tree, swing it three times, and its destruction p
   const restored=new World();restored.restore(w.serialize());assert.equal(restored.trees.find(t=>t.id===tree.id).log,false);
 });
 
-test('equipment slot effects coexist: wraps raise health, bracers parry, honey pouch rewards shape break',()=>{
-  const w=new World();w.enemies=[];w.pickup('hide_wrap');w.pickup('bracers');w.pickup('honey_pouch');assert.equal(w.player.maxHp,105);assert.equal(w.player.items.body,'hide_wrap');assert.equal(w.player.items.bracers,true);assert.equal(w.player.items.honeyPouch,true);
-  w.player.hp=50;w.player.wounds=0;w.player.form='bear';w.player.h=150;w.player.w=58;w.breakForm();assert.equal(w.player.hp,65);assert.equal(w.player.h,72);w.advance(3.1);assert.equal(w.dodge(true),true);assert.ok(w.player.parry>0);
-  w.die();assert.equal(w.player.maxHp,80);assert.equal(w.player.items.honeyPouch,false);
+test('equipment slot effects coexist: wraps raise health and bracers parry',()=>{
+  const w=new World();w.enemies=[];w.pickup('hide_wrap');w.pickup('bracers');assert.equal(w.player.maxHp,105);assert.equal(w.player.items.body,'hide_wrap');assert.equal(w.player.items.bracers,true);
+  w.player.hp=50;w.player.wounds=0;w.player.form='bear';w.player.h=150;w.player.w=58;w.breakForm();assert.equal(w.player.hp,50);assert.equal(w.player.h,72);w.advance(3.1);assert.equal(w.dodge(true),true);assert.ok(w.player.parry>0);
+  w.die();assert.equal(w.player.maxHp,80);
 });
 
 test('the first rotwood sapling gates the route until a bear slam permanently fells it',()=>{
@@ -169,6 +165,6 @@ test('public traversal enforces the first gap route and bear Dodge performs Char
   const charging=new World();charging.enemies=[];charging.player.form='bear';charging.player.formTimer=30;charging.player.formLength=30;charging.player.x=3830;charging.player.facing=1;charging.step({dodge:true});charging.advance(.3);assert.ok(charging.world.broken.includes('rot_wall_01'),'bear Dodge must map to Charge and break rot walls');
 });
 
-test('human Down plus Paw fells the bee-tree and exposes the Honeycomb Pouch',()=>{
-  const w=new World();w.enemies=[];const bee=w.trees.find(t=>t.id==='tree_06');w.player.x=bee.x;w.player.rage=25;assert.equal(w.tapSkill('down'),true);w.advance(1.4);assert.ok(bee.felled);const pouch=w.pickups.find(p=>p.item==='honey_pouch');assert.equal(pouch.requiresTree,bee.id);w.player.x=pouch.x;w.step();assert.equal(w.player.items.honeyPouch,true);
+test('human Down plus Paw fells the bee-tree and exposes a stone cache',()=>{
+  const w=new World();w.enemies=[];const bee=w.trees.find(t=>t.id==='tree_06');w.player.x=bee.x;w.player.rage=25;assert.equal(w.tapSkill('down'),true);w.advance(1.4);assert.ok(bee.felled);const cache=w.pickups.find(p=>p.requiresTree===bee.id);assert.ok(cache);w.player.x=cache.x;w.step();assert.equal(w.player.items.stones>0,true);
 });

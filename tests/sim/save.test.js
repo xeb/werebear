@@ -6,9 +6,9 @@ import { saveWorld,loadWorld,clearSave } from '../../site/sim/save.js';
 function storage(){const m=new Map();return{getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)}}
 
 test('local save round-trips the player, checkpoint, clock, stats and permanent world state',()=>{
-  const store=storage(),w=new World({seed:77});w.checkpoints[1].lit=true;w.checkpoint='cp1_den';w.player.items.hand='bone_knife';w.player.items.honey=2;w.clock=411;w.world.felled.push('tree_01');
+  const store=storage(),w=new World({seed:77});w.checkpoints[1].lit=true;w.checkpoint='cp1_den';w.player.items.hand='bone_knife';w.player.items.stones=3;w.clock=411;w.world.felled.push('tree_01');
   assert.equal(saveWorld(w,store),true);const restored=new World({seed:1});assert.equal(loadWorld(restored,store),true);
-  assert.equal(restored.seed,77);assert.equal(restored.player.items.hand,'bone_knife');assert.equal(restored.player.items.honey,2);assert.equal(restored.phase,'night');assert.equal(restored.checkpoint,'cp1_den');assert.ok(restored.trees.find(t=>t.id==='tree_01').felled);
+  assert.equal(restored.seed,77);assert.equal(restored.player.items.hand,'bone_knife');assert.equal(restored.player.items.stones,3);assert.equal(restored.phase,'night');assert.equal(restored.checkpoint,'cp1_den');assert.ok(restored.trees.find(t=>t.id==='tree_01').felled);
   assert.equal(clearSave(store),true);assert.equal(loadWorld(restored,store),false);
 });
 
@@ -30,8 +30,8 @@ test('valid JSON with invalid v1 structure is rejected without mutating the live
 });
 
 test('loading resumes at checkpoint as a healthy human and clears transient combat state',()=>{
-  const store=storage(),saved=new World();saved.checkpoints[1].lit=true;saved.checkpoint='cp1_den';saved.player.x=432;saved.player.hp=12;saved.player.wounds=30;saved.player.form='bear';saved.player.h=150;saved.player.exhaustion=3;saved.player.invuln=2;saved.player.items.hand='stick';saved.player.items.honey=2;saved.player.rage=55;saved.world.felled.push('tree_01');
-  saveWorld(saved,store);const loaded=new World();assert.equal(loadWorld(loaded,store),true);assert.equal(loaded.player.x,loaded.checkpoints[1].x);assert.equal(loaded.player.hp,loaded.player.maxHp);assert.equal(loaded.player.form,'man');assert.equal(loaded.player.h,72);assert.equal(loaded.player.wounds,0);assert.equal(loaded.player.exhaustion,0);assert.equal(loaded.player.invuln,0);assert.equal(loaded.player.items.hand,'stick');assert.equal(loaded.player.items.honey,2);assert.equal(loaded.player.rage,55);assert.ok(loaded.world.felled.includes('tree_01'));
+  const store=storage(),saved=new World();saved.checkpoints[1].lit=true;saved.checkpoint='cp1_den';saved.player.x=432;saved.player.hp=12;saved.player.wounds=30;saved.player.form='bear';saved.player.h=150;saved.player.exhaustion=3;saved.player.invuln=2;saved.player.items.hand='stick';saved.player.items.stones=2;saved.player.rage=55;saved.world.felled.push('tree_01');
+  saveWorld(saved,store);const loaded=new World();assert.equal(loadWorld(loaded,store),true);assert.equal(loaded.player.x,loaded.checkpoints[1].x);assert.equal(loaded.player.hp,loaded.player.maxHp);assert.equal(loaded.player.form,'man');assert.equal(loaded.player.h,72);assert.equal(loaded.player.wounds,0);assert.equal(loaded.player.exhaustion,0);assert.equal(loaded.player.invuln,0);assert.equal(loaded.player.items.hand,'stick');assert.equal(loaded.player.items.stones,2);assert.equal(loaded.player.rage,55);assert.ok(loaded.world.felled.includes('tree_01'));
 });
 
 test('v1 saves accept the cumulative in-game clock after several day cycles',()=>{

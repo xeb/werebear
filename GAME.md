@@ -28,6 +28,7 @@
 | D15 | **Title** | ***Wear the Bear.*** Coming-soon tagline: "Wake with nothing. Earn the fury." | User |
 | D16 | Cold open | Keep the 30-second playable bear dream before Bjarki wakes. | User |
 | D17 | Sleep | Sleeping at a checkpoint restores Health, respawns enemies and skips to the next dawn. | User |
+| D18 | **Tone pivot (2026-10-10)** | **Dark horror, not cozy.** The **honey mechanic is removed entirely** (no belt consumable, no Honeycomb Pouch; the bee-tree now breaks open into a stone cache). Healing exists only at dens and the bear's kill-driven Wound recovery. The play-evaluation rubric (`tests/evaluation/`) scores **challenging fun**: dread (the careless are punished), mastery (disciplined play is rewarded), and spend-or-save tension. | User |
 
 Removed from the v0.1 draft: Amber currency, Marks/stat levelling, the Shed Pelt recovery, the Heartwood Pulse (replaced by the day/night cycle), and the 12s/kill-extended berserk (replaced by a fixed 90s).
 

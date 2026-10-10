@@ -36,7 +36,7 @@ function navigate(mem, w, input) {
   if (inGap(w)) input.down = true;
   // hard-blocked for ~1.5s: spend 25 Rage on Bear Slam (fells Rotwood saplings)
   // — skipped while the policy is banking for the full transformation
-  if (input.right && (mem.blocked || 0) > 90 && w.player.form === 'man' && w.player.rage >= 25 && !mem.saveRage) {
+  if ((mem.blocked || 0) > 90 && w.player.form === 'man' && w.player.rage >= 25 && !mem.saveRage) {
     input.skill = true; input.direction = 'down'; mem.taps = (mem.taps || 0) + 1; mem.blocked = 0;
   }
   // bear blocked ~1s: Charge (bear dodge) breaks rot-walls and fells trees
@@ -54,16 +54,16 @@ function bearFrame(w, input, mem) {
 }
 
 export const POLICIES = {
-  // Push right as fast as possible, fight whatever is in the way.
+  // RECKLESS charger: pushes right through anything, swings blindly, never
+  // dodges or retreats. The rubric's "careless player" probe — the forest
+  // should punish this policy and reward the cautious one.
   speedrun: (w, t, mem) => {
     const input = { right: true };
     navigate(mem, w, input);
-    const e = nearestEnemy(w, 150);
+    const e = nearestEnemy(w, 170);
     if (e) { input.attack = true; if (w.player.rage >= 25 && w.player.form === 'man') { input.skill = true; input.direction = 'forward'; mem.taps = (mem.taps || 0) + 1; } }
     if (w.player.form === 'bear') return bearFrame(w, input, mem);
     if (w.player.rage >= 100 && w.player.form === 'man') input.transform = true; // one-step hold
-    const f = nearestEnemy(w, 260);
-    if (f && f.state === 'tell') { input.dodge = true; input.right = true; }
     return input;
   },
 
@@ -109,14 +109,24 @@ export const POLICIES = {
     return input;
   },
 
-  // Souls-inspired: respect tells, dodge, punish recoveries only.
+  // Souls-inspired: respect tells, dodge late, punish recoveries only. When a
+  // bear-gate hard-blocks the man (or 30s pass with no new ground), it
+  // deliberately farms Rage like the berserker's loop.
   cautious: (w, t, mem) => {
+    if (w.player.x > (mem.bestX || 0) + 8) { mem.bestX = w.player.x; mem.stagnant = 0; }
+    else mem.stagnant = (mem.stagnant || 0) + 1;
+    const gated = (mem.blocked || 0) > 240 || (mem.stagnant > 1800 && w.player.form === 'man' && w.player.rage < 100);
+    if (gated) {
+      mem.saveRage = true;
+      return POLICIES.berserker(w, t, mem);
+    }
     const input = {};
     navigate(mem, w, input);
     const e = nearestEnemy(w, 320);
     if (e) {
       const d = dist(e.x, w.player.x);
-      if (e.state === 'tell') { input.dodge = true; input.left = e.x > w.player.x; input.right = e.x < w.player.x; }
+      // dodge late: only when the tell is about to resolve (skillful timing)
+      if (e.state === 'tell' && (e.tellDuration === undefined || e.tellDuration - e.tell < 0.3)) { input.dodge = true; input.left = e.x > w.player.x; input.right = e.x < w.player.x; }
       else if (d < 95 && e.state !== 'recovery') { input.attack = true; input.right = e.x > w.player.x; }
       else if (d < 170 && e.state === 'recovery') { input.attack = true; input.right = e.x > w.player.x; }
       else input.right = true;

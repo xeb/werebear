@@ -19,6 +19,7 @@ export function runPolicy(policyName, { seed = 7, seconds = 600 } = {}) {
     frames: 0, firstTapSkill: null, firstTransform: null, transforms: 0,
     bearFrames: 0, tapSkills: 0, attacks: 0, dodges: 0, throws: 0, honeyEaten: 0,
     deaths: 0, deathsBefore: 0, nanFrames: 0,
+    damageTaken: 0, lowHpFrames: 0, nightFrames: 0,
     maxX: 0, bossReached: false, bossDamageDealt: 0, checkpointsLit: 0,
     samples: []
   };
@@ -33,9 +34,12 @@ export function runPolicy(policyName, { seed = 7, seconds = 600 } = {}) {
     if (input.dodge) m.dodges++;
     if (input.throw) m.throws++;
     if (input.honey) m.honeyEaten++;
-    const before = { form: w.player.form, rage: w.player.rage, deaths: w.stats.deaths };
+    const before = { form: w.player.form, rage: w.player.rage, deaths: w.stats.deaths, hp: w.player.hp };
     w.step(input);
     m.frames++;
+    if (w.player.hp < before.hp - 1e-6 && before.form !== 'bear') m.damageTaken += before.hp - w.player.hp; // man only: bear damage is Wounds
+    if (before.form !== 'bear' && w.player.hp < 24) m.lowHpFrames++;
+    if (w.night) m.nightFrames++;
     const nowAlive = w.enemies.filter(e => e.alive).length;
     if (nowAlive < alive) m.kills = (m.kills || 0) + (alive - nowAlive);
     alive = nowAlive;
@@ -79,11 +83,11 @@ export function contracts() {
   {
     const w = new World({ seed: 3 });
     w.player.items.hand = 'stick'; w.player.items.body = 'hide_wrap';
-    w.player.items.stones = 3; w.player.items.honey = 2; w.player.rage = 60;
+    w.player.items.stones = 3; w.player.rage = 60;
     w.player.hp = 1; w.player.invuln = 0; w.player.dodging = false;
     w.hurt(50);
     const p = w.player;
-    check('death/strips-inventory', !p.items.hand && !p.items.body && p.items.stones === 0 && p.items.honey === 0 && p.rage === 0, JSON.stringify(p.items));
+    check('death/strips-inventory', !p.items.hand && !p.items.body && p.items.stones === 0 && p.rage === 0, JSON.stringify(p.items));
   }
 
   // felled tree persists through death
