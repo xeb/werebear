@@ -1,6 +1,6 @@
 # Wear the Bear — automated play evaluation (adventure-rubric-v1)
 
-**Score: 85 / 100 — meets the adventure rubric target**
+**Score: 100 / 100 — meets the adventure rubric target**
 
 Level: 57600px wide, 27 trees, 25 enemies, 3 checkpoints. 900s sim per policy, seed 7.
 
@@ -8,7 +8,7 @@ Level: 57600px wide, 27 trees, 25 enemies, 3 checkpoints. 900s sim per policy, s
 |-----|--------|--------|--------|----------|
 | The level can be traversed | 25 | 4/4 | 25.0 | best policy berserker reached 100% of the Elderwold; checkpoints lit: 3/3 |
 | Combat tools earn their keep | 15 | 4/4 | 15.0 | 35 kills in 900s as berserker; attack frames 13924, dodge frames 111 |
-| Rage economy: spend or save is a real choice | 15 | 0/4 | 0.0 | tap skills fired: 2, full transformations: 0, first at 3s; contract rage/tap-costs-25 PASS |
+| Rage economy: spend or save is a real choice | 15 | 4/4 | 15.0 | tap skills fired: 2, full transformations: 2, first at 3s; contract rage/tap-costs-25 PASS |
 | The world remembers the bear | 10 | 4/4 | 10.0 | 14 trees felled in one run; felled-tree persistence contract PASS |
 | Death is a teacher, not a grind | 10 | 4/4 | 10.0 | death/strips-inventory PASS; total bot deaths 0 (bots that die keep their world changes) |
 | Different intents, different runs | 10 | 4/4 | 10.0 | progress spread across policies 97 points (berserker 100% vs pacifist 3%): the spend/save decision changes the run |
@@ -20,7 +20,7 @@ Level: 57600px wide, 27 trees, 25 enemies, 3 checkpoints. 900s sim per policy, s
 | Policy | Progress | Kills | Trees | Taps | Transforms | First transform | Bear uptime | Deaths |
 |--------|----------|-------|-------|------|------------|-----------------|-------------|--------|
 | speedrun | 7% | 1 | 0 | 1 | 0 | — | 0.0% | 0 |
-| berserker | 100% | 35 | 14 | 0 | 0 | 3.1 min | 19.5% | 0 |
+| berserker | 100% | 35 | 14 | 0 | 2 | 3.1 min | 19.5% | 0 |
 | cautious | 7% | 3 | 0 | 0 | 0 | — | 0.0% | 0 |
 | pacifist | 3% | 1 | 0 | 1 | 0 | — | 0.0% | 0 |
 

@@ -6,7 +6,7 @@
     "checkpoints": 3,
     "enemies": 25
   },
-  "points": 85,
+  "points": 100,
   "maxPoints": 100,
   "verdict": "meets the adventure rubric target",
   "blockers": [],
@@ -31,9 +31,9 @@
       "id": "rage",
       "name": "Rage economy: spend or save is a real choice",
       "weight": 15,
-      "rating": 0,
-      "evidence": "tap skills fired: 2, full transformations: 0, first at 3s; contract rage/tap-costs-25 PASS",
-      "points": 0
+      "rating": 4,
+      "evidence": "tap skills fired: 2, full transformations: 2, first at 3s; contract rage/tap-costs-25 PASS",
+      "points": 15
     },
     {
       "id": "world",
@@ -120,7 +120,7 @@
       "seconds": 900,
       "firstTapSkill": null,
       "firstTransform": 185.26666666666665,
-      "transforms": 0,
+      "transforms": 2,
       "bearFrames": 10556,
       "tapSkills": 0,
       "attacks": 13924,

@@ -41,7 +41,7 @@ export function runPolicy(policyName, { seed = 7, seconds = 600 } = {}) {
     alive = nowAlive;
     const p = w.player;
     if (!Number.isFinite(p.x) || !Number.isFinite(p.hp) || !Number.isFinite(p.rage)) m.nanFrames++;
-    if (before.form === 'man' && (p.form === 'bear')) m.transforms++;
+    if (before.form === 'man' && (p.form === 'bear' || p.form === 'transforming')) m.transforms++;
     if (before.form === 'man' && p.form === 'transforming' && m.firstTransform == null) m.firstTransform = i * STEP;
     if (p.form === 'bear') m.bearFrames++;
     if (p.form === 'man' && before.rage >= 25 && p.rage <= before.rage - 20 && m.firstTapSkill == null) m.firstTapSkill = i * STEP;
