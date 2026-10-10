@@ -1551,6 +1551,9 @@
   const engineState = {
     currentAction: 'lean_idle',
     currentSprite: 'lean_idle',
+    prevSprite: null,      // pose being faded out (cross-fade)
+    blend: 1,              // 0..1 cross-fade progress
+    blendDur: 0.18,        // seconds per cross-fade
     form: 'lean',
     x: 480,
     y: 390, // ground baseline
@@ -1560,8 +1563,30 @@
     timer: 0,
     animating: false,
     slashArc: 0,
-    stunPulse: 0
+    stunPulse: 0,
+    // eased motion state (all animated with exponential smoothing, frame-rate independent)
+    lastTs: 0,
+    curH: 190, jumpLift: 0, crouchDrop: 0, runCycle: 0, bobPhase: 0,
+    squash: 0, trail: [], trailTimer: 0,
+    timeline: null          // transform morph keyframes [{at, sprite, fx}]
   };
+
+  // Swap to a new pose with a smooth cross-fade instead of a hard cut.
+  function setSprite(key) {
+    if (engineState.currentSprite === key) return;
+    engineState.prevSprite = engineState.currentSprite;
+    engineState.currentSprite = key;
+    engineState.blend = 0;
+  }
+
+  function isTitanKey(key) { return key.includes('titan') || key.includes('stage3') || key.includes('stage4'); }
+  function targetHeight(key) {
+    if (key === 'stage2') return 220;
+    if (key === 'stage2_5') return 250;
+    if (key === 'stage3') return 280;
+    if (key === 'stage4') return 340;
+    return isTitanKey(key) ? 320 : 190;
+  }
 
   const actionStatusEl = document.getElementById('actionStatus');
   const formNameEl = document.getElementById('formName');
@@ -1578,22 +1603,22 @@
 
     if (action.startsWith('lean_')) {
       engineState.form = 'lean';
-      engineState.currentSprite = action;
+      setSprite(action);
       formNameEl.textContent = 'FORM: WAKING HUMAN (LEAN & TATTERED LOINCLOTH)';
       hudRageEl.style.width = '25%';
     } else if (action.startsWith('armored_')) {
       engineState.form = 'armored';
-      engineState.currentSprite = action;
+      setSprite(action);
       formNameEl.textContent = 'FORM: EQUIPPED BARBARIAN (BONE HARNESS & KNIFE)';
       hudRageEl.style.width = '75%';
     } else if (action.startsWith('titan_')) {
       engineState.form = 'titan';
-      engineState.currentSprite = action;
+      setSprite(action);
       formNameEl.textContent = 'FORM: THE PRIMALIST TITAN (90s BERSERK)';
       hudRageEl.style.width = '100%';
     } else if (action === 'revert') {
       engineState.form = 'lean';
-      engineState.currentSprite = 'lean_idle';
+      setSprite('lean_idle');
       formNameEl.textContent = 'FORM: WAKING HUMAN (REVERTED)';
       hudRageEl.style.width = '0%';
       actionStatusEl.textContent = 'REVERTED TO HUMAN FORM (0 RAGE)';
@@ -1608,6 +1633,12 @@
       triggerTransformSequence();
       return;
     }
+
+    // Motion triggers consumed by the eased render loop
+    if (action.includes('jump')) { engineState.hopT = 0.0001; }        // eased sine hop
+    else if (action.includes('crouch') || action.includes('dodge')) { engineState.crouchTarget = 15; }
+    else { engineState.crouchTarget = 0; }
+    if (action.includes('dodge')) { engineState.trailOn = 0.4; }        // seconds of afterimages
 
     // Move specific FX
     if (action === 'lean_punch' || action === 'armored_attack') {
@@ -1646,38 +1677,39 @@
     }
   }
 
-  // 5-Stage Morph Sequence
+  // 5-Stage Morph Sequence — keyframe timeline consumed by the render loop so
+  // every stage change cross-fades smoothly instead of setInterval hard cuts.
   function triggerTransformSequence() {
     engineState.timer = 0;
     engineState.animating = true;
-    let stage = 1;
-    engineState.currentSprite = 'stage1';
     engineState.shake = 5;
+    setSprite('stage1');
+    const stage = (at, sprite, shake, sparksY) => ({ at, sprite, shake, sparksY });
+    engineState.timeline = [
+      stage(0.38, 'stage2', 9, 80),
+      stage(0.76, 'stage2_5', 14, 100),
+      stage(1.14, 'stage3', 18, 120),
+      stage(1.52, 'stage4', 28, 150)
+    ];
+  }
 
-    const interval = setInterval(() => {
-      stage++;
-      if (stage === 2) {
-        engineState.currentSprite = 'stage2';
-        engineState.shake = 9;
-        addRoarSparks(engineState.x, engineState.y - 80);
-      } else if (stage === 3) {
-        engineState.currentSprite = 'stage2_5';
-        engineState.shake = 14;
-        addRoarSparks(engineState.x, engineState.y - 100);
-      } else if (stage === 4) {
-        engineState.currentSprite = 'stage3';
-        engineState.shake = 18;
-        addRoarSparks(engineState.x, engineState.y - 120);
-      } else if (stage === 5) {
-        engineState.currentSprite = 'stage4';
-        engineState.shake = 28;
+  // Advance the morph timeline (dt-based, engineSpeed-aware).
+  function updateTimeline(dt) {
+    const tl = engineState.timeline;
+    if (!tl) return;
+    engineState.timer += dt;
+    while (tl.length && engineState.timer >= tl[0].at / engineSpeed) {
+      const k = tl.shift();
+      setSprite(k.sprite);
+      engineState.shake = Math.max(engineState.shake, k.shake);
+      addRoarSparks(engineState.x, engineState.y - k.sparksY);
+      if (!tl.length) {
         engineState.stunPulse = 1.0;
-        addRoarSparks(engineState.x, engineState.y - 150);
         addDustShockwave(engineState.x, engineState.y);
+        engineState.timeline = null;
         actionStatusEl.textContent = 'EPIC PRIMALIST TITAN UNLEASHED: 90s BERSERK ACTIVATED!';
-        clearInterval(interval);
       }
-    }, 380 / engineSpeed);
+    }
   }
 
   // FX Helpers
@@ -1730,17 +1762,47 @@
     }
   }
 
-  // Main Render Loop (60 FPS)
-  function renderEngineStage() {
+  // Main Render Loop — dt-based (frame-rate independent), eased motion, cross-faded poses
+  function renderEngineStage(ts) {
     requestAnimationFrame(renderEngineStage);
+    const dt = engineState.lastTs ? Math.min(0.05, (ts - engineState.lastTs) / 1000) : 0;
+    engineState.lastTs = ts;
+    const adt = dt * engineSpeed; // animation-scaled delta
+    if (!dt) return;
 
-    // Camera Shake
+    updateTimeline(adt);
+    engineState.blend = Math.min(1, engineState.blend + adt / engineState.blendDur);
+
+    // Eased motion state
+    const targetH = targetHeight(engineState.currentSprite);
+    engineState.curH += (targetH - engineState.curH) * (1 - Math.exp(-adt * 10));
+    engineState.crouchDrop += ((engineState.crouchTarget || 0) - engineState.crouchDrop) * (1 - Math.exp(-adt * 12));
+    if (engineState.hopT > 0) {
+      engineState.hopT += adt / 0.85; // eased sine hop
+      if (engineState.hopT >= 1) { engineState.hopT = 0; engineState.squash = 0.5; }
+    }
+    engineState.squash *= Math.exp(-adt * 9);
+    if (engineState.currentAction.includes('run')) engineState.runCycle += adt * 9;
+    engineState.bobPhase += adt;
+    engineState.trailOn = Math.max(0, (engineState.trailOn || 0) - adt);
+    engineState.trailTimer -= adt;
+    if (engineState.trailOn > 0 && engineState.trailTimer <= 0) {
+      engineState.trailTimer = 0.045;
+      engineState.trail.push({ x: engineState.x, key: engineState.currentSprite, h: engineState.curH, life: 1 });
+    }
+    for (let i = engineState.trail.length - 1; i >= 0; i--) {
+      engineState.trail[i].life -= adt * 3.2;
+      if (engineState.trail[i].life <= 0) engineState.trail.splice(i, 1);
+    }
+
+    // Camera Shake (exponential decay)
     let offsetX = 0;
     let offsetY = 0;
     if (engineState.shake > 0) {
       offsetX = (Math.random() - 0.5) * engineState.shake;
       offsetY = (Math.random() - 0.5) * engineState.shake;
-      engineState.shake = Math.max(0, engineState.shake - 0.8 * engineSpeed);
+      engineState.shake *= Math.exp(-adt * 7);
+      if (engineState.shake < 0.05) engineState.shake = 0;
     }
 
     ctx.save();
@@ -1788,38 +1850,45 @@
       ctx.fillRect(x, groundY - 4, 12, 4);
     }
 
-    // 2. Draw Active Transparent Sprite
-    const activeImg = engineImages[engineState.currentSprite];
-    if (activeImg && activeImg.complete && activeImg.naturalWidth > 0) {
-      const isTitan = engineState.form === 'titan' || engineState.currentSprite.includes('titan') || engineState.currentSprite.includes('stage3') || engineState.currentSprite.includes('stage4');
-      // Scale: Lean Human is 72px logical, Titan is 150px (about 2×)
-      let targetH = isTitan ? 320 : 190;
-      if (engineState.currentSprite === 'stage2') targetH = 220;
-      if (engineState.currentSprite === 'stage2_5') targetH = 250;
-      if (engineState.currentSprite === 'stage3') targetH = 280;
-      if (engineState.currentSprite === 'stage4') targetH = 340;
+    // 2. Draw Active Transparent Sprite(s) with cross-fade + procedural motion
+    const hop = Math.sin(Math.min(1, engineState.hopT || 0) * Math.PI) * 70;
+    const runBob = Math.abs(Math.sin(engineState.runCycle)) * -6 * (engineState.currentAction.includes('run') ? 1 : 0);
+    const bob = Math.sin(engineState.bobPhase * 2.2) * 2.5;
+    const posYBase = groundY - engineState.curH + bob + runBob + engineState.crouchDrop - hop;
 
-      let targetW = (activeImg.naturalWidth / activeImg.naturalHeight) * targetH;
+    // Motion trail (afterimages during dodge)
+    for (const ghost of engineState.trail) {
+      const gImg = engineImages[ghost.key];
+      if (!gImg || !gImg.complete || gImg.naturalWidth <= 0) continue;
+      const gw = (gImg.naturalWidth / gImg.naturalHeight) * ghost.h;
+      ctx.globalAlpha = ghost.life * 0.28;
+      ctx.drawImage(gImg, ghost.x - gw / 2, groundY - ghost.h, gw, ghost.h);
+      ctx.globalAlpha = 1;
+    }
 
-      // Bob / Procedural movement
-      let bob = Math.sin(Date.now() * 0.004 * engineSpeed) * 3;
-      let posX = engineState.x - targetW / 2;
-      let posY = groundY - targetH + bob;
-
-      if (engineState.currentAction.includes('jump')) {
-        posY -= 50;
-      } else if (engineState.currentAction.includes('crouch') || engineState.currentAction.includes('dodge')) {
-        posY += 15;
-      }
-
-      // Draw Soft Shadow under feet
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
-      ctx.beginPath();
-      ctx.ellipse(engineState.x, groundY - 2, targetW * 0.32, 10, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Draw Transparent Character Sprite
-      ctx.drawImage(activeImg, posX, posY, targetW, targetH);
+    const drawPose = (key, alpha) => {
+      const img = engineImages[key];
+      if (!img || !img.complete || img.naturalWidth <= 0) return;
+      const targetW = (img.naturalWidth / img.naturalHeight) * engineState.curH;
+      const sq = engineState.squash;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(engineState.x, groundY);
+      ctx.scale(1 + sq * 0.06, 1 - sq * 0.06); // landing squash / takeoff stretch
+      ctx.drawImage(img, -targetW / 2, posYBase - groundY, targetW, engineState.curH);
+      ctx.restore();
+    };
+    // Soft shadow shrinks with air time
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+    ctx.beginPath();
+    ctx.ellipse(engineState.x, groundY - 2, engineState.curH * 0.24 * (1 - hop / 240), 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+    if (engineState.prevSprite && engineState.blend < 1) {
+      drawPose(engineState.prevSprite, 1 - engineState.blend);
+      drawPose(engineState.currentSprite, engineState.blend);
+    } else {
+      engineState.prevSprite = null;
+      drawPose(engineState.currentSprite, 1);
     }
 
     // 3. Stun Pulse / Roar Wave
@@ -1829,25 +1898,27 @@
       ctx.beginPath();
       ctx.arc(engineState.x, engineState.y - 120, (1 - engineState.stunPulse) * 480, 0, Math.PI * 2);
       ctx.stroke();
-      engineState.stunPulse = Math.max(0, engineState.stunPulse - 0.03 * engineSpeed);
+      engineState.stunPulse = Math.max(0, engineState.stunPulse - adt * 1.8);
     }
 
-    // 4. Slash Arc Visual
+    // 4. Slash Arc Visual (eased arc sweep)
     if (engineState.slashArc > 0) {
       ctx.strokeStyle = `rgba(255, 200, 100, ${engineState.slashArc})`;
       ctx.lineWidth = 5 * engineState.slashArc;
+      const sweep = 1 - engineState.slashArc; // arc travels with the swing
       ctx.beginPath();
-      ctx.arc(engineState.x + 30, engineState.y - 70, 70, -0.4, 0.8);
+      ctx.arc(engineState.x + 30, engineState.y - 70, 70, -0.4 + sweep * 0.9, 0.8 + sweep * 0.9);
       ctx.stroke();
-      engineState.slashArc = Math.max(0, engineState.slashArc - 0.06 * engineSpeed);
+      engineState.slashArc = Math.max(0, engineState.slashArc - adt * 3.2);
     }
 
-    // 5. Particles Update & Draw
+    // 5. Particles Update & Draw (dt-scaled)
     for (let i = engineState.particles.length - 1; i >= 0; i--) {
       const p = engineState.particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life -= p.decay;
+      p.x += p.vx * dt * 60;
+      p.y += p.vy * dt * 60;
+      p.vy += 5 * dt * 60 * 0.06; // slight gravity for organic arcs
+      p.life -= p.decay * dt * 60;
       if (p.life <= 0) {
         engineState.particles.splice(i, 1);
         continue;
