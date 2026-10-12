@@ -1,6 +1,11 @@
 # Cache headers for static assets
 /research/assets/*
   Cache-Control: public, max-age=31536000, immutable
+/guardian/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/guardian/*.js
+  Cache-Control: public, max-age=300, must-revalidate
+
 
 # game modules must revalidate so releases land immediately
 /main.js

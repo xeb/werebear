@@ -14,6 +14,7 @@ background trees, and the forest **stays felled** even after you die.
 - Full design spec & acceptance criteria: [GAME.md](GAME.md) (v1.0, locked)
 - Art review & live engine-moves simulator: [werebear.xeb.ai/art/](https://werebear.xeb.ai/art/)
 - The lore gallery, *The Ursa Codex*: [werebear.xeb.ai/research/](https://werebear.xeb.ai/research/)
+- The WoW Guardian Druid Top 20: [werebear.xeb.ai/guardian/](https://werebear.xeb.ai/guardian/)
 
 ---
 
