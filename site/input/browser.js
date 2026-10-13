@@ -2,7 +2,7 @@ import { TouchStick, normalizeGamepad, normalizeKeyboard, clearInputState } from
 
 const KEY = {
   ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down',
-  Space: 'jump', KeyJ: 'attack', KeyK: 'heavy', KeyL: 'dodge', ShiftLeft: 'dodge', ShiftRight: 'dodge', KeyU: 'throw', KeyH: 'honey', KeyE: 'interact'
+  Space: 'jump', KeyJ: 'attack', KeyK: 'heavy', KeyL: 'dodge', ShiftLeft: 'dodge', ShiftRight: 'dodge', KeyU: 'throw', KeyE: 'interact'
 };
 
 export class BrowserInput {
@@ -36,13 +36,13 @@ export class BrowserInput {
   sample(player = null) {
     if(player?.form)this.form=player.form;
     const stick = this.stick.sample(); const pad = navigator.getGamepads?.().find(p => p?.connected); let gp = normalizeGamepad(pad);
-    if(this.suppressUntilNeutral){const neutral=!gp.left&&!gp.right&&!gp.up&&!gp.down&&!gp.jump&&!gp.attack&&!gp.heavy&&!gp.dodge&&!gp.throw&&!gp.honey&&!gp.transform&&!gp.pause&&!gp.interact;if(neutral)this.suppressUntilNeutral=false;else gp={};}
+    if(this.suppressUntilNeutral){const neutral=!gp.left&&!gp.right&&!gp.up&&!gp.down&&!gp.jump&&!gp.attack&&!gp.heavy&&!gp.dodge&&!gp.throw&&!gp.transform&&!gp.pause&&!gp.interact;if(neutral)this.suppressUntilNeutral=false;else gp={};}
     const keyboard=normalizeKeyboard({left:this.keys.has('left'),right:this.keys.has('right'),up:this.keys.has('up'),down:this.keys.has('down'),space:this.keys.has('jump')});
     const left = keyboard.left || stick.x < -.25 || gp.left;
     const right = keyboard.right || stick.x > .25 || gp.right;
     const up = keyboard.up || stick.y < -.45 || gp.up; const down = keyboard.down || stick.y > .45 || gp.down;
     const data = { left, right, up, down };
-    for (const name of ['jump','attack','heavy','dodge','throw','honey','interact','pause']) data[name] = (name==='jump'?keyboard.jump:this.keys.has(name)) || this.buttons.has(name) || !!gp[name];
+    for (const name of ['jump','attack','heavy','dodge','throw','interact','pause']) data[name] = (name==='jump'?keyboard.jump:this.keys.has(name)) || this.buttons.has(name) || !!gp[name];
     if (this.skillPress && !this.skillFired && performance.now() - this.skillPress >= this.skillThreshold) { data.transform = true; this.skillFired = true; }
     if (this.tapRequested) { data.skill = true; data.direction = keyboard.direction==='up'||up ? 'up' : keyboard.direction==='down'||down ? 'down' : right || left ? 'forward' : 'neutral'; this.tapRequested = false; }
     if (this.releaseRequested) { data.releaseTransform = true; this.releaseRequested = false; }

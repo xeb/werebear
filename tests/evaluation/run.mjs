@@ -11,18 +11,18 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const argSeconds = Number((process.argv.find(a => a.startsWith('--seconds=')) || '').split('=')[1]) || 900;
 
 const w = new World({ seed: 1 });
-const levelInfo = { width: w.worldWidth, trees: w.trees.length, checkpoints: w.checkpoints.length, enemies: w.enemies.length };
+const levelInfo = { width: w.worldWidth, trees: w.trees.length, checkpoints: w.checkpoints.length, enemies: w.enemies.length, platforms: w.platforms.length - 1 };
 
-console.error(`Evaluating Wear the Bear — level ${levelInfo.width}px, ${levelInfo.trees} trees, ${levelInfo.enemies} enemies`);
+console.error(`Evaluating Wear the Bear — level ${levelInfo.width}px, ${levelInfo.trees} trees, ${levelInfo.enemies} enemies, ${levelInfo.platforms} elevated platforms`);
 const runs = [];
 for (const policy of POLICY_NAMES) {
   process.stderr.write(`  ${policy} ... `);
   const r = runPolicy(policy, { seed: 7, seconds: argSeconds });
   runs.push(r);
-  console.error(`progress ${(r.progress * 100).toFixed(0)}% · ${r.kills || 0} kills · ${r.treesFelled} trees · ${r.transforms} transforms · ${r.deaths} deaths`);
+  console.error(`progress ${(r.progress * 100).toFixed(0)}%${r.completed ? ' (COMPLETE)' : ''} · ${r.kills || 0} kills · ${r.bossDamageDealt} boss dmg · ${r.baitedTells} baited · ${r.recoveryPunishes} punishes · ${r.treesFelled} trees · ${r.transforms} transforms · ${r.deaths} deaths`);
 }
 process.stderr.write('  contracts ... ');
-const contractsOut = contracts();
+const contractsOut = contracts(runs);
 console.error(`${contractsOut.filter(c => c.pass).length}/${contractsOut.length} pass`);
 
 // Merge the art judge's verdict if one is on file (run tools/art_judge.py first).
@@ -41,7 +41,7 @@ const md = [
   '',
   `**Score: ${score.points} / 100 — ${score.verdict}**`,
   '',
-  `Level: ${levelInfo.width}px wide, ${levelInfo.trees} trees, ${levelInfo.enemies} enemies, ${levelInfo.checkpoints} checkpoints. ${runs[0].seconds}s sim per policy, seed 7.`,
+  `Level: ${levelInfo.width}px wide, ${levelInfo.trees} trees, ${levelInfo.enemies} enemies, ${levelInfo.checkpoints} checkpoints, ${levelInfo.platforms} elevated platforms. ${runs[0].seconds}s sim per policy, seed 7.`,
   '',
   '| Row | Weight | Rating | Points | Evidence |',
   '|-----|--------|--------|--------|----------|',
@@ -49,9 +49,9 @@ const md = [
   '',
   '## Runs',
   '',
-  '| Policy | Progress | Kills | Trees | Taps | Transforms | First transform | Bear uptime | Deaths |',
-  '|--------|----------|-------|-------|------|------------|-----------------|-------------|--------|',
-  ...runs.map(r => `| ${r.policy} | ${(r.progress * 100).toFixed(0)}% | ${r.kills || 0} | ${r.treesFelled} | ${r.tapSkills} | ${r.transforms} | ${r.firstTransform ? (r.firstTransform / 60).toFixed(1) + ' min' : '—'} | ${(r.bearUptime * 100).toFixed(1)}% | ${r.deaths} |`),
+  '| Policy | Progress | Completed | Boss Dmg | Kills | Baited Tells | Punishes | Trees | Taps | Transforms | First Transform | Bear Uptime | Deaths |',
+  '|--------|----------|-----------|----------|-------|--------------|----------|-------|------|------------|-----------------|-------------|--------|',
+  ...runs.map(r => `| ${r.policy} | ${(r.progress * 100).toFixed(0)}% | ${r.completed ? '✅' : '—'} | ${r.bossDamageDealt} | ${r.kills || 0} | ${r.baitedTells} | ${r.recoveryPunishes} | ${r.treesFelled} | ${r.tapSkills} | ${r.transforms} | ${r.firstTransform != null ? r.firstTransform.toFixed(0) + 's' : '—'} | ${(r.bearUptime * 100).toFixed(1)}% | ${r.deaths} |`),
   '',
   `## Contracts (${contractsOut.filter(c => c.pass).length}/${contractsOut.length} pass)`,
   '',

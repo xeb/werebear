@@ -20,7 +20,7 @@ export function normalizeGamepad(pad) {
   if (!pad) return {};
   const b = (i) => !!pad.buttons?.[i]?.pressed || (pad.buttons?.[i]?.value ?? 0) > .55;
   const x = pad.axes?.[0] ?? 0, y = pad.axes?.[1] ?? 0;
-  return { left: x < -.3 || b(14), right: x > .3 || b(15), up: y < -.45 || b(12), down: y > .45 || b(13), jump: b(0), attack: b(2), heavy: b(3), dodge: b(1), throw: b(5), honey: b(4), transform: b(7), pause: b(9), interact: b(8) };
+  return { left: x < -.3 || b(14), right: x > .3 || b(15), up: y < -.45 || b(12), down: y > .45 || b(13), jump: b(0), attack: b(2), heavy: b(3), dodge: b(1), throw: b(5), transform: b(7), pause: b(9), interact: b(8) };
 }
 
 export function normalizeKeyboard(keys={}){const up=!!keys.up;return{...keys,up,jump:!!keys.space||up,direction:up?'up':keys.down?'down':keys.left||keys.right?'forward':'neutral'};}

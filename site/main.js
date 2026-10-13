@@ -17,7 +17,7 @@ const renderer=new Renderer(canvas,world,settings),audio=new ForestAudio();audio
 const input=new BrowserInput(canvas,touchRoot,(reason)=>{if(reason==='lifecycle'){clearSimulationInputs();if(mode==='play')pause();}else if(mode==='play')pause();else if(mode==='pause')resume();else if(mode==='settings'||mode==='howto'){mode=menuReturn;screen(mode)}});
 let mode='title', dream=false, dreamTimer=0,acc=0,last=0,lastDeaths=0,menuReturn='title',pauseEdge=false,attackEdge=false,skillSerial=0,wasBear=false;
 // Narrow automation hook for browser QA; it does not override input or simulation.
-globalThis.__wearTheBear={world,input,get mode(){return mode},get dream(){return dream}};
+globalThis.__wearTheBear={world,input,renderer,get mode(){return mode},get dream(){return dream}};
 const SCREEN=['title','howto','settings','pause','complete'];
 function screen(name){for(const n of SCREEN)$('#'+n).hidden=n!==name;}
 function enableContinue(){const button=$('#continueBtn');button.disabled=false;button.style.opacity='1';}
@@ -36,7 +36,7 @@ function update(dt){if(mode==='pause'){const actions=input.sample(world.player);
   if(mode!=='play')return;
   acc+=Math.min(.25,dt);let steps=0;
   while(acc>=STEP&&steps<15){world.step(actions);acc-=STEP;steps++;
-    for(const ev of world.events){if(ev.type==='moonrise'){audio.event('moonrise');haptic([30,40,80])}if(ev.type==='treeFall'){audio.event('treeFall');haptic(90)}if(ev.type==='treeCreak')audio.event('treeCreak');if(ev.type==='treeSnap')audio.event('treeSnap');if(ev.type==='hit'){audio.event('hit');if(world.player.form==='bear')haptic(40)}if(ev.type==='parry'){audio.event('parry');haptic(24)}if(ev.type==='complete')audio.event('complete');if(ev.type==='checkpoint'){saveWorld(world);enableContinue()}if(ev.type==='sleep'){saveWorld(world);enableContinue()}}
+    for(const ev of world.events){if(ev.type==='moonrise'){audio.event('moonrise');haptic([30,40,80])}if(ev.type==='treeFall'){audio.event('treeFall');haptic(90)}if(ev.type==='treeCreak')audio.event('treeCreak');if(ev.type==='treeSnap')audio.event('treeSnap');if(ev.type==='hit'){audio.event('hit');if(world.player.form==='bear')haptic(40)}if(ev.type==='parry'){audio.event('parry');haptic(24)}if(ev.type==='armorClink')audio.event('armorClink');if(ev.type==='armorBreak'){audio.event('armorBreak');haptic(50)}if(ev.type==='bossStagger'){audio.event('bossStagger');haptic(80)}if(ev.type==='enemyTell')audio.event('enemyTell');if(ev.type==='bossTell')audio.event('bossTell');if(ev.type==='perfectDodge')audio.event('perfectDodge');if(ev.type==='pickup')audio.event('pickup');if(ev.type==='exhausted')audio.event('exhausted');if(ev.type==='slash'&&ev.heavy)audio.event('heavyAttack');if(ev.type==='complete')audio.event('complete');if(ev.type==='checkpoint'){audio.event('checkpoint');saveWorld(world);enableContinue()}if(ev.type==='sleep'){audio.event('sleep');saveWorld(world);enableContinue()}}
     if((world.player.skillSerial||0)!==skillSerial){audio.event('skill');skillSerial=world.player.skillSerial}
     if(world.player.form==='bear'&&!wasBear){audio.event('bear');haptic([45,35,95])}wasBear=world.player.form==='bear';
     if(world.stats.deaths!==lastDeaths){lastDeaths=world.stats.deaths;saveWorld(world);enableContinue();audio.event('hurt')}

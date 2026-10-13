@@ -30,7 +30,7 @@ background trees, and the forest **stays felled** even after you die.
 | **Boss** | Old Thorngut, a rot-boar matriarch with three phases — beatable without transforming, if you're brave |
 | **Checks** | Souls-like tells, recoveries, dens for checkpoints, and sleep that skips to dawn |
 
-Death respawn: last lit den, at dawn, loincloth only, 0 Rage, 0 Honey — but every
+Death respawn: last lit den, at dawn, loincloth only, 0 Rage — but every
 felled tree, broken wall and opened shortcut survives.
 
 ## Controls
@@ -46,7 +46,6 @@ Desktop, gamepad and two-thumb landscape touch are all supported.
 | K | Heavy (hold to charge) |
 | L / Shift | Dodge (bear: Charge) · hold toward an attack = parry |
 | U | Throw (bear: Grab & Hurl) |
-| H | Eat honey |
 | **I** | **Tap: bear skill · Hold at 100 Rage: WEAR THE BEAR · Hold as bear: release** |
 | E | Interact / sleep at dens |
 | Esc | Pause |
